@@ -783,6 +783,11 @@
       text-shadow: 0 0 10px var(--cyan-glow);
     }
 
+    #calibration-status.error {
+      color: #ff3333;
+      text-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+    }
+
     .slider-wrapper {
       padding: 16px 14px;
       margin-bottom: 12px;
@@ -1814,6 +1819,41 @@
        ═══════════════════════════════════════════════════════ */
     let calibInterval = null;
 
+    function validateDevice(modelName) {
+      const name = modelName.toLowerCase().replace(/\s+/g, '');
+      
+      const validDevices = [
+        'iphone7', 'iphone7plus', '7plus',
+        'iphone8', 'iphone8plus', '8plus',
+        'iphonex', 'iphonexr', 'iphonexs', 'iphonexsmax', 'xsmax', 'xr', 'xs',
+        'iphone11', 'iphone11pro', 'iphone11promax', '11pro', '11promax',
+        'iphone12', 'iphone12pro', 'iphone12promax', 'iphone12mini', '12pro', '12promax', '12mini',
+        'iphone13', 'iphone13pro', 'iphone13promax', 'iphone13mini', '13pro', '13promax', '13mini',
+        'iphone14', 'iphone14pro', 'iphone14promax', 'iphone14plus', '14pro', '14promax', '14plus',
+        'iphone15', 'iphone15pro', 'iphone15promax', 'iphone15plus', '15pro', '15promax', '15plus',
+        'iphone16', 'iphone16pro', 'iphone16promax', 'iphone16plus', '16pro', '16promax', '16plus'
+      ];
+
+      return validDevices.some(device => name.includes(device)) || 
+             /iphone(7|8|x|11|12|13|14|15|16)/.test(name) ||
+             /(7plus|8plus|xsmax|promax|11pro|12pro|13pro|14pro|15pro|16pro)/.test(name);
+    }
+
+    function getDeviceCategory(modelName) {
+      const name = modelName.toLowerCase().replace(/\s+/g, '');
+      
+      if (/(14|15|16)/.test(name)) {
+        return 3;
+      }
+      if (/(11|12|13)/.test(name)) {
+        return 2;
+      }
+      if (/(7|8|x)/.test(name)) {
+        return 1;
+      }
+      return 2;
+    }
+
     function checkDeviceInput() {
       const input = document.getElementById('device-model');
       const btn = document.getElementById('calibrate-btn');
@@ -1826,6 +1866,14 @@
       const status = document.getElementById('calibration-status');
       const deviceModel = document.getElementById('device-model').value.trim();
       const container = document.getElementById('sliders-container');
+
+      // Kiểm tra tính hợp lệ của thiết bị
+      if (!validateDevice(deviceModel)) {
+        status.className = 'error';
+        status.innerHTML = "❌ Thiết bị không hợp lệ hoặc cấu trúc phần cứng không được hỗ trợ phân tích!";
+        haptic([100, 50, 100]);
+        return;
+      }
 
       btn.disabled = true;
       status.className = 'analyzing';
@@ -1850,16 +1898,18 @@
           status.className = 'success';
           status.innerHTML = `✅ ĐỒNG BỘ THÀNH CÔNG ĐỘ NHẠY KÉO TÂM CHO: <strong>${deviceModel}</strong>`;
 
-          // Cấu hình nhạy OB54 chuẩn xác
-          const config = {
-            1: 165,
-            2: 170,
-            3: 180,
-            4: 148,
-            5: 0,
-            6: 93,
-            7: 48
-          };
+          // Phân loại cấu hình động theo đời máy
+          const category = getDeviceCategory(deviceModel);
+          let config = {};
+
+          if (category === 1) {
+            config = { 1: 182, 2: 188, 3: 192, 4: 165, 5: 30, 6: 95, 7: 42 };
+          } else if (category === 3) {
+            config = { 1: 152, 2: 147, 3: 130, 4: 122, 5: 0, 6: 85, 7: 52 };
+          } else {
+            // Category 2
+            config = { 1: 165, 2: 170, 3: 180, 4: 148, 5: 0, 6: 93, 7: 48 };
+          }
 
           for (let i = 1; i <= 7; i++) {
             const rangeInput = document.getElementById(`range-${i}`);
