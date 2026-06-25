@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zev Boost" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Zev Boost OB54 PRO — Gaming optimization dashboard for iOS. DNS accelerator, sensitivity tuner, and performance toggles." />
+  <title>Zev Boost [OB54 PRO]</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+    /* ═══════════════════════════════════════════════════════
+       DESIGN TOKENS
+       ═══════════════════════════════════════════════════════ */
+    :root {
+      --bg: #000000;
+      --glass-bg: rgba(255, 255, 255, 0.025);
+      --glass-bg-strong: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: blur(20px) saturate(180%);
+
+      --cyan: #00f2fe;
+      --cyan-dim: rgba(0, 242, 254, 0.15);
+      --cyan-glow: rgba(0, 242, 254, 0.3);
+      --magenta: #ff007f;
+      --magenta-dim: rgba(255, 0, 127, 0.15);
+      --magenta-glow: rgba(255, 0, 127, 0.3);
+      --electric: #4facfe;
+      --electric-glow: rgba(79, 172, 254, 0.25);
+      --green: #00e676;
+      --green-glow: rgba(0, 230, 118, 0.25);
+
+      --white: #ffffff;
+      --silver: #a1a1aa;
+      --muted: #52525b;
+      --dark: #09090b;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Space Mono', 'Courier New', monospace;
+
+      --safe-top: env(safe-area-inset-top, 44px);
+      --safe-bottom: env(safe-area-inset-bottom, 34px);
+
+      --header-h: 170px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       GLOBAL RESET — iOS SCROLL FIX
+       ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(255, 0, 127, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.025) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       KEYFRAME ANIMATIONS
+       ═══════════════════════════════════════════════════════ */
+    @keyframes neonPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--cyan), 0 0 20px var(--cyan-glow); }
+      50% { opacity: 0.75; text-shadow: 0 0 4px var(--cyan); }
+    }
+
+    @keyframes signaturePulse {
+      0%, 100% { color: var(--cyan); text-shadow: 0 0 10px var(--cyan-glow), 0 0 24px var(--electric-glow); }
+      50% { color: var(--electric); text-shadow: 0 0 10px var(--electric-glow), 0 0 24px var(--magenta-glow); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    @keyframes toastSlideUp {
+      from { transform: translateX(-50%) translateY(120%); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    @keyframes toastSlideDown {
+      from { transform: translateX(-50%) translateY(0); opacity: 1; }
+      to { transform: translateX(-50%) translateY(120%); opacity: 0; }
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes ambientBlink {
+      0%, 100% { box-shadow: 0 0 6px var(--cyan), 0 0 14px var(--cyan-glow); }
+      50% { box-shadow: 0 0 2px var(--cyan); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       GLASS PANEL DESIGN SYSTEM
+       ═══════════════════════════════════════════════════════ */
+    .glass-panel {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       STICKY TOP HEADER
+       ═══════════════════════════════════════════════════════ */
+    #app-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(0, 0, 0, 0.80);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    /* Brand bar */
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(var(--safe-top) + 10px) 20px 10px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--electric));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 14px var(--cyan-glow);
+      flex-shrink: 0;
+    }
+
+    .brand-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #000;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .brand-wordmark {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--cyan), var(--electric));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-tagline {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--silver);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--magenta), #a855f7);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px var(--magenta-glow);
+    }
+
+    /* Telemetry strip */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 0 16px 10px;
+    }
+
+    .telemetry-cell {
+      background: rgba(255,255,255,0.015);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 8px 4px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .telemetry-value {
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+      animation: neonPulse 2s ease-in-out infinite;
+    }
+
+    .telemetry-label {
+      font-size: 7px;
+      font-family: var(--font-mono);
+      color: var(--silver);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tabs navigation */
+    .tabs-bar {
+      padding: 0 16px 10px;
+    }
+
+    .tabs-track {
+      display: flex;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      position: relative;
+    }
+
+    .tab-glider {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc((100% - 6px) / 3);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 9px;
+      z-index: 1;
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--silver);
+      font-size: 9.5px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      padding: 10px 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: color 0.3s ease;
+      position: relative;
+      z-index: 2;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .tab-btn.active {
+      color: var(--white);
+    }
+
+    .tab-btn.active svg {
+      stroke: var(--cyan);
+    }
+
+    .tab-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 1.8px;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .tab-btn:active { opacity: 0.7; }
+
+    /* ═══════════════════════════════════════════════════════
+       SCROLLABLE CONTENT AREA
+       ═══════════════════════════════════════════════════════ */
+    #app-content {
+      position: relative;
+      z-index: 1;
+      padding: 20px 16px calc(var(--safe-bottom) + 24px);
+    }
+
+    .tab-panel {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: tabFadeIn 0.35s ease-out forwards;
+    }
+
+    .tab-panel.active {
+      display: flex;
+    }
+
+    /* Section title */
+    .section-title {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--silver);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--glass-border), transparent);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       OPTIMIZATION TOGGLE CARDS
+       ═══════════════════════════════════════════════════════ */
+    .toggle-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toggle-card {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .toggle-card:active {
+      transform: scale(0.98);
+    }
+
+    .toggle-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toggle-icon-box svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.6px;
+      fill: none;
+    }
+
+    .toggle-icon-box.cyan-box {
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+    .toggle-icon-box.cyan-box svg { stroke: var(--cyan); }
+
+    .toggle-icon-box.magenta-box {
+      background: var(--magenta-dim);
+      border: 1px solid rgba(255, 0, 127, 0.2);
+    }
+    .toggle-icon-box.magenta-box svg { stroke: var(--magenta); }
+
+    .toggle-icon-box.electric-box {
+      background: rgba(79,172,254,0.12);
+      border: 1px solid rgba(79,172,254,0.2);
+    }
+    .toggle-icon-box.electric-box svg { stroke: var(--electric); }
+
+    .toggle-icon-box.green-box {
+      background: rgba(0,230,118,0.1);
+      border: 1px solid rgba(0,230,118,0.2);
+    }
+    .toggle-icon-box.green-box svg { stroke: var(--green); }
+
+    .toggle-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toggle-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .toggle-desc {
+      font-size: 10.5px;
+      color: var(--silver);
+      line-height: 1.4;
+    }
+
+    /* Toggle switch */
+    .cyber-switch {
+      position: relative;
+      width: 44px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .cyber-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .cyber-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--glass-border);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cyber-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      background: var(--silver);
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cyber-switch input:checked + .cyber-slider {
+      background: rgba(0, 242, 254, 0.2);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .cyber-switch input:checked + .cyber-slider::before {
+      transform: translateX(18px);
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    /* Ambient blink indicator */
+    .ambient-dot {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: ambientBlink 1.2s ease-in-out infinite;
+    }
+
+    .ambient-dot.visible {
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DNS ACCELERATOR GRID
+       ═══════════════════════════════════════════════════════ */
+    .dns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .dns-card {
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-md);
+    }
+
+    .dns-card:active {
+      transform: scale(0.97);
+    }
+
+    .dns-card.active-dns {
+      border-color: var(--cyan) !important;
+      box-shadow: 0 0 14px var(--cyan-glow);
+    }
+
+    .dns-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .dns-name {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .dns-sub {
+      font-size: 8.5px;
+      color: var(--silver);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .dns-toggle-switch {
+      position: relative;
+      width: 30px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .dns-toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .dns-toggle-track {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--glass-border);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dns-toggle-track::before {
+      content: '';
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      left: 2px;
+      top: 2px;
+      background: var(--silver);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dns-toggle-switch input:checked + .dns-toggle-track {
+      background: rgba(0,242,254,0.2);
+      border-color: var(--cyan);
+    }
+
+    .dns-toggle-switch input:checked + .dns-toggle-track::before {
+      transform: translateX(13px);
+      background: var(--cyan);
+    }
+
+    .dns-ips {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dns-ip-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dns-ip-text {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--cyan);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .copy-ip-btn {
+      background: rgba(0,242,254,0.08);
+      border: 1px solid rgba(0,242,254,0.15);
+      border-radius: 5px;
+      color: var(--cyan);
+      font-size: 7.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 3px 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .copy-ip-btn:active {
+      background: rgba(0,242,254,0.2);
+      transform: scale(0.93);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TAB 2: HIỆU NĂNG FF — PERFORMANCE TOGGLES
+       ═══════════════════════════════════════════════════════ */
+    /* Uses same toggle-card system */
+
+    /* ═══════════════════════════════════════════════════════
+       TAB 3: ĐỘ NHẠY OB54 — SENSITIVITY TUNER
+       ═══════════════════════════════════════════════════════ */
+    .sensitivity-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sensitivity-header-card {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .sens-title {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: neonPulse 3s ease-in-out infinite;
+      margin-bottom: 6px;
+    }
+
+    .sens-subtitle {
+      font-size: 10px;
+      color: var(--silver);
+    }
+
+    .calibrate-btn {
+      margin-top: 14px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(0,242,254,0.1), rgba(79,172,254,0.1));
+      border: 1px solid rgba(0,242,254,0.25);
+      border-radius: var(--radius-sm);
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .calibrate-btn:active {
+      background: linear-gradient(90deg, rgba(0,242,254,0.2), rgba(79,172,254,0.2));
+      transform: scale(0.97);
+    }
+
+    .device-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .device-input {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 12px;
+      font-family: var(--font-mono);
+      padding: 10px 12px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .device-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .slider-card {
+      padding: 18px 16px;
+    }
+
+    .slider-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .slider-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .slider-sub {
+      font-size: 9.5px;
+      color: var(--silver);
+      margin-top: 2px;
+    }
+
+    .slider-value-display {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .slider-val {
+      font-size: 22px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+    }
+
+    .slider-max {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--silver);
+    }
+
+    /* Custom slider */
+    .cyber-range-wrap {
+      position: relative;
+      margin-top: 4px;
+    }
+
+    .cyber-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--glass-border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .cyber-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow), 0 0 24px rgba(0,242,254,0.15);
+      cursor: pointer;
+      border: 2px solid rgba(0,0,0,0.5);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .cyber-range:active::-webkit-slider-thumb {
+      box-shadow: 0 0 20px var(--cyan), 0 0 40px var(--cyan-glow);
+    }
+
+    .slider-track-fill {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--electric));
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: width 0.1s linear;
+    }
+
+    .calibration-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .calib-tag {
+      background: rgba(0,242,254,0.06);
+      border: 1px solid rgba(0,242,254,0.12);
+      border-radius: 6px;
+      color: var(--cyan);
+      font-size: 9px;
+      font-family: var(--font-mono);
+      padding: 4px 8px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CONFIG & SHARE GRID
+       ═══════════════════════════════════════════════════════ */
+    .share-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .share-card {
+      padding: 16px 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .share-card:active {
+      transform: scale(0.96);
+    }
+
+    .share-arrow {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--silver);
+      stroke-width: 1.8px;
+      fill: none;
+    }
+
+    .share-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .share-icon-wrap svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 1.6px;
+      fill: none;
+    }
+
+    .share-icon-wrap.cyan-share {
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,242,254,0.25);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+    .share-icon-wrap.cyan-share svg { stroke: var(--cyan); }
+
+    .share-icon-wrap.magenta-share {
+      background: var(--magenta-dim);
+      border: 1px solid rgba(255,0,127,0.25);
+      box-shadow: 0 0 12px var(--magenta-glow);
+    }
+    .share-icon-wrap.magenta-share svg { stroke: var(--magenta); }
+
+    .share-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .share-card-desc {
+      font-size: 10px;
+      color: var(--silver);
+      line-height: 1.45;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+       ═══════════════════════════════════════════════════════ */
+    #app-toast {
+      position: fixed;
+      bottom: calc(var(--safe-bottom) + 24px);
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(0,242,254,0.3);
+      border-radius: 30px;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 24px var(--cyan-glow), 0 8px 32px rgba(0,0,0,0.6);
+      white-space: nowrap;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    #app-toast.show {
+      animation: toastSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    #app-toast.hide {
+      animation: toastSlideDown 0.35s ease-in forwards;
+    }
+
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      flex-shrink: 0;
+    }
+
+    #app-toast-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       MODAL SHEET
+       ═══════════════════════════════════════════════════════ */
+    #install-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #install-modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 480px;
+      background: #0d0d0d;
+      border: 1px solid rgba(0,242,254,0.2);
+      border-radius: 24px 24px 20px 20px;
+      padding: 24px 22px calc(var(--safe-bottom) + 24px);
+      animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 auto 20px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .modal-subtitle {
+      font-size: 11.5px;
+      color: var(--silver);
+      margin-bottom: 20px;
+    }
+
+    .modal-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,242,254,0.25);
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .modal-step-text {
+      font-size: 12px;
+      color: var(--silver);
+      line-height: 1.5;
+    }
+
+    .modal-step-text strong {
+      color: var(--white);
+    }
+
+    .modal-link {
+      color: var(--cyan);
+      text-decoration: none;
+      font-family: var(--font-mono);
+    }
+
+    .modal-close-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      color: var(--silver);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .modal-close-btn:active {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FOOTER / DESIGNER SIGNATURE
+       ═══════════════════════════════════════════════════════ */
+    .designer-footer {
+      margin-top: 28px;
+      padding-bottom: 8px;
+      text-align: center;
+    }
+
+    .designer-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin: 0 auto 12px;
+    }
+
+    .designer-credit {
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      animation: signaturePulse 4s ease-in-out infinite;
+    }
+
+    .designer-version {
+      font-size: 8.5px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STICKY TOP HEADER
+       ═══════════════════════════════════════════════════════ -->
+  <header id="app-header">
+    <div class="brand-bar">
+      <div class="brand-left">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <div class="brand-wordmark">
+          <div class="brand-name">ZEV BOOST</div>
+          <div class="brand-tagline">iOS Gaming Engine</div>
+        </div>
+      </div>
+      <div class="brand-badge">OB54 PRO</div>
+    </div>
+
+    <!-- Hardware Telemetry -->
+    <div class="telemetry-strip">
+      <div class="telemetry-cell">
+        <div class="telemetry-value" id="tele-gpu">A16 GPU</div>
+        <div class="telemetry-label">GPU ENGINE</div>
+      </div>
+      <div class="telemetry-cell">
+        <div class="telemetry-value" id="tele-fps">60.0 FPS</div>
+        <div class="telemetry-label">RENDER RATE</div>
+      </div>
+      <div class="telemetry-cell">
+        <div class="telemetry-value" id="tele-ping">28ms</div>
+        <div class="telemetry-label">NET LATENCY</div>
+      </div>
+      <div class="telemetry-cell">
+        <div class="telemetry-value">16.8 GB</div>
+        <div class="telemetry-label">FREE STORAGE</div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-bar">
+      <div class="tabs-track" id="tabs-track" role="tablist">
+        <div class="tab-glider" id="tab-glider"></div>
+        <button class="tab-btn active" id="tab-btn-0" role="tab" aria-selected="true" onclick="switchTab(0)">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+          Tối Ưu iOS
+        </button>
+        <button class="tab-btn" id="tab-btn-1" role="tab" aria-selected="false" onclick="switchTab(1)">
+          <svg viewBox="0 0 24 24">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          Hiệu Năng FF
+        </button>
+        <button class="tab-btn" id="tab-btn-2" role="tab" aria-selected="false" onclick="switchTab(2)">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Độ Nhạy OB54
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCROLLABLE CONTENT
+       ═══════════════════════════════════════════════════════ -->
+  <main id="app-content">
+
+    <!-- ─── TAB 1: TỐI ƯU IOS ─────────────────────────────── -->
+    <div class="tab-panel active" id="panel-0" role="tabpanel">
+
+      <!-- Core Optimization Toggles -->
+      <div>
+        <div class="section-title">Bộ Tối Ưu Hệ Thống</div>
+        <div class="toggle-grid">
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'toggle-graphics')">
+            <div class="toggle-icon-box cyan-box">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Graphics Override</div>
+              <div class="toggle-desc">Hạn chế độ phức tạp của màn hình chuyển động</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="toggle-graphics" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'toggle-daemon')">
+            <div class="toggle-icon-box magenta-box">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Daemon Freeze</div>
+              <div class="toggle-desc">Hạn chế tài nguyên làm mới nền ứng dụng</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="toggle-daemon" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'toggle-privacy')">
+            <div class="toggle-icon-box electric-box">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Privacy Shield</div>
+              <div class="toggle-desc">Chặn theo dõi log phân tích dữ liệu</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="toggle-privacy" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'toggle-cache')">
+            <div class="toggle-icon-box green-box">
+              <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">System Cache Purge</div>
+              <div class="toggle-desc">Xóa cache dư thừa hệ thống</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="toggle-cache" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'toggle-ram')">
+            <div class="toggle-icon-box cyan-box">
+              <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Neural RAM Purge</div>
+              <div class="toggle-desc">Giải phóng bộ nhớ RAM tức thì</div>
+            </div>
+            <div class="ambient-dot" id="ram-dot"></div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="toggle-ram" onchange="handleSwitchChange(this); toggleRamDot(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DNS Accelerator -->
+      <div>
+        <div class="section-title">Elite DNS Network Accelerator</div>
+        <div class="dns-grid" id="dns-grid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- Config & Share -->
+      <div>
+        <div class="section-title">Cấu Hình & Chia Sẻ</div>
+        <div class="share-grid">
+
+          <div class="share-card glass-panel" id="btn-install" onclick="openInstallModal()">
+            <svg class="share-arrow" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            <div class="share-icon-wrap cyan-share">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div>
+              <div class="share-card-title">Cài Cấu Hình</div>
+              <div class="share-card-desc">Cài đặt Web Clip Zev Boost lên màn hình chính iOS.</div>
+            </div>
+          </div>
+
+          <div class="share-card glass-panel" id="btn-copy-link" onclick="copyShareLink()">
+            <svg class="share-arrow" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            <div class="share-icon-wrap magenta-share">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div>
+              <div class="share-card-title">Sao Chép Link</div>
+              <div class="share-card-desc">Sao chép live URL Cloudflare để chia sẻ cho thiết bị khác.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="designer-footer">
+        <div class="designer-line"></div>
+        <div class="designer-credit">Web designed by Duc Anh Zev</div>
+        <div class="designer-version">v3.2.0 · OB54 PRO · ducanhzev.pages.dev</div>
+      </div>
+
+    </div><!-- end panel-0 -->
+
+    <!-- ─── TAB 2: HIỆU NĂNG FF ───────────────────────────── -->
+    <div class="tab-panel" id="panel-1" role="tabpanel">
+
+      <div>
+        <div class="section-title">Gaming Performance Matrix</div>
+        <div class="toggle-grid">
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-fps')">
+            <div class="toggle-icon-box cyan-box">
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">FPS Unlock Engine</div>
+              <div class="toggle-desc">Mở giới hạn FPS cho hiệu suất tối đa trong game</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-fps" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-render')">
+            <div class="toggle-icon-box magenta-box">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Render Quality Boost</div>
+              <div class="toggle-desc">Tăng cường chất lượng render đồ họa game</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-render" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-network')">
+            <div class="toggle-icon-box electric-box">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Network Prioritizer</div>
+              <div class="toggle-desc">Ưu tiên băng thông mạng cho Free Fire</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-network" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-thermal')">
+            <div class="toggle-icon-box green-box">
+              <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Thermal Limiter</div>
+              <div class="toggle-desc">Quản lý nhiệt thiết bị giảm hiện tượng throttle</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-thermal" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-input')">
+            <div class="toggle-icon-box cyan-box">
+              <svg viewBox="0 0 24 24"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Input Lag Reducer</div>
+              <div class="toggle-desc">Giảm độ trễ đầu vào chạm màn hình</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-input" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-card glass-panel" onclick="handleToggle(event, 'ff-antilag')">
+            <div class="toggle-icon-box magenta-box">
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <div class="toggle-info">
+              <div class="toggle-name">Anti-Lag System</div>
+              <div class="toggle-desc">Hệ thống chống giật lag trong trận đấu</div>
+            </div>
+            <label class="cyber-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="ff-antilag" onchange="handleSwitchChange(this)">
+              <span class="cyber-slider"></span>
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="designer-footer">
+        <div class="designer-line"></div>
+        <div class="designer-credit">Web designed by Duc Anh Zev</div>
+        <div class="designer-version">v3.2.0 · OB54 PRO · ducanhzev.pages.dev</div>
+      </div>
+
+    </div><!-- end panel-1 -->
+
+    <!-- ─── TAB 3: ĐỘ NHẠY OB54 ──────────────────────────── -->
+    <div class="tab-panel" id="panel-2" role="tabpanel">
+
+      <div class="sensitivity-panel">
+
+        <div class="sensitivity-header-card glass-panel">
+          <div class="sens-title">⚡ OB54 Sensitivity Tuner</div>
+          <div class="sens-subtitle">Hiệu chỉnh độ nhạy tối ưu theo thiết bị của bạn</div>
+          <div class="device-input-row">
+            <input type="text" class="device-input" id="device-id-input" placeholder="Nhập Device ID hoặc Model..." autocomplete="off" autocorrect="off" spellcheck="false" />
+          </div>
+          <button class="calibrate-btn" onclick="runCalibration()">⚡ Hiệu Chỉnh Tự Động</button>
+          <div class="calibration-tags" id="calibration-tags">
+            <span class="calib-tag">GYRO: OFF</span>
+            <span class="calib-tag">MODE: STANDARD</span>
+            <span class="calib-tag">LATENCY: LOW</span>
+          </div>
+        </div>
+
+        <!-- Slider: Nhìn xung quanh -->
+        <div class="slider-card glass-panel">
+          <div class="slider-card-header">
+            <div>
+              <div class="slider-label">Nhìn xung quanh</div>
+              <div class="slider-sub">General Look · Free Camera</div>
+            </div>
+            <div class="slider-value-display">
+              <span class="slider-val" id="val-look">158</span>
+              <span class="slider-max">/200</span>
+            </div>
+          </div>
+          <div class="cyber-range-wrap">
+            <div class="slider-track-fill" id="fill-look" style="width:79%"></div>
+            <input type="range" class="cyber-range" id="slider-look" min="0" max="200" value="158"
+              oninput="updateSlider('look', this.value)" onchange="onSliderChange()">
+          </div>
+        </div>
+
+        <!-- Slider: Ống ngắm hồng tâm -->
+        <div class="slider-card glass-panel">
+          <div class="slider-card-header">
+            <div>
+              <div class="slider-label">Ống ngắm hồng tâm</div>
+              <div class="slider-sub">Red Dot Sight · ADS Sensitivity</div>
+            </div>
+            <div class="slider-value-display">
+              <span class="slider-val" id="val-reddot">147</span>
+              <span class="slider-max">/200</span>
+            </div>
+          </div>
+          <div class="cyber-range-wrap">
+            <div class="slider-track-fill" id="fill-reddot" style="width:73.5%"></div>
+            <input type="range" class="cyber-range" id="slider-reddot" min="0" max="200" value="147"
+              oninput="updateSlider('reddot', this.value)" onchange="onSliderChange()">
+          </div>
+        </div>
+
+        <!-- Slider: Ống ngắm 2x -->
+        <div class="slider-card glass-panel">
+          <div class="slider-card-header">
+            <div>
+              <div class="slider-label">Ống ngắm 2x</div>
+              <div class="slider-sub">2x Scope · Zoom Sensitivity</div>
+            </div>
+            <div class="slider-value-display">
+              <span class="slider-val" id="val-scope2x">130</span>
+              <span class="slider-max">/200</span>
+            </div>
+          </div>
+          <div class="cyber-range-wrap">
+            <div class="slider-track-fill" id="fill-scope2x" style="width:65%"></div>
+            <input type="range" class="cyber-range" id="slider-scope2x" min="0" max="200" value="130"
+              oninput="updateSlider('scope2x', this.value)" onchange="onSliderChange()">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="designer-footer">
+        <div class="designer-line"></div>
+        <div class="designer-credit">Web designed by Duc Anh Zev</div>
+        <div class="designer-version">v3.2.0 · OB54 PRO · ducanhzev.pages.dev</div>
+      </div>
+
+    </div><!-- end panel-2 -->
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+       ═══════════════════════════════════════════════════════ -->
+  <div id="app-toast" role="alert" aria-live="polite">
+    <div class="toast-dot"></div>
+    <span id="app-toast-text">Đã bật chức năng này thành công!</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INSTALL MODAL
+       ═══════════════════════════════════════════════════════ -->
+  <div id="install-modal-overlay" onclick="closeInstallModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Cài Cấu Hình Web Clip</div>
+      <div class="modal-subtitle">Thêm Zev Boost vào màn hình chính iPhone của bạn</div>
+
+      <div class="modal-step">
+        <div class="modal-step-num">1</div>
+        <div class="modal-step-text">Tải file <strong>ZevBoost.mobileconfig</strong> từ repository GitHub của Zev Boost về thiết bị iOS.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">2</div>
+        <div class="modal-step-text">Truy cập <strong>Cài đặt → Đã tải về Hồ sơ</strong> và nhấn <strong>Cài đặt</strong> để xác nhận cài profile.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">3</div>
+        <div class="modal-step-text">Nếu cần ký profile tự ký, sử dụng <a class="modal-link" href="https://vsign.me" target="_blank">vsign.me</a> hoặc công cụ OpenSSL để tạo chứng chỉ hợp lệ.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">4</div>
+        <div class="modal-step-text">Sau khi cài đặt thành công, biểu tượng <strong>Zev Boost</strong> sẽ xuất hiện trên màn hình chính iOS dưới dạng Web Clip toàn màn hình.</div>
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-num">5</div>
+        <div class="modal-step-text">Khởi động Web Clip và trải nghiệm dashboard tối ưu hóa OB54 PRO của bạn!</div>
+      </div>
+
+      <button class="modal-close-btn" onclick="closeInstallModalBtn()">Đã hiểu, Đóng lại</button>
+    </div>
+  </div>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════
+       TOAST ENGINE
+       ═══════════════════════════════════════════════════════ */
+    let toastTimer = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById('app-toast');
+      const textEl = document.getElementById('app-toast-text');
+      if (toastTimer) {
+        clearTimeout(toastTimer);
+        toast.classList.remove('show', 'hide');
+        // force reflow
+        void toast.offsetWidth;
+      }
+      textEl.textContent = msg || 'Đã bật chức năng này thành công!';
+      toast.classList.remove('hide');
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+        toastTimer = null;
+      }, 2800);
+    }
+
+    function haptic(pattern) {
+      if (navigator.vibrate) {
+        navigator.vibrate(pattern || [15]);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TAB SWITCHING
+       ═══════════════════════════════════════════════════════ */
+    function switchTab(idx) {
+      haptic([10]);
+      const panels = document.querySelectorAll('.tab-panel');
+      const btns = document.querySelectorAll('.tab-btn');
+      const glider = document.getElementById('tab-glider');
+
+      panels.forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+      });
+      btns.forEach((b, i) => {
+        b.classList.toggle('active', i === idx);
+        b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+
+      const trackW = document.getElementById('tabs-track').offsetWidth - 6;
+      glider.style.transform = `translateX(${idx * (trackW / 3)}px)`;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TOGGLE HANDLERS
+       ═══════════════════════════════════════════════════════ */
+    function handleToggle(event, switchId) {
+      const sw = document.getElementById(switchId);
+      if (sw && event.target !== sw && event.target.tagName !== 'SPAN') {
+        sw.checked = !sw.checked;
+        sw.dispatchEvent(new Event('change'));
+      }
+    }
+
+    function handleSwitchChange(el) {
+      haptic([15]);
+      showToast('Đã bật chức năng này thành công!');
+    }
+
+    function toggleRamDot(el) {
+      const dot = document.getElementById('ram-dot');
+      if (dot) dot.classList.toggle('visible', el.checked);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DNS ACCELERATOR
+       ═══════════════════════════════════════════════════════ */
+    const DNS_PROFILES = [
+      { name: 'Cloudflare Hyper-Speed', sub: 'Ultra-fast resolver', ip1: '1.1.1.1', ip2: '1.0.0.1' },
+      { name: 'Google Public Core', sub: 'Reliable global DNS', ip1: '8.8.8.8', ip2: '8.8.4.4' },
+      { name: 'AdGuard Gaming Shield', sub: 'Ad-blocked gaming', ip1: '94.140.14.14', ip2: '94.140.15.15' },
+      { name: 'Quad9 Secure Core', sub: 'Threat-blocking DNS', ip1: '9.9.9.9', ip2: '149.112.112.112' },
+      { name: 'OpenDNS Home Speed', sub: 'Customizable resolver', ip1: '208.67.222.222', ip2: '208.67.220.220' },
+      { name: 'CleanBrowsing Gaming', sub: 'Clean & fast gaming', ip1: '185.228.168.168', ip2: '185.228.169.168' },
+      { name: 'Comodo Secure', sub: 'Malware protection', ip1: '8.26.56.26', ip2: '8.20.247.20' },
+      { name: 'Level3 Infrastructure', sub: 'Enterprise-grade DNS', ip1: '209.244.0.3', ip2: '209.244.0.4' },
+    ];
+
+    function buildDnsGrid() {
+      const grid = document.getElementById('dns-grid');
+      grid.innerHTML = DNS_PROFILES.map((dns, idx) => `
+        <div class="dns-card glass-panel" id="dns-card-${idx}">
+          <div class="dns-card-header">
+            <div>
+              <div class="dns-name">${dns.name}</div>
+              <div class="dns-sub">${dns.sub}</div>
+            </div>
+            <label class="dns-toggle-switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="dns-toggle-${idx}" onchange="activateDns(${idx}, this)">
+              <span class="dns-toggle-track"></span>
+            </label>
+          </div>
+          <div class="dns-ips">
+            <div class="dns-ip-row">
+              <span class="dns-ip-text">${dns.ip1}</span>
+              <button class="copy-ip-btn" onclick="copyDnsIp('${dns.ip1}', '${dns.name}', 1)">Copy IP 1</button>
+            </div>
+            <div class="dns-ip-row">
+              <span class="dns-ip-text">${dns.ip2}</span>
+              <button class="copy-ip-btn" onclick="copyDnsIp('${dns.ip2}', '${dns.name}', 2)">Copy IP 2</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function copyDnsIp(ip, name, num) {
+      haptic([15]);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ip).then(() => {
+          showToast(`Đã sao chép ${name} IP ${num}: ${ip}`);
+        }).catch(() => fallbackCopy(ip));
+      } else {
+        fallbackCopy(ip);
+        showToast(`Đã sao chép ${name} IP ${num}: ${ip}`);
+      }
+    }
+
+    function activateDns(idx, el) {
+      haptic([15]);
+      document.querySelectorAll('.dns-card').forEach((card, i) => {
+        card.classList.toggle('active-dns', i === idx && el.checked);
+      });
+      if (el.checked) {
+        showToast(`DNS ${DNS_PROFILES[idx].name} đã kích hoạt!`);
+      } else {
+        showToast('Đã tắt DNS profile này.');
+      }
+    }
+
+    function fallbackCopy(text) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.style.position = 'fixed';
+      el.style.opacity = '0';
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(el);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SENSITIVITY SLIDERS
+       ═══════════════════════════════════════════════════════ */
+    const SLIDERS = {
+      look:    { el: null, fill: null, val: null },
+      reddot:  { el: null, fill: null, val: null },
+      scope2x: { el: null, fill: null, val: null },
+    };
+
+    function initSliders() {
+      Object.keys(SLIDERS).forEach(key => {
+        SLIDERS[key].el   = document.getElementById(`slider-${key}`);
+        SLIDERS[key].fill = document.getElementById(`fill-${key}`);
+        SLIDERS[key].val  = document.getElementById(`val-${key}`);
+      });
+    }
+
+    function updateSlider(key, value) {
+      const s = SLIDERS[key];
+      const v = parseInt(value, 10);
+      if (s.val) s.val.textContent = v;
+      if (s.fill) s.fill.style.width = ((v / 200) * 100) + '%';
+    }
+
+    function onSliderChange() {
+      haptic([10]);
+      showToast('Đã cập nhật cấu hình độ nhạy!');
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CALIBRATION ENGINE
+       ═══════════════════════════════════════════════════════ */
+    function runCalibration() {
+      haptic([20, 50, 20]);
+      const deviceId = document.getElementById('device-id-input').value.trim() || 'DEFAULT';
+
+      let hash = 0;
+      for (let i = 0; i < deviceId.length; i++) {
+        hash = ((hash << 5) - hash) + deviceId.charCodeAt(i);
+        hash |= 0;
+      }
+
+      const base = Math.abs(hash);
+      const look    = 130 + (base % 40);
+      const reddot  = 120 + (base % 35);
+      const scope2x = 110 + (base % 30);
+
+      // Animate sliders
+      animateSliderTo('look', look);
+      animateSliderTo('reddot', reddot);
+      animateSliderTo('scope2x', scope2x);
+
+      // Update calibration tags
+      const tagsEl = document.getElementById('calibration-tags');
+      if (tagsEl) {
+        tagsEl.innerHTML = `
+          <span class="calib-tag">GYRO: OFF</span>
+          <span class="calib-tag">DEVICE: ${deviceId.substring(0,12).toUpperCase()}</span>
+          <span class="calib-tag">LATENCY: ULTRA-LOW</span>
+          <span class="calib-tag">HASH: ${(base % 9999).toString(16).toUpperCase()}</span>
+        `;
+      }
+
+      showToast('⚡ Hiệu chỉnh thành công theo thiết bị của bạn!');
+    }
+
+    function animateSliderTo(key, target) {
+      const s = SLIDERS[key];
+      if (!s.el) return;
+      const start = parseInt(s.el.value, 10);
+      const diff = target - start;
+      const duration = 600;
+      const startTime = performance.now();
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(start + diff * eased);
+        s.el.value = current;
+        updateSlider(key, current);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       MODAL
+       ═══════════════════════════════════════════════════════ */
+    function openInstallModal() {
+      haptic([15]);
+      document.getElementById('install-modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeInstallModal(event) {
+      document.getElementById('install-modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeInstallModalBtn() {
+      haptic([10]);
+      closeInstallModal();
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       COPY SHARE LINK
+       ═══════════════════════════════════════════════════════ */
+    function copyShareLink() {
+      haptic([40]);
+      const url = 'https://ducanhzev.pages.dev/';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Đã sao chép link thành công!');
+        }).catch(() => {
+          fallbackCopy(url);
+          showToast('Đã sao chép link thành công!');
+        });
+      } else {
+        fallbackCopy(url);
+        showToast('Đã sao chép link thành công!');
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       LIVE TELEMETRY SIMULATION
+       ═══════════════════════════════════════════════════════ */
+    function initTelemetry() {
+      // Detect GPU model from UA
+      const ua = navigator.userAgent;
+      let gpuLabel = 'Apple GPU';
+      if (/iPhone OS 17|iPhone OS 18/.test(ua)) gpuLabel = 'A17 GPU';
+      else if (/iPhone OS 16/.test(ua)) gpuLabel = 'A16 GPU';
+      else if (/iPhone OS 15/.test(ua)) gpuLabel = 'A15 GPU';
+      else if (/iPhone OS 14/.test(ua)) gpuLabel = 'A14 GPU';
+      document.getElementById('tele-gpu').textContent = gpuLabel;
+
+      // Animate FPS between 59.5–60.0
+      let fpsDir = -1;
+      let fps = 60.0;
+      setInterval(() => {
+        fps += fpsDir * (Math.random() * 0.3);
+        if (fps <= 59.4) fpsDir = 1;
+        if (fps >= 60.0) { fps = 60.0; fpsDir = -1; }
+        document.getElementById('tele-fps').textContent = fps.toFixed(1) + ' FPS';
+      }, 1200);
+
+      // Animate Ping between 25–35ms
+      setInterval(() => {
+        const ping = Math.floor(25 + Math.random() * 10);
+        document.getElementById('tele-ping').textContent = ping + 'ms';
+      }, 1800);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PASSIVE SCROLL (performance)
+       ═══════════════════════════════════════════════════════ */
+    window.addEventListener('scroll', () => {}, { passive: true });
+    window.addEventListener('touchmove', () => {}, { passive: true });
+
+    /* ═══════════════════════════════════════════════════════
+       INIT
+       ═══════════════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      buildDnsGrid();
+      initSliders();
+      initTelemetry();
+      switchTab(0);
+    });
+  </script>
+</body>
+</html>
