@@ -6,57 +6,63 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ZEV QUANTUM" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="ZEV BOOST QUANTUM — Hacker Future Mainframe. iOS Gaming Overclock Engine." />
-  <title>ZEV BOOST QUANTUM [v4.0]</title>
+  <meta name="theme-color" content="#08020f" />
+  <meta name="description" content="ZEV BOOST QUANTUM v6.0 — Neon Purple Cyber Void. iOS Gaming Overclock Engine." />
+  <title>ZEV BOOST QUANTUM [v6.0]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ═══════════════════════════════════════════════════════
-       GOOGLE FONTS — QUANTUM TYPOGRAPHY
-       ═══════════════════════════════════════════════════════ */
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
-
-    /* ═══════════════════════════════════════════════════════
-       DESIGN TOKENS — HACKER FUTURE MAINFRAME
-       ═══════════════════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────────────────
+       DESIGN TOKENS — NEON PURPLE CYBER VOID
+    ───────────────────────────────────────────────────────── */
     :root {
-      --bg:           #000000;
-      --bg-1:         #030b05;
-      --bg-2:         #040d08;
-      --panel:        rgba(0, 255, 102, 0.03);
-      --panel-border: rgba(0, 255, 102, 0.18);
+      --bg-deep:       #08020f;
+      --bg-space:      #0c0417;
+      --bg-panel:      rgba(20, 8, 35, 0.65);
+      --bg-card:       rgba(28, 12, 48, 0.70);
+      --bg-input:      rgba(32, 12, 58, 0.60);
 
-      --toxic:        #00ff66;
-      --toxic-dim:    rgba(0, 255, 102, 0.12);
-      --toxic-glow:   rgba(0, 255, 102, 0.35);
-      --cyan:         #00f0ff;
-      --cyan-dim:     rgba(0, 240, 255, 0.10);
-      --cyan-glow:    rgba(0, 240, 255, 0.30);
-      --pink:         #ff007f;
-      --pink-dim:     rgba(255, 0, 127, 0.12);
-      --pink-glow:    rgba(255, 0, 127, 0.30);
-      --amber:        #ffb300;
-      --red:          #ff3333;
+      --violet:        #b700ff;
+      --violet-dim:    rgba(183, 0, 255, 0.15);
+      --violet-glow:   rgba(183, 0, 255, 0.35);
+      --purple:        #8a2be2;
+      --purple-dim:    rgba(138, 43, 226, 0.15);
+      --purple-glow:   rgba(138, 43, 226, 0.35);
+      --pink-neon:     #ff00c8;
+      --pink-dim:      rgba(255, 0, 200, 0.15);
+      --pink-glow:     rgba(255, 0, 200, 0.30);
+      --cyan-soft:     #bf80ff;
+      --white-soft:    #f0e8ff;
+      --silver-purple: #9b80bb;
+      --muted-purple:  #4a3060;
+      --dark-purple:   #1a0830;
 
-      --white:        #e8ffe8;
-      --silver:       #7a9b7a;
-      --muted:        #3a5a3a;
-      --dark:         #0a150a;
+      --grad-primary:  linear-gradient(135deg, #ff00c8 0%, #b700ff 50%, #8a2be2 100%);
+      --grad-glow:     linear-gradient(135deg, rgba(255,0,200,0.8) 0%, rgba(183,0,255,0.8) 50%, rgba(138,43,226,0.8) 100%);
+      --grad-panel:    linear-gradient(135deg, rgba(28,12,48,0.7) 0%, rgba(20,8,35,0.7) 100%);
+      --border-glow:   rgba(183, 0, 255, 0.30);
+      --border-soft:   rgba(138, 43, 226, 0.25);
 
-      --font-mono:    'Share Tech Mono', 'Courier New', monospace;
-      --font-hud:     'Orbitron', sans-serif;
-      --font-sans:    'Inter', -apple-system, sans-serif;
+      --r-xs:   8px;
+      --r-sm:   12px;
+      --r-md:   14px;
+      --r-lg:   16px;
+      --r-xl:   18px;
+      --r-full: 999px;
 
-      --safe-top:     env(safe-area-inset-top, 44px);
-      --safe-bottom:  env(safe-area-inset-bottom, 34px);
+      --font-hud:  'Orbitron', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --font-body: 'Inter', -apple-system, sans-serif;
 
-      --r-sharp:      3px;
-      --r-md:         6px;
+      --safe-top:    env(safe-area-inset-top, 44px);
+      --safe-bottom: env(safe-area-inset-bottom, 34px);
     }
 
-    /* ═══════════════════════════════════════════════════════
+    /* ─────────────────────────────────────────────────────────
        GLOBAL RESET — iOS OPTIMIZED
-       ═══════════════════════════════════════════════════════ */
+    ───────────────────────────────────────────────────────── */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -79,137 +85,101 @@
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      background: var(--bg);
-      color: var(--white);
-      font-family: var(--font-mono);
+      background: var(--bg-deep);
+      color: var(--white-soft);
+      font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       SCANLINE CRT OVERLAY
-       ═══════════════════════════════════════════════════════ */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.06) 0px,
-        rgba(0, 0, 0, 0.06) 1px,
-        transparent 1px,
-        transparent 3px
-      );
+    /* ─────────────────────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────────────────────── */
+    @keyframes corePulse {
+      0%, 100% { box-shadow: 0 0 20px var(--violet-glow), 0 0 50px rgba(183,0,255,0.1); }
+      50%       { box-shadow: 0 0 40px var(--violet), 0 0 80px var(--violet-glow); }
     }
 
-    /* ═══════════════════════════════════════════════════════
-       KEYFRAME ANIMATIONS
-       ═══════════════════════════════════════════════════════ */
-    @keyframes glitchText {
-      0%   { text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan); clip-path: inset(0 0 95% 0); }
-      5%   { clip-path: inset(30% 0 60% 0); transform: skewX(-5deg); }
-      10%  { text-shadow: -2px 0 var(--toxic), 2px 0 var(--pink); clip-path: inset(50% 0 30% 0); }
-      15%  { clip-path: inset(0 0 0 0); transform: skewX(0deg); text-shadow: none; }
-      100% { clip-path: inset(0 0 0 0); transform: skewX(0deg); text-shadow: none; }
+    @keyframes borderGlow {
+      0%, 100% { border-color: rgba(183,0,255,0.30); }
+      50%       { border-color: rgba(183,0,255,0.75); }
     }
 
-    @keyframes glitchPulse {
-      0%, 90%, 100% { transform: translate(0); opacity: 1; }
-      91% { transform: translate(-3px, 1px) skewX(-2deg); opacity: 0.85; }
-      93% { transform: translate(3px, -1px) skewX(2deg); opacity: 0.9; }
-      95% { transform: translate(-2px, 0); opacity: 0.7; }
-      97% { transform: translate(2px, 1px); opacity: 1; }
-    }
-
-    @keyframes neonFlicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { text-shadow: 0 0 8px var(--toxic), 0 0 20px var(--toxic-glow); opacity: 1; }
-      20%, 24%, 55% { text-shadow: none; opacity: 0.5; }
-    }
-
-    @keyframes scanDown {
-      from { transform: translateY(-100%); }
-      to   { transform: translateY(100vh); }
-    }
-
-    @keyframes bootLine {
-      from { opacity: 0; transform: translateX(-8px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(12px); }
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes toastSlideUp {
-      from { transform: translateX(-50%) translateY(120px); opacity: 0; }
-      to   { transform: translateX(-50%) translateY(0); opacity: 1; }
+    @keyframes tabSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes toastSlideDown {
-      from { transform: translateX(-50%) translateY(0); opacity: 1; }
-      to   { transform: translateX(-50%) translateY(120px); opacity: 0; }
-    }
-
-    @keyframes coreRotate {
+    @keyframes orbitSpin {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
 
-    @keyframes corePulse {
-      0%, 100% { box-shadow: 0 0 20px var(--toxic-glow), 0 0 50px rgba(0,255,102,0.1); }
-      50%       { box-shadow: 0 0 40px var(--toxic), 0 0 80px var(--toxic-glow); }
+    @keyframes orbitSpinReverse {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
     }
 
-    @keyframes logScroll {
-      from { opacity: 0; transform: translateY(-4px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes toastUp {
+      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
     }
 
-    @keyframes injectBlink {
-      0%, 100% { opacity: 1; color: var(--toxic); }
-      25%, 75%  { opacity: 0; }
-      50%       { opacity: 1; color: var(--cyan); }
+    @keyframes toastDown {
+      from { transform: translateX(-50%) translateY(0);    opacity: 1; }
+      to   { transform: translateX(-50%) translateY(100px); opacity: 0; }
     }
 
-    @keyframes tabFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes logType {
+      from { opacity: 0; transform: translateX(-5px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
 
-    @keyframes ambientBlink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
+    @keyframes tinyBlink {
+      0%, 80%, 100% { opacity: 1; }
+      85%            { opacity: 0.35; }
     }
 
-    /* ═══════════════════════════════════════════════════════
-       APP CONTAINER — MAX 480px MOBILE
-       ═══════════════════════════════════════════════════════ */
+    @keyframes progressWave {
+      from { background-position: 0 0; }
+      to   { background-position: 60px 0; }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       APP ROOT
+    ───────────────────────────────────────────────────────── */
     #app-root {
       width: 100%;
       max-width: 480px;
       min-height: 100vh;
       margin: 0 auto;
       position: relative;
-      background: var(--bg-1);
-      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, rgba(138,43,226,0.15) 0%, var(--bg-deep) 70%);
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       TERMINAL LOCK SCREEN
-       ═══════════════════════════════════════════════════════ */
-    #terminal-lock-screen {
+    /* ─────────────────────────────────────────────────────────
+       CYBER LOCK SCREEN
+    ───────────────────────────────────────────────────────── */
+    #cyber-lock-screen {
       position: fixed;
       inset: 0;
       z-index: 9000;
-      background: #000;
+      max-width: 480px;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at 50% 30%, rgba(138,43,226,0.25) 0%, #06010d 75%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      max-width: 480px;
-      margin: 0 auto;
+      overflow: hidden;
     }
 
     #matrix-canvas {
@@ -217,180 +187,249 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.55;
+      opacity: 0.45;
     }
 
     .lock-content {
       position: relative;
-      z-index: 10;
+      z-index: 5;
       width: 90%;
-      max-width: 400px;
-      text-align: center;
+      max-width: 390px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
     }
 
-    .lock-logo {
+    /* Outer eye / Z Logo orb */
+    .lock-orb-wrap {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lock-orb-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+    }
+
+    .lock-orb-ring-1 {
+      border-top-color: var(--violet);
+      border-right-color: var(--violet);
+      animation: orbitSpin 3s linear infinite;
+      box-shadow: 0 0 12px var(--violet-glow);
+    }
+
+    .lock-orb-ring-2 {
+      inset: 8px;
+      border-bottom-color: var(--pink-neon);
+      border-left-color: var(--pink-neon);
+      animation: orbitSpinReverse 2.2s linear infinite;
+    }
+
+    .lock-orb-core {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(183,0,255,0.4), rgba(22,8,48,0.95));
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-hud);
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
-      color: var(--toxic);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      animation: glitchPulse 4s ease-in-out infinite, neonFlicker 8s ease-in-out infinite;
-      margin-bottom: 4px;
+      color: var(--violet);
+      text-shadow: 0 0 15px var(--violet);
+      animation: corePulse 2s ease-in-out infinite;
+      border: 1px solid rgba(183,0,255,0.35);
+      z-index: 2;
     }
 
-    .lock-sub {
-      font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--silver);
+    .lock-title {
+      font-family: var(--font-hud);
+      font-size: 17px;
+      font-weight: 900;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      animation: tinyBlink 4s ease-in-out infinite;
+    }
+
+    .lock-subtitle {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--silver-purple);
+      letter-spacing: 2px;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .lock-panel {
-      background: rgba(0, 0, 0, 0.85);
-      border: 1px solid var(--panel-border);
-      padding: 22px 18px;
-      position: relative;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      width: 100%;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-xl);
+      padding: 20px 18px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
     }
 
-    .lock-panel::before {
-      content: '[ MAINFRAME_AUTH v4.0 ]';
-      position: absolute;
-      top: -8px;
-      left: 12px;
-      font-size: 8px;
+    .lock-field-label {
+      font-size: 9.5px;
       font-family: var(--font-mono);
-      color: var(--toxic);
-      background: #000;
-      padding: 0 6px;
-      letter-spacing: 1px;
-    }
-
-    .lock-panel::after {
-      content: '[ + ]';
-      position: absolute;
-      bottom: 6px;
-      right: 8px;
-      font-size: 9px;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
-
-    .lock-label {
-      font-size: 10px;
-      font-family: var(--font-mono);
-      color: var(--silver);
+      color: var(--silver-purple);
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 10px;
-      text-align: left;
+      margin-bottom: 12px;
+      text-align: center;
     }
 
-    #hacker-key-input {
+    #key-input {
       width: 100%;
-      background: rgba(0, 255, 102, 0.04);
-      border: 1px solid var(--panel-border);
-      color: var(--toxic);
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--r-md);
+      color: var(--violet);
       font-family: var(--font-mono);
-      font-size: 15px;
+      font-size: 13px;
       letter-spacing: 2px;
       padding: 12px 14px;
       outline: none;
       text-transform: uppercase;
-      caret-color: var(--toxic);
-      margin-bottom: 14px;
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      text-align: center;
+      caret-color: var(--violet);
       -webkit-appearance: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      margin-bottom: 12px;
     }
 
-    #hacker-key-input:focus {
-      border-color: var(--toxic);
-      box-shadow: 0 0 12px var(--toxic-glow);
+    #key-input:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 16px var(--violet-glow);
     }
 
-    #hacker-key-input::placeholder {
-      color: var(--muted);
-      text-transform: uppercase;
+    #key-input::placeholder {
+      color: var(--muted-purple);
+      font-size: 11px;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     #inject-btn {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, rgba(0,255,102,0.1), rgba(0,240,255,0.05));
-      border: 1px solid var(--toxic);
-      color: var(--toxic);
-      font-family: var(--font-mono);
+      padding: 13px;
+      background: var(--grad-primary);
+      border: none;
+      border-radius: var(--r-md);
+      color: #fff;
+      font-family: var(--font-hud);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       cursor: pointer;
+      box-shadow: 0 4px 20px rgba(183,0,255,0.4);
       transition: all 0.25s ease;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-      box-shadow: 0 0 10px rgba(0,255,102,0.1);
     }
 
     #inject-btn:active {
       transform: scale(0.97);
-      box-shadow: 0 0 20px var(--toxic-glow);
+      box-shadow: 0 2px 10px rgba(183,0,255,0.3);
     }
 
-    #lock-status {
+    /* Long Loading / Fake Injection UI */
+    #inject-progress-area {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 12px;
       margin-top: 14px;
-      font-size: 10px;
-      font-family: var(--font-mono);
-      color: var(--silver);
-      letter-spacing: 1px;
-      text-align: center;
-      min-height: 18px;
-      transition: color 0.3s;
     }
 
-    #lock-status.error  { color: var(--red); }
-    #lock-status.inject { color: var(--cyan); animation: injectBlink 0.25s steps(1) infinite; }
-    #lock-status.ok     { color: var(--toxic); }
+    .inject-progress-bar-wrap {
+      height: 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--r-full);
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+    }
 
-    .lock-keys-hint {
-      margin-top: 20px;
+    .inject-progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--grad-primary);
+      border-radius: var(--r-full);
+      box-shadow: 0 0 10px var(--violet-glow);
+      transition: width 0.1s linear;
+    }
+
+    #inject-log-terminal {
+      background: rgba(4, 1, 12, 0.95);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-sm);
+      height: 90px;
+      overflow-y: auto;
+      padding: 8px 10px;
+      font-family: var(--font-mono);
       font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.7;
+      color: var(--violet);
+      scrollbar-width: none;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       MAIN APP (hidden until auth)
-       ═══════════════════════════════════════════════════════ */
+    #inject-log-terminal::-webkit-scrollbar { display: none; }
+
+    #lock-status-msg {
+      margin-top: 12px;
+      font-size: 9.5px;
+      font-family: var(--font-mono);
+      color: var(--silver-purple);
+      text-align: center;
+      min-height: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    #lock-status-msg.err { color: #ff4d6a; }
+    #lock-status-msg.ok  { color: #7aff9c; }
+
+    /* ─────────────────────────────────────────────────────────
+       MAIN APP
+    ───────────────────────────────────────────────────────── */
     #main-app {
       display: none;
       flex-direction: column;
       min-height: 100vh;
-      animation: fadeInUp 0.5s ease forwards;
+      flex: 1;
     }
 
     #main-app.visible {
       display: flex;
+      animation: floatUp 0.5s ease forwards;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       HEADER — STICKY HUD BAR
-       ═══════════════════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────────────────
+       STICKY HEADER
+    ───────────────────────────────────────────────────────── */
     #app-header {
       position: sticky;
       top: 0;
       z-index: 500;
-      background: rgba(0, 0, 0, 0.90);
-      border-bottom: 1px solid var(--panel-border);
-      backdrop-filter: blur(14px) saturate(180%);
-      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      background: rgba(8, 2, 15, 0.90);
+      border-bottom: 1px solid var(--border-soft);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
     }
 
-    .header-brand {
+    .header-brand-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -403,497 +442,627 @@
       gap: 10px;
     }
 
-    .brand-icon-wrap {
+    .brand-orb {
       width: 34px;
       height: 34px;
-      border: 1px solid var(--toxic);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(183,0,255,0.45), rgba(10,2,20,0.95));
+      border: 1.5px solid var(--violet);
       display: flex;
       align-items: center;
       justify-content: center;
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-      box-shadow: 0 0 10px var(--toxic-glow);
+      font-family: var(--font-hud);
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--violet);
+      box-shadow: 0 0 10px var(--violet-glow);
       flex-shrink: 0;
     }
 
-    .brand-icon-wrap svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--toxic);
-      fill: none;
-      stroke-width: 2;
-    }
-
-    .brand-title {
+    .brand-text .brand-name {
       font-family: var(--font-hud);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--toxic);
       letter-spacing: 2px;
-      text-transform: uppercase;
-      animation: glitchPulse 6s ease-in-out infinite;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .brand-version {
+    .brand-text .brand-ver {
       font-size: 7.5px;
       font-family: var(--font-mono);
-      color: var(--silver);
+      color: var(--muted-purple);
       letter-spacing: 1.5px;
       margin-top: 2px;
     }
 
-    #license-badge {
+    #lic-badge {
       font-size: 8px;
       font-family: var(--font-mono);
       letter-spacing: 1px;
-      padding: 4px 8px;
-      border: 1px solid var(--panel-border);
-      color: var(--silver);
-      clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+      padding: 5px 10px;
+      border-radius: var(--r-full);
+      border: 1px solid var(--border-glow);
+      color: var(--violet);
+      background: var(--violet-dim);
+      white-space: nowrap;
       text-transform: uppercase;
+      animation: borderGlow 3s ease-in-out infinite;
     }
 
-    #license-badge.day   { border-color: var(--amber); color: var(--amber); }
-    #license-badge.week  { border-color: var(--cyan);  color: var(--cyan);  }
-    #license-badge.month { border-color: var(--toxic); color: var(--toxic); box-shadow: 0 0 8px var(--toxic-glow); }
-
-    /* Telemetry strip */
-    .telemetry-strip {
+    /* HUD Stats Strip */
+    .hud-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-      padding: 0 14px 8px;
+      gap: 6px;
+      padding: 0 14px 10px;
     }
 
-    .tele-cell {
-      background: rgba(0, 255, 102, 0.025);
-      border: 1px solid rgba(0,255,102,0.08);
-      padding: 7px 4px;
+    .hud-cell {
+      background: rgba(32, 12, 58, 0.40);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-sm);
+      padding: 8px 4px;
       text-align: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .tele-val {
-      font-size: 10px;
+    .hud-val {
       font-family: var(--font-mono);
-      color: var(--toxic);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--violet);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 100%;
-      text-align: center;
-      animation: neonFlicker 12s ease-in-out infinite;
+      animation: tinyBlink 4s ease-in-out infinite;
     }
 
-    .tele-lbl {
+    .hud-lbl {
       font-size: 6.5px;
       font-family: var(--font-mono);
-      color: var(--muted);
+      color: var(--muted-purple);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    /* Tab navigation */
+    /* Tab Nav */
     .tab-nav {
       display: flex;
-      background: rgba(0,0,0,0.4);
-      border-bottom: 1px solid var(--panel-border);
-      padding: 0 14px 6px;
+      padding: 0 12px 10px;
+      gap: 5px;
     }
 
     .tab-nav-btn {
       flex: 1;
       background: transparent;
-      border: none;
-      color: var(--muted);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-full);
+      color: var(--silver-purple);
       font-family: var(--font-mono);
-      font-size: 8.5px;
-      letter-spacing: 0.8px;
+      font-size: 7.5px;
+      letter-spacing: 0.3px;
       text-transform: uppercase;
-      padding: 8px 4px;
+      padding: 7px 2px;
       cursor: pointer;
       transition: all 0.25s ease;
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 4px;
     }
 
     .tab-nav-btn svg {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       stroke: currentColor;
       fill: none;
-      stroke-width: 1.8;
+      stroke-width: 2;
       flex-shrink: 0;
     }
 
     .tab-nav-btn.active {
-      color: var(--toxic);
+      background: var(--grad-primary);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(183,0,255,0.35);
     }
 
-    .tab-nav-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 10%;
-      width: 80%;
-      height: 1px;
-      background: var(--toxic);
-      box-shadow: 0 0 8px var(--toxic);
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       CONTENT AREA
-       ═══════════════════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────────────────
+       MAIN CONTENT
+    ───────────────────────────────────────────────────────── */
     #app-content {
-      position: relative;
-      z-index: 1;
-      padding: 18px 14px calc(var(--safe-bottom) + 24px);
       flex: 1;
+      padding: 16px 14px calc(var(--safe-bottom) + 24px);
     }
 
     .tab-panel {
       display: none;
       flex-direction: column;
-      gap: 16px;
-      animation: tabFadeIn 0.35s ease forwards;
+      gap: 14px;
     }
 
-    .tab-panel.active { display: flex; }
+    .tab-panel.active {
+      display: flex;
+      animation: tabSlide 0.35s ease forwards;
+    }
 
-    /* ═══════════════════════════════════════════════════════
-       HUD PANEL — SCI-FI ANGLED CORNERS
-       ═══════════════════════════════════════════════════════ */
-    .hud-panel {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      position: relative;
+    /* ─────────────────────────────────────────────────────────
+       GLASS PANEL
+    ───────────────────────────────────────────────────────── */
+    .glass-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-xl);
       padding: 16px 14px;
-      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
     }
 
-    .hud-panel::before {
-      content: attr(data-label);
+    .glass-panel::before {
+      content: '';
       position: absolute;
-      top: -7px;
-      left: 12px;
-      font-size: 7.5px;
-      font-family: var(--font-mono);
-      color: var(--toxic);
-      background: var(--bg-1);
-      padding: 0 6px;
-      letter-spacing: 1px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(183,0,255,0.4), transparent);
+    }
+
+    .panel-title {
+      font-family: var(--font-hud);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
       text-transform: uppercase;
-    }
-
-    .hud-panel::after {
-      content: '[ + ]';
-      position: absolute;
-      bottom: 4px;
-      right: 7px;
-      font-size: 8px;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
-
-    .hud-panel.cyan-panel {
-      border-color: rgba(0,240,255,0.2);
-    }
-
-    .hud-panel.cyan-panel::before { color: var(--cyan); }
-
-    .hud-panel.pink-panel {
-      border-color: rgba(255,0,127,0.2);
-    }
-
-    .hud-panel.pink-panel::before { color: var(--pink); }
-
-    .section-title {
-      font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
+      color: var(--violet);
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
-    .section-title::after {
+    .panel-title::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, var(--panel-border), transparent);
+      background: linear-gradient(90deg, var(--border-glow), transparent);
     }
 
-    /* ═══════════════════════════════════════════════════════
+    /* ─────────────────────────────────────────────────────────
+       TAB 0: ACCOUNT MANAGER
+    ───────────────────────────────────────────────────────── */
+    .hologram-card {
+      background: linear-gradient(135deg, rgba(183,0,255,0.08), rgba(138,43,226,0.04));
+      border: 1px solid var(--border-glow);
+      border-radius: var(--r-lg);
+      padding: 20px 16px;
+      position: relative;
+      overflow: hidden;
+      animation: borderGlow 4s ease-in-out infinite;
+    }
+
+    .hologram-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hologram-field-label {
+      font-size: 8px;
+      font-family: var(--font-mono);
+      color: var(--muted-purple);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .hologram-field-val {
+      font-family: var(--font-hud);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white-soft);
+      letter-spacing: 1px;
+    }
+
+    .tier-badge {
+      padding: 6px 14px;
+      border-radius: var(--r-full);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .tier-badge.day   { background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.4); color: #ffb300; }
+    .tier-badge.week  { background: rgba(0,200,255,0.12); border: 1px solid rgba(0,200,255,0.35); color: #00c8ff; }
+    .tier-badge.month { background: var(--violet-dim); border: 1px solid var(--border-glow); color: var(--violet); box-shadow: 0 0 10px var(--violet-glow); }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cd-block {
+      background: rgba(10, 4, 20, 0.75);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-md);
+      padding: 12px 4px;
+      text-align: center;
+    }
+
+    .cd-num {
+      font-family: var(--font-hud);
+      font-size: 20px;
+      font-weight: 700;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .cd-unit {
+      font-size: 7px;
+      font-family: var(--font-mono);
+      color: var(--muted-purple);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    .acc-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .acc-btn {
+      padding: 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-md);
+      color: var(--silver-purple);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .acc-btn:active { transform: scale(0.96); }
+    .acc-btn.danger  { color: #ff4d6a; border-color: rgba(255,77,106,0.3); }
+    .acc-btn.danger:active { background: rgba(255,77,106,0.1); }
+    .acc-btn.primary { background: var(--grad-primary); border-color: transparent; color: #fff; box-shadow: 0 4px 14px rgba(183,0,255,0.35); }
+
+    /* ─────────────────────────────────────────────────────────
        TAB 1: OVERCLOCK CORE
-       ═══════════════════════════════════════════════════════ */
-    /* Nuclear Core Button */
-    .core-wrapper {
+    ───────────────────────────────────────────────────────── */
+    .core-center {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      padding: 20px 0 10px;
+      padding: 20px 0 14px;
+      gap: 16px;
     }
 
-    .core-ring-outer {
+    .core-orbit-wrap {
+      position: relative;
       width: 130px;
       height: 130px;
-      border-radius: 50%;
-      border: 2px solid var(--toxic);
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      box-shadow: 0 0 20px var(--toxic-glow), inset 0 0 20px rgba(0,255,102,0.05);
-      transition: all 0.4s ease;
     }
 
-    .core-ring-outer.active {
-      border-color: var(--toxic);
-      box-shadow: 0 0 40px var(--toxic), 0 0 80px var(--toxic-glow), inset 0 0 40px rgba(0,255,102,0.08);
-      animation: corePulse 1.5s ease-in-out infinite;
-    }
-
-    .core-ring-mid {
-      width: 100px;
-      height: 100px;
+    .core-ring-1, .core-ring-2, .core-ring-3 {
+      position: absolute;
       border-radius: 50%;
-      border: 1px dashed rgba(0,255,102,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 2px solid transparent;
+    }
+
+    .core-ring-1 {
+      inset: 0;
+      border-top-color: var(--violet);
+      border-right-color: var(--violet);
       transition: all 0.4s ease;
     }
 
-    .core-ring-outer.active .core-ring-mid {
-      animation: coreRotate 3s linear infinite;
-      border-color: rgba(0,255,102,0.6);
+    .core-ring-1.active {
+      animation: orbitSpin 2.4s linear infinite;
+      border-top-color: var(--violet);
+      border-right-color: var(--pink-neon);
+      box-shadow: 0 0 16px var(--violet-glow);
+    }
+
+    .core-ring-2 {
+      inset: 12px;
+      border-bottom-color: rgba(138,43,226,0.4);
+      border-left-color: rgba(138,43,226,0.4);
+      transition: all 0.4s ease;
+    }
+
+    .core-ring-2.active {
+      animation: orbitSpinReverse 2.6s linear infinite;
+      border-bottom-color: var(--purple);
+      border-left-color: var(--pink-neon);
+    }
+
+    .core-ring-3 {
+      inset: 24px;
+      border-top-color: rgba(255,0,200,0.25);
+      transition: all 0.4s ease;
+    }
+
+    .core-ring-3.active {
+      animation: orbitSpin 3.5s linear infinite;
+      border-top-color: var(--pink-neon);
+      border-right-color: rgba(255,0,200,0.3);
     }
 
     .core-btn {
-      width: 74px;
-      height: 74px;
+      width: 66px;
+      height: 66px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(0,255,102,0.12), rgba(0,0,0,0.9));
-      border: 2px solid var(--toxic);
+      background: radial-gradient(circle at 35% 35%, rgba(183,0,255,0.3), rgba(10,2,22,0.95));
+      border: 2px solid var(--violet);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      gap: 2px;
-      box-shadow: 0 0 14px var(--toxic-glow);
+      gap: 3px;
+      box-shadow: 0 0 20px var(--violet-glow);
       transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .core-btn.active {
+      animation: corePulse 1.8s ease-in-out infinite;
+      border-color: var(--pink-neon);
     }
 
     .core-btn:active { transform: scale(0.92); }
 
-    .core-btn-label {
-      font-family: var(--font-hud);
-      font-size: 7px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--toxic);
-      text-align: center;
-      text-transform: uppercase;
-    }
-
     .core-btn svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--toxic);
+      width: 20px;
+      height: 20px;
+      stroke: var(--violet);
       fill: none;
       stroke-width: 1.5;
+      transition: stroke 0.3s;
     }
 
-    .core-status-text {
-      font-size: 10px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      letter-spacing: 1.5px;
-      text-align: center;
+    .core-btn.active svg { stroke: var(--pink-neon); }
+
+    .core-btn-txt {
+      font-family: var(--font-hud);
+      font-size: 6px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--violet);
       text-transform: uppercase;
-      transition: all 0.3s ease;
+      transition: color 0.3s;
     }
 
-    .core-status-text.active {
-      color: var(--toxic);
-      text-shadow: 0 0 8px var(--toxic-glow);
-      animation: neonFlicker 4s ease-in-out infinite;
+    .core-btn.active .core-btn-txt { color: var(--pink-neon); }
+
+    .core-status {
+      font-size: 9.5px;
+      font-family: var(--font-mono);
+      color: var(--muted-purple);
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s;
     }
 
-    /* Core stats strip */
-    .core-stats {
+    .core-status.active {
+      color: var(--violet);
+      text-shadow: 0 0 10px var(--violet-glow);
+      animation: tinyBlink 3s ease-in-out infinite;
+    }
+
+    .core-stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
 
-    .core-stat-cell {
-      text-align: center;
+    .cstat {
+      background: rgba(10,4,20,0.7);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-md);
       padding: 10px 4px;
-      border: 1px solid rgba(0,255,102,0.1);
-      background: rgba(0,255,102,0.02);
+      text-align: center;
     }
 
-    .core-stat-val {
+    .cstat-v {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--toxic);
+      color: var(--muted-purple);
+      transition: all 0.4s;
     }
 
-    .core-stat-val.dim { color: var(--muted); }
-    .core-stat-val.active-val { animation: neonFlicker 3s ease-in-out infinite; }
+    .cstat-v.on {
+      color: var(--violet);
+      text-shadow: 0 0 8px var(--violet-glow);
+      animation: tinyBlink 2.5s ease-in-out infinite;
+    }
 
-    .core-stat-lbl {
-      font-size: 7.5px;
+    .cstat-l {
+      font-size: 6.5px;
       font-family: var(--font-mono);
-      color: var(--muted);
+      color: var(--muted-purple);
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
-    /* Hacker Log Terminal */
+    /* Hacker Log */
     #hacker-log {
-      background: #000;
-      border: 1px solid rgba(0,255,102,0.15);
-      min-height: 130px;
-      max-height: 180px;
+      background: rgba(4, 1, 12, 0.95);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-md);
+      min-height: 120px;
+      max-height: 170px;
       overflow-y: auto;
-      padding: 10px 12px;
+      padding: 12px;
       font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--toxic);
+      font-size: 9px;
+      color: var(--violet);
       scrollbar-width: none;
     }
 
     #hacker-log::-webkit-scrollbar { display: none; }
 
-    .log-line {
+    .log-ln {
       display: block;
-      animation: logScroll 0.2s ease forwards;
-      line-height: 1.7;
-      white-space: pre-wrap;
+      line-height: 1.75;
+      animation: logType 0.18s ease forwards;
       word-break: break-all;
     }
 
-    .log-line.cyan  { color: var(--cyan); }
-    .log-line.pink  { color: var(--pink); }
-    .log-line.amber { color: var(--amber); }
-    .log-line.muted { color: var(--muted); }
-    .log-line.error { color: var(--red); }
+    .log-ln.dim    { color: var(--muted-purple); }
+    .log-ln.pink   { color: var(--pink-neon); }
+    .log-ln.cyan   { color: #7df9ff; }
+    .log-ln.amber  { color: #ffb300; }
+    .log-ln.green  { color: #7aff9c; }
 
-    /* Download Profile Button */
-    .download-profile-btn {
+    /* Download button */
+    .dl-btn {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, rgba(0,240,255,0.08), rgba(0,255,102,0.04));
-      border: 1px solid var(--cyan);
-      color: var(--cyan);
+      background: linear-gradient(135deg, rgba(0,180,255,0.12), rgba(138,43,226,0.08));
+      border: 1.5px solid rgba(0,200,255,0.35);
+      border-radius: var(--r-md);
+      color: #7df9ff;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       cursor: pointer;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
       transition: all 0.25s ease;
-      box-shadow: 0 0 8px rgba(0,240,255,0.1);
+      box-shadow: 0 2px 12px rgba(0,200,255,0.1);
     }
 
-    .download-profile-btn:active {
-      background: rgba(0,240,255,0.15);
-      box-shadow: 0 0 20px var(--cyan-glow);
+    .dl-btn:active {
+      background: rgba(0,200,255,0.2);
       transform: scale(0.97);
     }
 
-    /* ═══════════════════════════════════════════════════════
-       TAB 2: OPTIMIZE — TOGGLE CARDS
-       ═══════════════════════════════════════════════════════ */
-    .toggle-list {
+    /* ─────────────────────────────────────────────────────────
+       TAB 2: FREE FIRE OPTIMIZER
+    ───────────────────────────────────────────────────────── */
+    .ff-toggle-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .toggle-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      padding: 12px 14px;
+    .ff-toggle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-lg);
+      padding: 13px 14px;
       display: flex;
       align-items: center;
       gap: 12px;
       cursor: pointer;
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
       transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .toggle-card:active { transform: scale(0.98); }
-
-    .toggle-card.active-card {
-      border-color: var(--toxic);
-      box-shadow: 0 0 10px rgba(0,255,102,0.1);
+    .ff-toggle-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-lg);
+      background: var(--grad-primary);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
-    .t-icon {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--panel-border);
+    .ff-toggle-card.card-on::before { opacity: 0.04; }
+    .ff-toggle-card.card-on { border-color: var(--border-glow); box-shadow: 0 0 12px rgba(183,0,255,0.1); }
+
+    .ff-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-md);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+      position: relative;
+      z-index: 1;
     }
 
-    .t-icon svg {
-      width: 16px;
-      height: 16px;
-      stroke-width: 1.6;
+    .ff-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.8;
       fill: none;
     }
 
-    .t-icon.green { background: rgba(0,255,102,0.06); border-color: rgba(0,255,102,0.2); }
-    .t-icon.green svg { stroke: var(--toxic); }
-    .t-icon.cyan  { background: rgba(0,240,255,0.06); border-color: rgba(0,240,255,0.2); }
-    .t-icon.cyan  svg { stroke: var(--cyan); }
-    .t-icon.pink  { background: rgba(255,0,127,0.06); border-color: rgba(255,0,127,0.2); }
-    .t-icon.pink  svg { stroke: var(--pink); }
-    .t-icon.amber { background: rgba(255,179,0,0.06); border-color: rgba(255,179,0,0.2); }
-    .t-icon.amber svg { stroke: var(--amber); }
+    .ff-icon.violet { background: var(--violet-dim); border: 1px solid rgba(183,0,255,0.25); }
+    .ff-icon.violet svg { stroke: var(--violet); }
+    .ff-icon.pink   { background: var(--pink-dim); border: 1px solid rgba(255,0,200,0.25); }
+    .ff-icon.pink   svg { stroke: var(--pink-neon); }
+    .ff-icon.purple { background: var(--purple-dim); border: 1px solid rgba(138,43,226,0.25); }
+    .ff-icon.purple svg { stroke: var(--cyan-soft); }
 
-    .t-info { flex: 1; min-width: 0; }
-
-    .t-name {
-      font-size: 11.5px;
-      font-family: var(--font-mono);
-      color: var(--white);
-      margin-bottom: 2px;
-    }
-
-    .t-desc {
-      font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--silver);
-      line-height: 1.4;
-    }
-
-    /* Cyber toggle switch */
-    .cyber-sw {
+    .ff-info {
+      flex: 1;
+      min-width: 0;
       position: relative;
-      width: 40px;
-      height: 22px;
-      flex-shrink: 0;
+      z-index: 1;
     }
 
-    .cyber-sw input {
+    .ff-name {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white-soft);
+      margin-bottom: 3px;
+    }
+
+    .ff-desc {
+      font-size: 9px;
+      font-family: var(--font-body);
+      color: var(--silver-purple);
+      line-height: 1.45;
+    }
+
+    /* LED Toggle Switch */
+    .led-sw {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .led-sw input {
       opacity: 0;
       width: 0;
       height: 0;
@@ -903,9 +1072,9 @@
     .sw-track {
       position: absolute;
       inset: 0;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--panel-border);
-      clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--r-full);
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -913,281 +1082,254 @@
     .sw-track::before {
       content: '';
       position: absolute;
-      width: 14px;
-      height: 14px;
-      left: 3px;
-      top: 3px;
-      background: var(--muted);
+      width: 16px;
+      height: 16px;
+      top: 2.5px;
+      left: 2.5px;
+      background: var(--muted-purple);
+      border-radius: 50%;
       transition: all 0.3s ease;
     }
 
-    .cyber-sw input:checked + .sw-track {
-      background: rgba(0,255,102,0.15);
-      border-color: var(--toxic);
-      box-shadow: 0 0 10px var(--toxic-glow);
+    .led-sw input:checked + .sw-track {
+      background: rgba(183,0,255,0.18);
+      border-color: var(--violet);
+      box-shadow: 0 0 12px var(--violet-glow);
     }
 
-    .cyber-sw input:checked + .sw-track::before {
-      transform: translateX(18px);
-      background: var(--toxic);
-      box-shadow: 0 0 6px var(--toxic);
+    .led-sw input:checked + .sw-track::before {
+      transform: translateX(20px);
+      background: var(--violet);
+      box-shadow: 0 0 8px var(--violet);
+      animation: ledPulse 1.5s ease-in-out infinite;
     }
 
-    /* DNS Grid */
-    .dns-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .dns-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      padding: 12px 10px;
-      clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
-      transition: all 0.25s ease;
+    /* Progress bars */
+    .ff-progress-section {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 12px;
     }
 
-    .dns-card.active-dns {
-      border-color: var(--toxic);
-      box-shadow: 0 0 10px rgba(0,255,102,0.15);
-    }
-
-    .dns-card-header {
+    .ff-prog-row {
       display: flex;
-      align-items: flex-start;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .ff-prog-header {
+      display: flex;
       justify-content: space-between;
-      gap: 4px;
-    }
-
-    .dns-name {
-      font-size: 9.5px;
-      font-family: var(--font-mono);
-      color: var(--white);
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .dns-sub {
-      font-size: 7.5px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .dns-mini-switch {
-      position: relative;
-      width: 26px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    .dns-mini-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-
-    .dns-sw-track {
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--panel-border);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .dns-sw-track::before {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      left: 2px;
-      top: 2px;
-      background: var(--muted);
-      transition: all 0.3s ease;
-    }
-
-    .dns-mini-switch input:checked + .dns-sw-track {
-      background: rgba(0,255,102,0.12);
-      border-color: var(--toxic);
-    }
-
-    .dns-mini-switch input:checked + .dns-sw-track::before {
-      transform: translateX(12px);
-      background: var(--toxic);
-    }
-
-    .dns-ip-row {
-      display: flex;
       align-items: center;
-      gap: 4px;
     }
 
-    .dns-ip-text {
-      font-size: 8px;
+    .ff-prog-name {
+      font-size: 10px;
+      font-family: var(--font-body);
+      color: var(--silver-purple);
+      font-weight: 500;
+    }
+
+    .ff-prog-pct {
+      font-size: 10px;
       font-family: var(--font-mono);
-      color: var(--toxic);
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .copy-btn {
-      background: rgba(0,255,102,0.06);
-      border: 1px solid rgba(0,255,102,0.15);
-      color: var(--toxic);
-      font-size: 6.5px;
-      font-family: var(--font-mono);
-      padding: 2px 5px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      letter-spacing: 0.5px;
-    }
-
-    .copy-btn:active {
-      background: rgba(0,255,102,0.2);
-      transform: scale(0.93);
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       TAB 3: OB54 SENSITIVITY TUNER
-       ═══════════════════════════════════════════════════════ */
-    .sens-header-panel {
-      text-align: center;
-    }
-
-    .sens-title-hud {
-      font-family: var(--font-hud);
-      font-size: 11px;
       font-weight: 700;
-      color: var(--toxic);
+      color: var(--violet);
+    }
+
+    .ff-prog-track {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--r-full);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ff-prog-fill {
+      height: 100%;
+      border-radius: var(--r-full);
+      background: var(--grad-primary);
+      box-shadow: 0 0 8px var(--violet-glow);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      background-size: 60px 100%;
+      animation: progressWave 1.5s linear infinite;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       TAB 3: OB54 SENSITIVITY TUNER
+    ───────────────────────────────────────────────────────── */
+    .sens-header {
+      text-align: center;
+      padding: 6px 0;
+    }
+
+    .sens-title {
+      font-family: var(--font-hud);
+      font-size: 12px;
+      font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 5px;
-      animation: neonFlicker 6s ease-in-out infinite;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
     }
 
-    .sens-subtitle {
-      font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--silver);
+    .sens-sub {
+      font-size: 9.5px;
+      font-family: var(--font-body);
+      color: var(--silver-purple);
     }
 
-    .device-input-row {
-      margin-top: 12px;
-    }
-
-    .cyber-input {
+    .cyber-field {
       width: 100%;
-      background: rgba(0, 255, 102, 0.03);
-      border: 1px solid rgba(0,255,102,0.2);
-      color: var(--toxic);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 1px;
-      padding: 11px 13px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--r-md);
+      color: var(--white-soft);
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 12px 14px;
       outline: none;
-      caret-color: var(--toxic);
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      caret-color: var(--violet);
       -webkit-appearance: none;
-      transition: all 0.3s ease;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      margin-bottom: 10px;
     }
 
-    .cyber-input:focus {
-      border-color: var(--toxic);
-      box-shadow: 0 0 10px var(--toxic-glow);
+    .cyber-field:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 16px var(--violet-glow);
     }
 
-    .cyber-input::placeholder {
-      color: var(--muted);
-      font-size: 11px;
-    }
+    .cyber-field::placeholder { color: var(--muted-purple); font-size: 12px; }
 
-    #calibrate-btn {
+    #analyze-btn {
       width: 100%;
-      margin-top: 12px;
       padding: 13px;
-      background: linear-gradient(135deg, rgba(0,255,102,0.08), rgba(0,240,255,0.04));
-      border: 1px solid rgba(0,255,102,0.3);
-      color: var(--toxic);
-      font-family: var(--font-mono);
+      background: var(--grad-primary);
+      border: none;
+      border-radius: var(--r-md);
+      color: #fff;
+      font-family: var(--font-hud);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       cursor: pointer;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(183,0,255,0.35);
+      transition: all 0.25s ease;
     }
 
-    #calibrate-btn:not(:disabled):active {
-      background: rgba(0,255,102,0.15);
-      box-shadow: 0 0 16px var(--toxic-glow);
-    }
-
-    #calibrate-btn:disabled {
-      border-color: rgba(255,255,255,0.05) !important;
-      color: var(--muted) !important;
+    #analyze-btn:disabled {
+      background: rgba(255,255,255,0.06);
+      box-shadow: none;
+      color: var(--muted-purple);
       cursor: not-allowed;
     }
 
-    #calibration-status {
-      margin-top: 10px;
-      font-size: 10px;
-      font-family: var(--font-mono);
-      color: var(--amber);
-      letter-spacing: 0.8px;
-      text-align: center;
-      transition: all 0.3s ease;
-      min-height: 16px;
+    #analyze-btn:not(:disabled):active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 10px rgba(183,0,255,0.25);
     }
 
-    #calibration-status.error    { color: var(--red); }
-    #calibration-status.ok       { color: var(--toxic); }
-    #calibration-status.scanning { color: var(--cyan); }
+    /* Scan wave bar */
+    #scan-bar-wrap {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
 
-    .slider-wrapper {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      padding: 14px 12px;
-      margin-bottom: 8px;
-      clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+    .scan-track {
+      height: 5px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--r-full);
+      overflow: hidden;
+    }
+
+    .scan-fill {
+      height: 100%;
+      border-radius: var(--r-full);
+      background: var(--grad-primary);
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 8px var(--violet-glow);
+    }
+
+    .scan-label {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--violet);
+      text-align: center;
+      animation: tinyBlink 0.8s ease-in-out infinite;
+    }
+
+    #sens-status {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--silver-purple);
+      text-align: center;
+      min-height: 16px;
+      transition: color 0.3s;
+    }
+
+    #sens-status.ok  { color: #7aff9c; }
+    #sens-status.err { color: #ff4d6a; }
+    #sens-status.prg { color: var(--violet); }
+
+    /* Sensitivity Sliders Area */
+    #sliders-zone {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sens-slider-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r-lg);
+      padding: 13px 12px;
+      transition: border-color 0.3s;
+    }
+
+    .sens-slider-card:focus-within {
+      border-color: var(--border-glow);
+      box-shadow: 0 0 10px rgba(183,0,255,0.08);
     }
 
     .slider-hd {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 10px;
     }
 
-    .slider-name {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: var(--white);
+    .sl-name {
+      font-family: var(--font-body);
+      font-size: 12px;
       font-weight: 600;
+      color: var(--white-soft);
     }
 
-    .slider-subn {
-      font-size: 8px;
-      font-family: var(--font-mono);
-      color: var(--muted);
+    .sl-sub {
+      font-size: 8.5px;
+      font-family: var(--font-body);
+      color: var(--muted-purple);
       margin-top: 2px;
-      display: block;
     }
 
-    .slider-val-display {
-      font-size: 18px;
+    .sl-val {
       font-family: var(--font-hud);
+      font-size: 18px;
       font-weight: 700;
-      color: var(--toxic);
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      min-width: 44px;
+      text-align: right;
     }
 
     .slider-controls {
@@ -1196,291 +1338,136 @@
       gap: 10px;
     }
 
+    /* Fine adjustment step buttons styled as square boxes */
     .step-btn {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--panel-border);
-      color: var(--silver);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-xs);
+      background: rgba(183,0,255,0.12);
+      border: 1px solid var(--border-soft);
+      color: var(--violet);
       font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 5px 9px;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      flex-shrink: 0;
       transition: all 0.2s ease;
       user-select: none;
       -webkit-user-select: none;
+      line-height: 1;
     }
 
-    .step-btn:active { background: rgba(0,255,102,0.1); color: var(--toxic); transform: scale(0.9); }
+    .step-btn:active {
+      background: rgba(183,0,255,0.25);
+      transform: scale(0.90);
+      box-shadow: 0 0 10px var(--violet-glow);
+    }
 
-    .range-input {
+    input[type="range"] {
       flex: 1;
       -webkit-appearance: none;
       appearance: none;
-      height: 3px;
-      background: rgba(0,255,102,0.15);
+      height: 4px;
+      background: rgba(183,0,255,0.20);
+      border-radius: var(--r-full);
       outline: none;
       cursor: pointer;
     }
 
-    .range-input::-webkit-slider-thumb {
+    input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px;
       height: 18px;
-      background: var(--toxic);
-      box-shadow: 0 0 8px var(--toxic-glow);
-      border: 2px solid #000;
+      border-radius: 50%;
+      background: var(--grad-primary);
+      box-shadow: 0 0 8px var(--violet-glow);
+      border: 2px solid rgba(0,0,0,0.3);
       cursor: pointer;
-      transition: transform 0.1s ease;
+      transition: transform 0.15s ease;
     }
 
-    .range-input:active::-webkit-slider-thumb {
-      transform: scale(1.2);
-      box-shadow: 0 0 14px var(--toxic);
+    input[type="range"]:active::-webkit-slider-thumb {
+      transform: scale(1.15);
+      box-shadow: 0 0 16px var(--violet);
     }
 
-    /* Pink fire button overrides */
-    .fire-wrapper { border-color: rgba(255,0,127,0.2); }
-    .fire-name    { color: var(--pink) !important; }
-    .fire-val     { color: var(--pink) !important; }
-    .fire-step    { color: var(--pink) !important; border-color: rgba(255,0,127,0.2) !important; }
-    .fire-step:active { background: rgba(255,0,127,0.1) !important; }
-    .fire-range::-webkit-slider-thumb { background: var(--pink) !important; box-shadow: 0 0 8px var(--pink-glow) !important; }
-
-    /* Share section */
-    .share-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .share-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      padding: 14px 12px;
-      cursor: pointer;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      position: relative;
-      transition: all 0.25s ease;
-    }
-
-    .share-card:active { transform: scale(0.96); }
-
-    .share-card-arrow {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 9px;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
-
-    .share-icon-box {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--panel-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
-    }
-
-    .share-icon-box svg {
-      width: 18px;
-      height: 18px;
-      stroke-width: 1.5;
-      fill: none;
-    }
-
-    .share-icon-box.green { background: rgba(0,255,102,0.06); border-color: rgba(0,255,102,0.25); box-shadow: 0 0 8px rgba(0,255,102,0.1); }
-    .share-icon-box.green svg { stroke: var(--toxic); }
-    .share-icon-box.pink  { background: rgba(255,0,127,0.06); border-color: rgba(255,0,127,0.25); box-shadow: 0 0 8px var(--pink-glow); }
-    .share-icon-box.pink  svg { stroke: var(--pink); }
-
-    .share-card-title {
-      font-size: 12px;
-      font-family: var(--font-mono);
-      color: var(--white);
-      font-weight: 700;
-    }
-
-    .share-card-desc {
-      font-size: 9px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       INSTALL MODAL
-       ═══════════════════════════════════════════════════════ */
-    #install-modal-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 4000;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    #install-modal-overlay.open { display: flex; }
-
-    .modal-box {
-      width: 100%;
-      max-width: 452px;
-      background: #050e05;
-      border: 1px solid var(--panel-border);
-      padding: 22px 18px calc(var(--safe-bottom) + 22px);
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-      animation: fadeInUp 0.35s ease forwards;
-    }
-
-    .modal-handle {
-      width: 32px;
-      height: 3px;
-      background: var(--panel-border);
-      margin: 0 auto 18px;
-    }
-
-    .modal-title {
-      font-family: var(--font-hud);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--toxic);
-      margin-bottom: 4px;
-    }
-
-    .modal-sub {
-      font-size: 9.5px;
-      font-family: var(--font-mono);
-      color: var(--silver);
-      margin-bottom: 18px;
-    }
-
-    .modal-step {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-      align-items: flex-start;
-    }
-
-    .modal-step-num {
-      width: 20px;
-      height: 20px;
-      border: 1px solid rgba(0,255,102,0.3);
-      color: var(--toxic);
-      font-size: 9px;
-      font-family: var(--font-mono);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .modal-step-text {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: var(--silver);
-      line-height: 1.55;
-    }
-
-    .modal-step-text strong { color: var(--white); }
-
-    .modal-close-btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--panel-border);
-      color: var(--silver);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-    }
-
-    .modal-close-btn:active { background: rgba(255,255,255,0.06); }
-
-    /* ═══════════════════════════════════════════════════════
-       TOAST NOTIFICATION
-       ═══════════════════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────────────────
+       TOAST
+    ───────────────────────────────────────────────────────── */
     #app-toast {
       position: fixed;
-      bottom: calc(var(--safe-bottom) + 22px);
+      bottom: calc(var(--safe-bottom) + 20px);
       left: 50%;
-      transform: translateX(-50%) translateY(120px);
+      transform: translateX(-50%) translateY(100px);
       z-index: 9990;
-      background: rgba(0,0,0,0.92);
-      border: 1px solid var(--toxic);
-      padding: 11px 20px;
+      background: rgba(20, 8, 35, 0.95);
+      border: 1px solid var(--border-glow);
+      border-radius: var(--r-full);
+      padding: 10px 18px;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 0 20px var(--toxic-glow);
+      box-shadow: 0 4px 24px rgba(183,0,255,0.3);
       white-space: nowrap;
       pointer-events: none;
       opacity: 0;
-      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    #app-toast.show {
-      animation: toastSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    #app-toast.hide {
-      animation: toastSlideDown 0.35s ease-in forwards;
-    }
+    #app-toast.show { animation: toastUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    #app-toast.hide { animation: toastDown 0.35s ease-in forwards; }
 
     .toast-dot {
       width: 6px;
       height: 6px;
-      background: var(--toxic);
-      box-shadow: 0 0 6px var(--toxic);
+      border-radius: 50%;
+      background: var(--violet);
+      box-shadow: 0 0 8px var(--violet);
       flex-shrink: 0;
     }
 
-    #app-toast-text {
+    #toast-txt {
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--toxic);
-      letter-spacing: 0.5px;
+      color: var(--white-soft);
+      letter-spacing: 0.3px;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       DESIGNER FOOTER
-       ═══════════════════════════════════════════════════════ */
-    .designer-footer {
-      margin-top: 24px;
+    /* ─────────────────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────────────────── */
+    .app-footer {
       text-align: center;
+      padding: 6px 0 4px;
     }
 
-    .designer-line {
-      width: 32px;
+    .footer-divider {
+      width: 48px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--toxic), transparent);
+      background: linear-gradient(90deg, transparent, var(--violet), transparent);
       margin: 0 auto 10px;
     }
 
-    .designer-credit {
-      font-size: 9.5px;
+    .footer-credit {
       font-family: var(--font-mono);
+      font-size: 9px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      animation: neonFlicker 7s ease-in-out infinite;
-      color: var(--toxic);
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: tinyBlink 6s ease-in-out infinite;
     }
 
-    .designer-version {
+    .footer-ver {
       font-size: 7.5px;
       font-family: var(--font-mono);
-      color: var(--muted);
+      color: var(--muted-purple);
       letter-spacing: 1px;
       margin-top: 4px;
     }
@@ -1489,1063 +1476,1311 @@
 <body>
 <div id="app-root">
 
-  <!-- ═══════════════════════════════════════════════════════
-       TERMINAL LOCK SCREEN
-       ═══════════════════════════════════════════════════════ -->
-  <div id="terminal-lock-screen">
+  <!-- ════════════════════════════════════════════════════════
+       CYBER LOCK SCREEN
+       ════════════════════════════════════════════════════════ -->
+  <div id="cyber-lock-screen">
     <canvas id="matrix-canvas"></canvas>
     <div class="lock-content">
-      <div class="lock-logo">ZEV BOOST QUANTUM</div>
-      <div class="lock-sub">[ HACKER FUTURE MAINFRAME v4.0 ]</div>
-
+      <div class="lock-orb-wrap">
+        <div class="lock-orb-ring lock-orb-ring-1"></div>
+        <div class="lock-orb-ring lock-orb-ring-2"></div>
+        <div class="lock-orb-core">Z</div>
+      </div>
+      <div>
+        <div class="lock-title">ZEV BOOST QUANTUM</div>
+        <div class="lock-subtitle" style="margin-top:6px;">[ NEON PURPLE CYBER VOID v6.0 ]</div>
+      </div>
       <div class="lock-panel">
-        <div class="lock-label">▶ NHẬP LICENSE KEY ĐỂ TRUY CẬP HỆ THỐNG</div>
+        <div class="lock-field-label">▶ NHẬP LICENSE KEY ĐỂ TRUY CẬP HỆ THỐNG</div>
         <input
           type="text"
-          id="hacker-key-input"
-          placeholder="ZEV-DAY-001 / ZEV-WEEK-001 / ZEV-MONTH-001"
+          id="key-input"
+          placeholder="ENTER VALID LICENSE KEY"
           autocomplete="off"
           autocorrect="off"
+          autocapitalize="characters"
           spellcheck="false"
-          oninput="this.value = this.value.toUpperCase()"
+          oninput="this.value=this.value.toUpperCase()"
         />
-        <button id="inject-btn" onclick="injectLicense()">⚡ INJECT LICENSE &gt;&gt;</button>
-        <div id="lock-status">[ SYSTEM LOCKED — INSERT KEY TO BYPASS ]</div>
-      </div>
+        <button id="inject-btn" onclick="startKeyValidationSequence()">⚡ INJECT LICENSE KEY</button>
+        
+        <!-- Long Loading Injection Box -->
+        <div id="inject-progress-area">
+          <div class="inject-progress-bar-wrap">
+            <div class="inject-progress-bar-fill" id="inject-bar-fill"></div>
+          </div>
+          <div id="inject-log-terminal"></div>
+        </div>
 
-      <div class="lock-keys-hint">
-        SUPPORTED KEY FORMATS:<br>
-        ZEV-DAY-001...050 · ZEV-WEEK-001...050 · ZEV-MONTH-001...050
+        <div id="lock-status-msg">[ SYSTEM LOCKED — SECURITY HANDSHAKE REQUIRED ]</div>
+      </div>
+      <div class="lock-hint">
+        ỨNG DỤNG BẢO MẬT CAO · LICENSE ĐƯỢC MÃ HÓA QUANTUM
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════════════════
        MAIN APPLICATION
-       ═══════════════════════════════════════════════════════ -->
+       ════════════════════════════════════════════════════════ -->
   <div id="main-app">
 
     <!-- Header -->
     <header id="app-header">
-      <div class="header-brand">
+      <div class="header-brand-row">
         <div class="brand-left">
-          <div class="brand-icon-wrap">
-            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <div>
-            <div class="brand-title">ZEV BOOST QUANTUM</div>
-            <div class="brand-version">HACKER FUTURE MAINFRAME v4.0</div>
+          <div class="brand-orb">Z</div>
+          <div class="brand-text">
+            <div class="brand-name">ZEV BOOST QUANTUM</div>
+            <div class="brand-ver">NEON PURPLE CYBER VOID v6.0</div>
           </div>
         </div>
-        <div id="license-badge">NO_LICENSE</div>
+        <div id="lic-badge">LOCKED</div>
       </div>
 
-      <!-- Live Telemetry -->
-      <div class="telemetry-strip">
-        <div class="tele-cell">
-          <div class="tele-val" id="tele-gpu">A16_GPU</div>
-          <div class="tele-lbl">GPU CORE</div>
+      <!-- HUD Strip -->
+      <div class="hud-strip">
+        <div class="hud-cell">
+          <div class="hud-val" id="hud-gpu">A15_GPU</div>
+          <div class="hud-lbl">GPU CORE</div>
         </div>
-        <div class="tele-cell">
-          <div class="tele-val" id="tele-fps">60.0</div>
-          <div class="tele-lbl">RENDER/S</div>
+        <div class="hud-cell">
+          <div class="hud-val" id="hud-fps">59.8</div>
+          <div class="hud-lbl">RENDER/S</div>
         </div>
-        <div class="tele-cell">
-          <div class="tele-val" id="tele-ping">--ms</div>
-          <div class="tele-lbl">NET PING</div>
+        <div class="hud-cell">
+          <div class="hud-val" id="hud-ping">28ms</div>
+          <div class="hud-lbl">LATENCY</div>
         </div>
-        <div class="tele-cell">
-          <div class="tele-val">16.8GB</div>
-          <div class="tele-lbl">FREE_MEM</div>
+        <div class="hud-cell">
+          <div class="hud-val">16.8GB</div>
+          <div class="hud-lbl">FREE MEM</div>
         </div>
       </div>
 
-      <!-- Tab nav -->
+      <!-- Tab Nav -->
       <div class="tab-nav">
-        <button class="tab-nav-btn active" id="tab-btn-0" onclick="switchTab(0)">
+        <button class="tab-nav-btn active" id="t0" onclick="switchTab(0)">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          TÀI KHOẢN
+        </button>
+        <button class="tab-nav-btn" id="t1" onclick="switchTab(1)">
           <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           OVERCLOCK
         </button>
-        <button class="tab-nav-btn" id="tab-btn-1" onclick="switchTab(1)">
+        <button class="tab-nav-btn" id="t2" onclick="switchTab(2)">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-          OPTIMIZE
+          FREE FIRE
         </button>
-        <button class="tab-nav-btn" id="tab-btn-2" onclick="switchTab(2)">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <button class="tab-nav-btn" id="t3" onclick="switchTab(3)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
           OB54 SENS
         </button>
       </div>
     </header>
 
-    <!-- Content -->
     <main id="app-content">
 
-      <!-- ─── TAB 0: OVERCLOCK CORE ───────────────────────── -->
+      <!-- ─── TAB 0: ACCOUNT MANAGER ─────────────────────── -->
       <div class="tab-panel active" id="panel-0">
 
-        <div class="hud-panel" data-label="CORE_STATUS">
-          <div class="section-title">OVERCLOCKING REACTOR CORE</div>
-          <div class="core-wrapper">
-            <div class="core-ring-outer" id="core-ring">
-              <div class="core-ring-mid">
-                <div class="core-btn" id="core-btn" onclick="toggleOverclock()">
-                  <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                  <div class="core-btn-label" id="core-btn-label">ACTIVATE</div>
-                </div>
+        <div class="glass-panel">
+          <div class="panel-title">Hologram License Panel</div>
+          <div class="hologram-card">
+            <div class="hologram-row">
+              <div>
+                <div class="hologram-field-label">Mã Key Đang Dùng</div>
+                <div class="hologram-field-val" id="acc-key-display">——————</div>
+              </div>
+              <div id="acc-tier-badge" class="tier-badge month">——</div>
+            </div>
+            <div class="hologram-row" style="margin-bottom:14px;">
+              <div>
+                <div class="hologram-field-label">Phân Hạng Gói</div>
+                <div class="hologram-field-val" id="acc-pkg-display">——</div>
+              </div>
+              <div>
+                <div class="hologram-field-label">Trạng Thái</div>
+                <div class="hologram-field-val" style="color:#7aff9c;" id="acc-status-display">——</div>
               </div>
             </div>
-            <div class="core-status-text" id="core-status-text">[ SYSTEM STANDBY — REACTOR OFFLINE ]</div>
-          </div>
-
-          <div class="core-stats">
-            <div class="core-stat-cell">
-              <div class="core-stat-val dim" id="stat-fps">—</div>
-              <div class="core-stat-lbl">RENDER BOOST</div>
+            <div style="font-size:8.5px;font-family:var(--font-mono);color:var(--muted-purple);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;">⏳ Thời Gian Còn Lại</div>
+            <div class="countdown-grid">
+              <div class="cd-block">
+                <div class="cd-num" id="cd-d">00</div>
+                <div class="cd-unit">Ngày</div>
+              </div>
+              <div class="cd-block">
+                <div class="cd-num" id="cd-h">00</div>
+                <div class="cd-unit">Giờ</div>
+              </div>
+              <div class="cd-block">
+                <div class="cd-num" id="cd-m">00</div>
+                <div class="cd-unit">Phút</div>
+              </div>
+              <div class="cd-block">
+                <div class="cd-num" id="cd-s">00</div>
+                <div class="cd-unit">Giây</div>
+              </div>
             </div>
-            <div class="core-stat-cell">
-              <div class="core-stat-val dim" id="stat-touch">—</div>
-              <div class="core-stat-lbl">TOUCH POLL</div>
-            </div>
-            <div class="core-stat-cell">
-              <div class="core-stat-val dim" id="stat-lock">—</div>
-              <div class="core-stat-lbl">WAKE LOCK</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hud-panel cyan-panel" data-label="EXPLOIT_LOG_STREAM">
-          <div class="section-title">HACKER LOG TERMINAL</div>
-          <div id="hacker-log">
-            <span class="log-line muted">[SYS] ZEV QUANTUM MAINFRAME v4.0 INITIALIZED</span>
-            <span class="log-line muted">[SYS] AWAITING OVERCLOCK COMMAND...</span>
           </div>
         </div>
 
-        <div class="hud-panel cyan-panel" data-label="NETWORK_CORE">
-          <div class="section-title">MOBILECONFIG PROFILE INJECTOR</div>
-          <button class="download-profile-btn" onclick="downloadMobileConfig()">
-            ⬇ TẢI PROFILE LÕI MẠNG GAME CRITICAL (.MOBILECONFIG)
-          </button>
+        <div class="glass-panel">
+          <div class="panel-title">Quản Lý Tài Khoản</div>
+          <div class="acc-actions">
+            <button class="acc-btn" onclick="copyLink()">📋 Sao Chép Link</button>
+            <button class="acc-btn primary" onclick="openInstallGuide()">⬇ Hướng Dẫn Cài</button>
+            <button class="acc-btn" onclick="renewKey()">🔄 Đổi Key Mới</button>
+            <button class="acc-btn danger" onclick="revokeKey()">🗑 Hủy Phiên Đăng Nhập</button>
+          </div>
         </div>
 
-      </div><!-- end panel-0 -->
+        <div class="app-footer">
+          <div class="footer-divider"></div>
+          <div class="footer-credit">Web designed by Duc Anh Zev</div>
+          <div class="footer-ver">v6.0.0 · NEON PURPLE CYBER VOID · ducanhzev.pages.dev</div>
+        </div>
 
-      <!-- ─── TAB 1: OPTIMIZE ─────────────────────────────── -->
+      </div>
+
+      <!-- ─── TAB 1: OVERCLOCK CORE ──────────────────────── -->
       <div class="tab-panel" id="panel-1">
 
-        <div class="hud-panel" data-label="SYS_OPTIMIZATION_MATRIX">
-          <div class="section-title">HỆ THỐNG TỐI ƯU PHẦN CỨNG</div>
-          <div class="toggle-list">
-
-            <div class="toggle-card" onclick="handleToggle(event,'sw-graphics')">
-              <div class="t-icon green"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-              <div class="t-info">
-                <div class="t-name">Graphics Override</div>
-                <div class="t-desc">Hạn chế độ phức tạp màn hình chuyển động</div>
+        <div class="glass-panel">
+          <div class="panel-title">Reactor Core Control</div>
+          <div class="core-center">
+            <div class="core-orbit-wrap">
+              <div class="core-ring-1" id="cr1"></div>
+              <div class="core-ring-2" id="cr2"></div>
+              <div class="core-ring-3" id="cr3"></div>
+              <div class="core-btn" id="core-btn" onclick="toggleOverclock()">
+                <svg id="core-ico" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <div class="core-btn-txt" id="core-lbl">ACTIVATE</div>
               </div>
-              <label class="cyber-sw" onclick="event.stopPropagation()">
-                <input type="checkbox" id="sw-graphics" onchange="onToggleChange(this)">
-                <span class="sw-track"></span>
-              </label>
             </div>
-
-            <div class="toggle-card" onclick="handleToggle(event,'sw-daemon')">
-              <div class="t-icon pink"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-              <div class="t-info">
-                <div class="t-name">Daemon Freeze</div>
-                <div class="t-desc">Đóng băng tiến trình nền ứng dụng</div>
-              </div>
-              <label class="cyber-sw" onclick="event.stopPropagation()">
-                <input type="checkbox" id="sw-daemon" onchange="onToggleChange(this)">
-                <span class="sw-track"></span>
-              </label>
-            </div>
-
-            <div class="toggle-card" onclick="handleToggle(event,'sw-privacy')">
-              <div class="t-icon cyan"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-              <div class="t-info">
-                <div class="t-name">Privacy Shield</div>
-                <div class="t-desc">Chặn theo dõi log phân tích dữ liệu người dùng</div>
-              </div>
-              <label class="cyber-sw" onclick="event.stopPropagation()">
-                <input type="checkbox" id="sw-privacy" onchange="onToggleChange(this)">
-                <span class="sw-track"></span>
-              </label>
-            </div>
-
-            <div class="toggle-card" onclick="handleToggle(event,'sw-cache')">
-              <div class="t-icon amber"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></div>
-              <div class="t-info">
-                <div class="t-name">System Cache Purge</div>
-                <div class="t-desc">Xóa cache dư thừa, giải phóng bộ nhớ</div>
-              </div>
-              <label class="cyber-sw" onclick="event.stopPropagation()">
-                <input type="checkbox" id="sw-cache" onchange="onToggleChange(this)">
-                <span class="sw-track"></span>
-              </label>
-            </div>
-
-            <div class="toggle-card" onclick="handleToggle(event,'sw-ram')">
-              <div class="t-icon green"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
-              <div class="t-info">
-                <div class="t-name">Neural RAM Purge</div>
-                <div class="t-desc">Giải phóng RAM tức thì, kích hoạt chỉ báo xung</div>
-              </div>
-              <label class="cyber-sw" onclick="event.stopPropagation()">
-                <input type="checkbox" id="sw-ram" onchange="onToggleChange(this)">
-                <span class="sw-track"></span>
-              </label>
-            </div>
-
+            <div class="core-status" id="core-status">[ STANDBY — REACTOR OFFLINE ]</div>
           </div>
-        </div>
-
-        <div class="hud-panel" data-label="ELITE_DNS_ACCELERATOR">
-          <div class="section-title">ELITE DNS NETWORK ACCELERATOR</div>
-          <div class="dns-grid" id="dns-grid"></div>
-        </div>
-
-        <div>
-          <div class="section-title">CẤU HÌNH & CHIA SẺ</div>
-          <div class="share-grid">
-            <div class="share-card" onclick="openInstallModal()">
-              <div class="share-card-arrow">↗</div>
-              <div class="share-icon-box green"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-              <div class="share-card-title">Cài Cấu Hình</div>
-              <div class="share-card-desc">Cài Web Clip Zev Boost lên màn hình chính iOS.</div>
+          <div class="core-stats-row">
+            <div class="cstat">
+              <div class="cstat-v" id="sv-fps">—</div>
+              <div class="cstat-l">RENDER BOOST</div>
             </div>
-            <div class="share-card" onclick="copyShareLink()">
-              <div class="share-card-arrow">↗</div>
-              <div class="share-icon-box pink"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-              <div class="share-card-title">Sao Chép Link</div>
-              <div class="share-card-desc">Copy URL Cloudflare để chia sẻ.</div>
+            <div class="cstat">
+              <div class="cstat-v" id="sv-touch">—</div>
+              <div class="cstat-l">TOUCH POLL</div>
+            </div>
+            <div class="cstat">
+              <div class="cstat-v" id="sv-lock">—</div>
+              <div class="cstat-l">WAKE LOCK</div>
             </div>
           </div>
         </div>
 
-        <div class="designer-footer">
-          <div class="designer-line"></div>
-          <div class="designer-credit">Web designed by Duc Anh Zev</div>
-          <div class="designer-version">v4.0.0 · QUANTUM · ducanhzev.pages.dev</div>
+        <div class="glass-panel">
+          <div class="panel-title">Hacker Log Terminal</div>
+          <div id="hacker-log">
+            <span class="log-ln dim">[SYS] ZEV QUANTUM MAINFRAME v6.0 — INITIALIZED</span><br>
+            <span class="log-ln dim">[SYS] AWAITING OVERCLOCK COMMAND...</span>
+          </div>
         </div>
 
-      </div><!-- end panel-1 -->
+        <div class="glass-panel">
+          <div class="panel-title">Network Profile Injector</div>
+          <button class="dl-btn" onclick="downloadProfile()">
+            ⬇ TẢI PROFILE DNS MÃ HÓA KÉP (.MOBILECONFIG)
+          </button>
+          <p style="font-size:8.5px;color:var(--muted-purple);font-family:var(--font-mono);margin-top:10px;line-height:1.7;text-align:center;">
+            Sau khi tải, vào <strong style="color:var(--silver-purple);">Cài đặt → Đã tải về Hồ sơ</strong> trên iPhone để cài đặt và phê duyệt profile DNS mã hóa.
+          </p>
+        </div>
 
-      <!-- ─── TAB 2: OB54 SENSITIVITY ─────────────────────── -->
+        <div class="app-footer">
+          <div class="footer-divider"></div>
+          <div class="footer-credit">Web designed by Duc Anh Zev</div>
+          <div class="footer-ver">v6.0.0 · ducanhzev.pages.dev</div>
+        </div>
+
+      </div>
+
+      <!-- ─── TAB 2: FREE FIRE OPTIMIZER ────────────────── -->
       <div class="tab-panel" id="panel-2">
 
-        <div class="hud-panel sens-header-panel" data-label="OB54_SENS_TUNER">
-          <div class="sens-title-hud">⚡ OB54 SENSITIVITY TUNER</div>
-          <div class="sens-subtitle">Nhập tên thiết bị để hiệu chỉnh độ nhạy theo phần cứng</div>
-          <div class="device-input-row">
+        <div class="glass-panel">
+          <div class="panel-title">Combat Touch Enhancer</div>
+          <div class="ff-toggle-list">
+
+            <div class="ff-toggle-card" id="ffc-0" onclick="ffToggle(0,event)">
+              <div class="ff-icon violet">
+                <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div class="ff-info">
+                <div class="ff-name">X20 Speed Touch</div>
+                <div class="ff-desc">Tăng tốc nhận diện điểm chạm hồng tâm cực nhanh</div>
+              </div>
+              <label class="led-sw" onclick="event.stopPropagation()">
+                <input type="checkbox" id="ff-sw-0" onchange="ffSwChange(0,this)">
+                <span class="sw-track"></span>
+              </label>
+            </div>
+
+            <div class="ff-toggle-card" id="ffc-1" onclick="ffToggle(1,event)">
+              <div class="ff-icon pink">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="ff-info">
+                <div class="ff-name">Macro Glitch Drag</div>
+                <div class="ff-desc">Vuốt kéo tâm mượt mà, chống găm ngực bay đầu</div>
+              </div>
+              <label class="led-sw" onclick="event.stopPropagation()">
+                <input type="checkbox" id="ff-sw-1" onchange="ffSwChange(1,this)">
+                <span class="sw-track"></span>
+              </label>
+            </div>
+
+            <div class="ff-toggle-card" id="ffc-2" onclick="ffToggle(2,event)">
+              <div class="ff-icon purple">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div class="ff-info">
+                <div class="ff-name">DPI Simulator Matrix</div>
+                <div class="ff-desc">Giả lập tần số DPI gaming trên màn hình cảm ứng iOS</div>
+              </div>
+              <label class="led-sw" onclick="event.stopPropagation()">
+                <input type="checkbox" id="ff-sw-2" onchange="ffSwChange(2,this)">
+                <span class="sw-track"></span>
+              </label>
+            </div>
+
+            <div class="ff-toggle-card" id="ffc-3" onclick="ffToggle(3,event)">
+              <div class="ff-icon violet">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="ff-info">
+                <div class="ff-name">Anti-Recoil Engine</div>
+                <div class="ff-desc">Bù rung giật nòng súng, giữ tâm chuẩn tự động</div>
+              </div>
+              <label class="led-sw" onclick="event.stopPropagation()">
+                <input type="checkbox" id="ff-sw-3" onchange="ffSwChange(3,this)">
+                <span class="sw-track"></span>
+              </label>
+            </div>
+
+            <div class="ff-toggle-card" id="ffc-4" onclick="ffToggle(4,event)">
+              <div class="ff-icon pink">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="ff-info">
+                <div class="ff-name">Frame Sync Boost</div>
+                <div class="ff-desc">Đồng bộ khung hình với ProMotion 120Hz iOS</div>
+              </div>
+              <label class="led-sw" onclick="event.stopPropagation()">
+                <input type="checkbox" id="ff-sw-4" onchange="ffSwChange(4,this)">
+                <span class="sw-track"></span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <div class="panel-title">Optimization Progress Matrix</div>
+          <div class="ff-progress-section">
+            <div class="ff-prog-row">
+              <div class="ff-prog-header">
+                <span class="ff-prog-name">Touch Response Rate</span>
+                <span class="ff-prog-pct" id="prg-touch-pct">0%</span>
+              </div>
+              <div class="ff-prog-track">
+                <div class="ff-prog-fill" id="prg-touch" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ff-prog-row">
+              <div class="ff-prog-header">
+                <span class="ff-prog-name">Aim Trajectory Accuracy</span>
+                <span class="ff-prog-pct" id="prg-aim-pct">0%</span>
+              </div>
+              <div class="ff-prog-track">
+                <div class="ff-prog-fill" id="prg-aim" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ff-prog-row">
+              <div class="ff-prog-header">
+                <span class="ff-prog-name">DPI Simulation Fidelity</span>
+                <span class="ff-prog-pct" id="prg-dpi-pct">0%</span>
+              </div>
+              <div class="ff-prog-track">
+                <div class="ff-prog-fill" id="prg-dpi" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ff-prog-row">
+              <div class="ff-prog-header">
+                <span class="ff-prog-name">Recoil Compensation</span>
+                <span class="ff-prog-pct" id="prg-reco-pct">0%</span>
+              </div>
+              <div class="ff-prog-track">
+                <div class="ff-prog-fill" id="prg-reco" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ff-prog-row">
+              <div class="ff-prog-header">
+                <span class="ff-prog-name">Frame Sync Override</span>
+                <span class="ff-prog-pct" id="prg-fps-pct">0%</span>
+              </div>
+              <div class="ff-prog-track">
+                <div class="ff-prog-fill" id="prg-fps" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-footer">
+          <div class="footer-divider"></div>
+          <div class="footer-credit">Web designed by Duc Anh Zev</div>
+          <div class="footer-ver">v6.0.0 · ducanhzev.pages.dev</div>
+        </div>
+
+      </div>
+
+      <!-- ─── TAB 3: OB54 SENSITIVITY ───────────────────── -->
+      <div class="tab-panel" id="panel-3">
+
+        <div class="glass-panel">
+          <div class="sens-header">
+            <div class="sens-title">⚡ OB54 SENSITIVITY TUNER</div>
+            <div class="sens-sub">Nhập dòng máy iPhone để hiệu chỉnh độ nhạy theo phần cứng thực tế</div>
+          </div>
+          <div style="margin-top:14px;">
             <input
               type="text"
-              class="cyber-input"
-              id="device-model"
-              placeholder="Ví dụ: iPhone 14 Pro Max..."
-              oninput="checkDeviceInput()"
+              class="cyber-field"
+              id="device-input"
+              placeholder="Ví dụ: iPhone 14 Pro Max, iPhone 15..."
+              oninput="checkDevice()"
               autocomplete="off"
               autocorrect="off"
               spellcheck="false"
             />
+            <button id="analyze-btn" disabled onclick="runAnalyze()">⚡ ANALYZE SYSTEM MODEL</button>
           </div>
-          <button id="calibrate-btn" disabled onclick="executeCalibration()">⚡ HIỆU CHỈNH TỰ ĐỘNG</button>
-          <div id="calibration-status">⚠️ HỆ THỐNG KHÓA: CHỜ NHẬP DỮ LIỆU PHẦN CỨNG...</div>
+          <div id="scan-bar-wrap" style="margin-top:12px;">
+            <div class="scan-label" id="scan-lbl">Đang phân tích phần cứng...</div>
+            <div class="scan-track"><div class="scan-fill" id="scan-fill"></div></div>
+          </div>
+          <div id="sens-status" style="margin-top:10px;">⚠ HỆ THỐNG KHÓA — CHỜ NHẬP DỮ LIỆU THIẾT BỊ</div>
         </div>
 
-        <!-- Sliders container — hidden until calibration -->
-        <div id="sliders-container" style="display:none;">
+        <div id="sliders-zone">
 
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Nhìn xung quanh</span>
-                <span class="slider-subn">General Look · Free Camera</span>
+          <div class="glass-panel">
+            <div class="panel-title">Sensitivity Matrix — OB54</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Nhìn xung quanh</div>
+                    <div class="sl-sub">General Look · Free Camera</div>
+                  </div>
+                  <div class="sl-val" id="sv1">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(1,-1)">−</button>
+                  <input type="range" id="sr1" min="0" max="200" value="0" oninput="onRange(1)">
+                  <button class="step-btn" onclick="stepSlider(1,1)">+</button>
+                </div>
               </div>
-              <span class="slider-val-display" id="val-1">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(1,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-1" min="0" max="200" value="0" oninput="updateSliderVal(1,'val-1')">
-              <button class="step-btn" onclick="stepSlider(1,1)">[+]</button>
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Ống ngắm hồng tâm</div>
+                    <div class="sl-sub">Red Dot Sight · ADS Sensitivity</div>
+                  </div>
+                  <div class="sl-val" id="sv2">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(2,-1)">−</button>
+                  <input type="range" id="sr2" min="0" max="200" value="0" oninput="onRange(2)">
+                  <button class="step-btn" onclick="stepSlider(2,1)">+</button>
+                </div>
+              </div>
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Ống ngắm 2x Scope</div>
+                    <div class="sl-sub">2x Zoom · Medium Range</div>
+                  </div>
+                  <div class="sl-val" id="sv3">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(3,-1)">−</button>
+                  <input type="range" id="sr3" min="0" max="200" value="0" oninput="onRange(3)">
+                  <button class="step-btn" onclick="stepSlider(3,1)">+</button>
+                </div>
+              </div>
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Ống ngắm 4x Scope</div>
+                    <div class="sl-sub">4x Zoom · Long Range</div>
+                  </div>
+                  <div class="sl-val" id="sv4">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(4,-1)">−</button>
+                  <input type="range" id="sr4" min="0" max="200" value="0" oninput="onRange(4)">
+                  <button class="step-btn" onclick="stepSlider(4,1)">+</button>
+                </div>
+              </div>
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Ống ngắm súng ngắm</div>
+                    <div class="sl-sub">Sniper Scope · Precision</div>
+                  </div>
+                  <div class="sl-val" id="sv5">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(5,-1)">−</button>
+                  <input type="range" id="sr5" min="0" max="200" value="0" oninput="onRange(5)">
+                  <button class="step-btn" onclick="stepSlider(5,1)">+</button>
+                </div>
+              </div>
+
+              <div class="sens-slider-card">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name">Nút camera tự do</div>
+                    <div class="sl-sub">Free Look · Camera Sensitivity</div>
+                  </div>
+                  <div class="sl-val" id="sv6">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" onclick="stepSlider(6,-1)">−</button>
+                  <input type="range" id="sr6" min="0" max="200" value="0" oninput="onRange(6)">
+                  <button class="step-btn" onclick="stepSlider(6,1)">+</button>
+                </div>
+              </div>
+
+              <div class="sens-slider-card" style="border-color:rgba(255,0,200,0.2);">
+                <div class="slider-hd">
+                  <div>
+                    <div class="sl-name" style="color:var(--pink-neon);">Kích thước Nút Bắn</div>
+                    <div class="sl-sub">Fire Button Size · Precision Control</div>
+                  </div>
+                  <div class="sl-val" id="sv7">—</div>
+                </div>
+                <div class="slider-controls">
+                  <button class="step-btn" style="border-color:rgba(255,0,200,0.3);color:var(--pink-neon);" onclick="stepSlider(7,-1)">−</button>
+                  <input type="range" id="sr7" min="10" max="100" value="10" oninput="onRange(7)" style="background:rgba(255,0,200,0.2);">
+                  <button class="step-btn" style="border-color:rgba(255,0,200,0.3);color:var(--pink-neon);" onclick="stepSlider(7,1)">+</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Ống ngắm hồng tâm</span>
-                <span class="slider-subn">Red Dot Sight · ADS Sensitivity</span>
-              </div>
-              <span class="slider-val-display" id="val-2">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(2,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-2" min="0" max="200" value="0" oninput="updateSliderVal(2,'val-2')">
-              <button class="step-btn" onclick="stepSlider(2,1)">[+]</button>
-            </div>
-          </div>
-
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Ống ngắm 2x</span>
-                <span class="slider-subn">2x Scope · Zoom Sensitivity</span>
-              </div>
-              <span class="slider-val-display" id="val-3">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(3,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-3" min="0" max="200" value="0" oninput="updateSliderVal(3,'val-3')">
-              <button class="step-btn" onclick="stepSlider(3,1)">[+]</button>
-            </div>
-          </div>
-
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Ống ngắm 4x</span>
-                <span class="slider-subn">4x Scope · Long Range Sensitivity</span>
-              </div>
-              <span class="slider-val-display" id="val-4">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(4,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-4" min="0" max="200" value="0" oninput="updateSliderVal(4,'val-4')">
-              <button class="step-btn" onclick="stepSlider(4,1)">[+]</button>
-            </div>
-          </div>
-
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Ống ngắm súng ngắm</span>
-                <span class="slider-subn">Sniper Scope · Precision Targeting</span>
-              </div>
-              <span class="slider-val-display" id="val-5">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(5,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-5" min="0" max="200" value="0" oninput="updateSliderVal(5,'val-5')">
-              <button class="step-btn" onclick="stepSlider(5,1)">[+]</button>
-            </div>
-          </div>
-
-          <div class="slider-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name">Nút camera tự do</span>
-                <span class="slider-subn">Free Look · Camera Sensitivity</span>
-              </div>
-              <span class="slider-val-display" id="val-6">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn" onclick="stepSlider(6,-1)">[-]</button>
-              <input type="range" class="range-input" id="range-6" min="0" max="200" value="0" oninput="updateSliderVal(6,'val-6')">
-              <button class="step-btn" onclick="stepSlider(6,1)">[+]</button>
-            </div>
-          </div>
-
-          <div class="slider-wrapper fire-wrapper">
-            <div class="slider-hd">
-              <div>
-                <span class="slider-name fire-name">Kích thước Nút Bắn</span>
-                <span class="slider-subn">Fire Button Size · Precision Control</span>
-              </div>
-              <span class="slider-val-display fire-val" id="val-7">--</span>
-            </div>
-            <div class="slider-controls">
-              <button class="step-btn fire-step" onclick="stepSlider(7,-1)">[-]</button>
-              <input type="range" class="range-input fire-range" id="range-7" min="10" max="100" value="10" oninput="updateSliderVal(7,'val-7')">
-              <button class="step-btn fire-step" onclick="stepSlider(7,1)">[+]</button>
-            </div>
-          </div>
-
-        </div><!-- end sliders-container -->
-
-        <div class="designer-footer">
-          <div class="designer-line"></div>
-          <div class="designer-credit">Web designed by Duc Anh Zev</div>
-          <div class="designer-version">v4.0.0 · QUANTUM · ducanhzev.pages.dev</div>
         </div>
 
-      </div><!-- end panel-2 -->
+        <div class="app-footer">
+          <div class="footer-divider"></div>
+          <div class="footer-credit">Web designed by Duc Anh Zev</div>
+          <div class="footer-ver">v6.0.0 · ducanhzev.pages.dev</div>
+        </div>
+
+      </div>
 
     </main>
   </div><!-- end main-app -->
 
-  <!-- ═══════════════════════════════════════════════════════
-       TOAST NOTIFICATION
-       ═══════════════════════════════════════════════════════ -->
+  <!-- Toast -->
   <div id="app-toast">
     <div class="toast-dot"></div>
-    <span id="app-toast-text">OPERATION SUCCESSFUL</span>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════
-       INSTALL MODAL
-       ═══════════════════════════════════════════════════════ -->
-  <div id="install-modal-overlay" onclick="closeInstallModal(event)">
-    <div class="modal-box" onclick="event.stopPropagation()">
-      <div class="modal-handle"></div>
-      <div class="modal-title">CÀI WEB CLIP ZEV BOOST</div>
-      <div class="modal-sub">Thêm ZEV BOOST QUANTUM vào màn hình chính iPhone</div>
-      <div class="modal-step">
-        <div class="modal-step-num">1</div>
-        <div class="modal-step-text">Tải file <strong>ZevBoost.mobileconfig</strong> từ repo GitHub về thiết bị iOS.</div>
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-num">2</div>
-        <div class="modal-step-text">Vào <strong>Cài đặt → Đã tải về Hồ sơ</strong> và nhấn <strong>Cài đặt</strong>.</div>
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-num">3</div>
-        <div class="modal-step-text">Ký profile bằng <strong>vsign.me</strong> hoặc OpenSSL nếu cần chứng chỉ hợp lệ.</div>
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-num">4</div>
-        <div class="modal-step-text">Sau cài đặt, biểu tượng <strong>ZEV QUANTUM</strong> xuất hiện trên màn hình chính iOS.</div>
-      </div>
-      <button class="modal-close-btn" onclick="closeInstallModalBtn()">[ CLOSE_TERMINAL ]</button>
-    </div>
+    <span id="toast-txt">OPERATION SUCCESSFUL</span>
   </div>
 
 </div><!-- end app-root -->
 
 <script>
-  /* ═══════════════════════════════════════════════════════
-     MATRIX CANVAS RAIN
-     ═══════════════════════════════════════════════════════ */
-  (function initMatrixRain() {
+/* ─────────────────────────────────────────────────────────
+   HƯỚNG DẪN DÀNH CHO LẬP TRÌNH VIÊN:
+   Sao chép danh sách các Key mẫu bên dưới và lưu thành tệp
+   tin "keys.txt" trong cùng thư mục chạy ứng dụng này để
+   quản lý danh sách license key.
+   ───────────────────────────────────────────────────────── */
+const VALID_KEYS = [
+  'ZEV-DAY-K91', 'ZEV-DAY-A7K', 'ZEV-DAY-B3X', 'ZEV-DAY-4L7', 'ZEV-DAY-W8M',
+  'ZEV-DAY-R2P', 'ZEV-DAY-F5S', 'ZEV-DAY-V9Q', 'ZEV-DAY-C2W', 'ZEV-DAY-Y8N',
+  'ZEV-WEEK-9X2', 'ZEV-WEEK-M4X', 'ZEV-WEEK-H6Y', 'ZEV-WEEK-T8R', 'ZEV-WEEK-J3K',
+  'ZEV-WEEK-G2F', 'ZEV-WEEK-D7S', 'ZEV-WEEK-Z4Q', 'ZEV-WEEK-N1W', 'ZEV-WEEK-L5M',
+  'ZEV-MONTH-M3P', 'ZEV-MONTH-P7Z', 'ZEV-MONTH-F2K', 'ZEV-MONTH-H9X', 'ZEV-MONTH-V4Y',
+  'ZEV-MONTH-K1B', 'ZEV-MONTH-N8W', 'ZEV-MONTH-Q5T', 'ZEV-MONTH-L3R', 'ZEV-MONTH-S6G'
+];
+
+/* ════════════════════════════════════════════════════════
+   MATRIX CANVAS — PURPLE RAIN
+   ════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx    = canvas.getContext('2d');
+  const CHARS  = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&'.split('');
+  const COL_W  = 14;
+  let drops    = [];
+  let raf      = null;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    const cols    = Math.floor(canvas.width / COL_W);
+    drops = Array.from({ length: cols }, () => -(Math.random() * 40));
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(8, 2, 15, 0.07)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '12px Space Mono, monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const y = drops[i] * COL_W;
+      const t = Math.random();
+      if (t > 0.95)       ctx.fillStyle = '#ffffff';
+      else if (y < canvas.height * 0.3) ctx.fillStyle = '#b700ff';
+      else                ctx.fillStyle = 'rgba(138, 43, 226, 0.6)';
+
+      const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+      ctx.fillText(ch, i * COL_W, y);
+
+      if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 0.55;
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+
+  window._stopMatrix = function() {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  };
+})();
+
+/* ════════════════════════════════════════════════════════
+   LICENSE KEY ENGINE (ALPHANUMERIC SUFFIX)
+   ════════════════════════════════════════════════════════ */
+const KEY_REGEX = /^ZEV-(DAY|WEEK|MONTH)-[A-Za-z0-9]{3}$/;
+const DURATIONS = { DAY: 86400000, WEEK: 604800000, MONTH: 2592000000 };
+const PKG_NAMES = { DAY: 'GÓI NGÀY (1 NGÀY)', WEEK: 'GÓI TUẦN (7 NGÀY)', MONTH: 'GÓI THÁNG (30 NGÀY)' };
+let countdownTimer = null;
+
+// Lock-screen terminal loader lines
+const INJECT_STEPS = [
+  { p: 0,   t: '🚀 CONNECTING TO BYPASS EXPLOIT MATRIX...' },
+  { p: 15,  t: '🛰️ ESTABLISHING VPN TUNNEL TO iOS SANDBOX...' },
+  { p: 30,  t: '🔑 VERIFYING ALPHANUMERIC CRYPTO SEED...' },
+  { p: 45,  t: '🧩 DECRYPTING SHA-256 SYSTEM SIGNATURES...' },
+  { p: 60,  t: '⚙️ INJECTING SPEED HOOKS INTO SAFARI RENDER ENGINE...' },
+  { p: 80,  t: '⚡ OVERRIDING THERMAL THROTTLING GOVERNOR...' },
+  { p: 95,  t: '🛸 SYNCING PROMOTION 120HZ RENDER LOOP...' },
+  { p: 100, t: '✅ SUCCESS: SYSTEM ACCESS GRANTED!' }
+];
+
+function addInjectLog(text) {
+  const term = document.getElementById('inject-log-terminal');
+  const span = document.createElement('span');
+  span.className = 'log-ln cyan';
+  span.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+  term.appendChild(span);
+  term.appendChild(document.createElement('br'));
+  term.scrollTop = term.scrollHeight;
+}
+
+function startKeyValidationSequence() {
+  const keyVal   = document.getElementById('key-input').value.trim();
+  const statusEl = document.getElementById('lock-status-msg');
+
+  if (!keyVal) {
+    statusEl.textContent = '[ ERROR: KEY CANNOT BE EMPTY ]';
+    statusEl.className = 'err';
+    return;
+  }
+
+  // Regex validation check
+  if (!KEY_REGEX.test(keyVal)) {
+    statusEl.textContent = '[ ACCESS DENIED: KEY STRUCTURE INVALID ]';
+    statusEl.className = 'err';
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    return;
+  }
+
+  // Check if key is within valid keys list
+  if (!VALID_KEYS.includes(keyVal)) {
+    statusEl.textContent = '[ ACCESS DENIED: LICENSE KEY NOT EXISTENT ]';
+    statusEl.className = 'err';
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    return;
+  }
+
+  const tier     = keyVal.split('-')[1]; // DAY / WEEK / MONTH
+  const nowMs    = Date.now();
+  const expiryAbs = nowMs + DURATIONS[tier];
+
+  // Lock input and button, show terminal
+  document.getElementById('key-input').disabled = true;
+  document.getElementById('inject-btn').disabled = true;
+  document.getElementById('inject-progress-area').style.display = 'flex';
+  statusEl.textContent = '[ INJECTING... ]';
+  statusEl.className = '';
+
+  let stepIdx = 0;
+  const progressBar = document.getElementById('inject-bar-fill');
+  
+  function executeLoaderStep() {
+    if (stepIdx < INJECT_STEPS.length) {
+      const step = INJECT_STEPS[stepIdx];
+      progressBar.style.width = `${step.p}%`;
+      addInjectLog(step.t);
+      if (navigator.vibrate) navigator.vibrate([15]);
+      stepIdx++;
+      
+      // Dynamic timer duration to create a smooth, variable loading experience (5-7 seconds total)
+      const nextDelay = 600 + Math.random() * 300; 
+      setTimeout(executeLoaderStep, nextDelay);
+    } else {
+      // Completed, save to localStorage and unlock
+      localStorage.setItem('zev_key', keyVal);
+      localStorage.setItem('zev_exact_expiry', expiryAbs.toString());
+      localStorage.setItem('zev_tier', tier);
+      
+      statusEl.className = 'ok';
+      statusEl.textContent = '[ EXPLOIT INJECTED SUCCESSFULLY ]';
+      
+      setTimeout(() => {
+        runUnlockAnimation(() => unlockApp(keyVal, tier, expiryAbs));
+      }, 800);
+    }
+  }
+
+  executeLoaderStep();
+}
+
+function runUnlockAnimation(callback) {
+  const lockEl = document.getElementById('cyber-lock-screen');
+  lockEl.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  lockEl.style.opacity = '0';
+
+  setTimeout(() => {
+    lockEl.style.display = 'none';
+    window._stopMatrix && window._stopMatrix();
+    callback();
+  }, 650);
+}
+
+function unlockApp(key, tier, expiryAbs) {
+  const mainEl = document.getElementById('main-app');
+  mainEl.classList.add('visible');
+
+  document.getElementById('lic-badge').textContent =
+    tier === 'DAY' ? 'DAY_1D' : tier === 'WEEK' ? 'WEEK_7D' : 'MONTH_30D';
+
+  const badge = document.getElementById('acc-tier-badge');
+  badge.textContent  = tier;
+  badge.className    = 'tier-badge ' + tier.toLowerCase();
+
+  document.getElementById('acc-key-display').textContent = key;
+  document.getElementById('acc-pkg-display').textContent = PKG_NAMES[tier];
+  document.getElementById('acc-status-display').textContent = '⚡ ACTIVE';
+
+  startCountdown(expiryAbs);
+  startTelemetry();
+  showToast('⚡ SYSTEM INTERFACE INJECTED');
+}
+
+function checkStoredKey() {
+  const key    = localStorage.getItem('zev_key');
+  const expiry = parseInt(localStorage.getItem('zev_exact_expiry') || '0', 10);
+  const tier   = localStorage.getItem('zev_tier') || '';
+  const now    = Date.now();
+
+  // If expiry exists and is in the future, bypass lockscreen
+  if (key && tier && expiry > now) {
+    document.getElementById('cyber-lock-screen').style.display = 'none';
+    window._stopMatrix && window._stopMatrix();
+    unlockApp(key, tier, expiry);
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   COUNTDOWN TIMER
+   ════════════════════════════════════════════════════════ */
+function startCountdown(expiryAbs) {
+  if (countdownTimer) clearInterval(countdownTimer);
+  updateCountdown(expiryAbs);
+  countdownTimer = setInterval(() => {
+    const active = updateCountdown(expiryAbs);
+    if (!active) {
+      clearInterval(countdownTimer);
+      countdownTimer = null;
+      expireSession();
+    }
+  }, 1000);
+}
+
+function updateCountdown(expiryAbs) {
+  const now  = Date.now();
+  const diff = expiryAbs - now;
+  if (diff <= 0) {
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00');
+    return false;
+  }
+  const diffSec = Math.floor(diff / 1000);
+  const dd = Math.floor(diffSec / 86400);
+  const hh = Math.floor((diffSec % 86400) / 3600);
+  const mm = Math.floor((diffSec % 3600) / 60);
+  const ss = diffSec % 60;
+  
+  document.getElementById('cd-d').textContent = String(dd).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(hh).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(mm).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(ss).padStart(2,'0');
+  return true;
+}
+
+function expireSession() {
+  localStorage.removeItem('zev_key');
+  localStorage.removeItem('zev_exact_expiry');
+  localStorage.removeItem('zev_tier');
+
+  const mainEl = document.getElementById('main-app');
+  const lockEl = document.getElementById('cyber-lock-screen');
+
+  mainEl.classList.remove('visible');
+  mainEl.style.display = 'none';
+
+  lockEl.style.opacity  = '0';
+  lockEl.style.display  = 'flex';
+  
+  // Re-enable elements on screen
+  document.getElementById('key-input').disabled = false;
+  document.getElementById('key-input').value = '';
+  document.getElementById('inject-btn').disabled = false;
+  document.getElementById('inject-progress-area').style.display = 'none';
+  document.getElementById('inject-log-terminal').innerHTML = '';
+
+  (function() {
     const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/\\|~'.split('');
-    let columns = 0;
-    let drops = [];
-    let raf = null;
-
-    function resize() {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      columns = Math.floor(canvas.width / 14);
-      drops = Array.from({ length: columns }, () => Math.random() * -50);
-    }
-
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = '12px Share Tech Mono, monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
-        const y = drops[i] * 14;
-
-        if (y > 0 && y < canvas.height * 0.4) {
-          ctx.fillStyle = '#00ff66';
-        } else {
-          ctx.fillStyle = 'rgba(0, 255, 102, 0.45)';
-        }
-
-        ctx.fillText(char, i * 14, y);
-
-        if (y > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i] += 0.5;
+    const ctx    = canvas.getContext('2d');
+    const CHARS  = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const COL_W  = 14;
+    let drops    = [];
+    let raf2     = null;
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    const cols    = Math.floor(canvas.width / COL_W);
+    drops = Array.from({ length: cols }, () => -(Math.random() * 30));
+    function draw2() {
+      ctx.fillStyle = 'rgba(8,2,15,0.07)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.font = '12px Space Mono,monospace';
+      for (let i=0;i<drops.length;i++){
+        const y=drops[i]*COL_W;
+        ctx.fillStyle = y<canvas.height*0.3?'#b700ff':'rgba(138,43,226,0.6)';
+        ctx.fillText(CHARS[Math.floor(Math.random()*CHARS.length)],i*COL_W,y);
+        if(y>canvas.height&&Math.random()>0.97)drops[i]=0;
+        drops[i]+=0.55;
       }
-      raf = requestAnimationFrame(draw);
+      raf2=requestAnimationFrame(draw2);
     }
-
-    resize();
-    window.addEventListener('resize', resize);
-    draw();
-
-    window._stopMatrixRain = function() {
-      if (raf) cancelAnimationFrame(raf);
-    };
+    draw2();
+    window._stopMatrix=function(){if(raf2){cancelAnimationFrame(raf2);raf2=null;}};
   })();
 
-  /* ═══════════════════════════════════════════════════════
-     LICENSE KEY VALIDATION
-     ═══════════════════════════════════════════════════════ */
-  const LICENSE_CONFIG = {
-    day:   { regex: /^ZEV-DAY-(0[0-4][0-9]|050)$/, duration: 86400,   label: 'DAY_1D',    tier: 'day'   },
-    week:  { regex: /^ZEV-WEEK-(0[0-4][0-9]|050)$/, duration: 604800,  label: 'WEEK_7D',   tier: 'week'  },
-    month: { regex: /^ZEV-MONTH-(0[0-4][0-9]|050)$/, duration: 2592000, label: 'MONTH_30D', tier: 'month' }
-  };
+  requestAnimationFrame(() => {
+    lockEl.style.transition = 'opacity 0.5s ease';
+    lockEl.style.opacity = '1';
+  });
 
-  function checkExistingLicense() {
-    const expiry = parseInt(localStorage.getItem('zev_expiry_time') || '0', 10);
-    const tier   = localStorage.getItem('zev_license_tier') || '';
-    const now    = Math.floor(Date.now() / 1000);
+  document.getElementById('lock-status-msg').textContent = '[ SESSION EXPIRED — NEW KEY REQUIRED ]';
+  document.getElementById('lock-status-msg').className = 'err';
+}
 
-    if (expiry > now && tier) {
-      unlockMainframe(tier, false);
-    }
-  }
-
-  function injectLicense() {
-    const key      = document.getElementById('hacker-key-input').value.trim();
-    const statusEl = document.getElementById('lock-status');
-
-    if (!key) {
-      statusEl.className = 'error';
-      statusEl.textContent = '[ ERROR: NULL KEY DETECTED — INJECTION ABORTED ]';
-      return;
-    }
-
-    let matchedTier = null;
-    for (const [tierId, cfg] of Object.entries(LICENSE_CONFIG)) {
-      if (cfg.regex.test(key)) {
-        matchedTier = { tierId, cfg };
-        break;
-      }
-    }
-
-    if (!matchedTier) {
-      statusEl.className = 'error';
-      statusEl.textContent = '[ ACCESS DENIED: INVALID KEY STRUCTURE — SYSTEM LOCKED ]';
-      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-      return;
-    }
-
-    statusEl.className = 'inject';
-    statusEl.textContent = '🔓 INJECTING BYPASS EXPLOIT... SUCCESSFUL!';
-    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
-
-    const { tierId, cfg } = matchedTier;
-    const now    = Math.floor(Date.now() / 1000);
-    const expiry = now + cfg.duration;
-    localStorage.setItem('zev_expiry_time', expiry.toString());
-    localStorage.setItem('zev_license_tier', tierId);
-
-    setTimeout(() => {
-      unlockMainframe(tierId, true);
-    }, 2500);
-  }
-
-  function unlockMainframe(tier, animate) {
-    const lockEl   = document.getElementById('terminal-lock-screen');
-    const mainEl   = document.getElementById('main-app');
-    const badgeEl  = document.getElementById('license-badge');
-    const cfg      = LICENSE_CONFIG[tier];
-
-    if (!cfg) return;
-
-    badgeEl.textContent = cfg.label;
-    badgeEl.className   = `${tier}`;
-
-    if (animate) {
-      lockEl.style.transition = 'opacity 0.6s ease';
-      lockEl.style.opacity = '0';
-      setTimeout(() => {
-        lockEl.style.display = 'none';
-        window._stopMatrixRain && window._stopMatrixRain();
-        mainEl.classList.add('visible');
-        showToast('⚡ MAINFRAME UNLOCKED — WELCOME OPERATOR');
-      }, 650);
-    } else {
-      lockEl.style.display = 'none';
-      window._stopMatrixRain && window._stopMatrixRain();
-      mainEl.classList.add('visible');
-    }
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     TOAST ENGINE
-     ═══════════════════════════════════════════════════════ */
-  let toastTimer = null;
-
-  function showToast(msg) {
-    const toast  = document.getElementById('app-toast');
-    const textEl = document.getElementById('app-toast-text');
-    if (toastTimer) {
-      clearTimeout(toastTimer);
-      toast.classList.remove('show', 'hide');
-      void toast.offsetWidth;
-    }
-    textEl.textContent = msg || 'OPERATION SUCCESSFUL';
-    toast.classList.remove('hide');
-    toast.classList.add('show');
-    toastTimer = setTimeout(() => {
-      toast.classList.remove('show');
-      toast.classList.add('hide');
-      toastTimer = null;
-    }, 2800);
-  }
-
-  function haptic(pattern) {
-    if (navigator.vibrate) navigator.vibrate(pattern || [15]);
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     TAB SWITCHING
-     ═══════════════════════════════════════════════════════ */
-  function switchTab(idx) {
-    haptic([10]);
-    document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
-    document.querySelectorAll('.tab-nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     OVERCLOCK CORE ENGINE
-     ═══════════════════════════════════════════════════════ */
-  let isOverclockActive = false;
-  let wakeLockRef       = null;
-  let rafLoopId         = null;
-  let logIntervalId     = null;
-
-  const LOG_LINES = [
-    { text: '[ROOT@ZEV_CORE:~]$ nvram boot-args="gpu_perf_mode=1"',                           cls: ''      },
-    { text: '[SYS] BYPASSING APPLE THERMAL LIMITS...',                                         cls: 'amber' },
-    { text: '[TOUCH] INTERPOLATING PROMOTION POLLING RATIO: 1000Hz...',                        cls: 'cyan'  },
-    { text: '[ROOT@ZEV_CORE:~]$ sysctl -w kern.sched_preempt_pri=80',                          cls: ''      },
-    { text: '[GPU] METAL PERFORMANCE SHADER PIPELINE INJECTED',                                cls: 'cyan'  },
-    { text: '[ROOT@ZEV_CORE:~]$ defaults write com.apple.springboard SBShowTouchHighlight 0',  cls: ''      },
-    { text: '[NET] UDP PACKET QUEUE PRIORITY SET TO REALTIME',                                  cls: 'cyan'  },
-    { text: '[SYS] ANTI-THROTTLE GOVERNOR: PERFORMANCE MODE LOCKED',                           cls: 'amber' },
-    { text: '[ROOT@ZEV_CORE:~]$ launchctl setenv NSAnimationDuration 0',                       cls: ''      },
-    { text: '[RAF] REQUESTANIMATIONFRAME LOOP: 120Hz TARGET ACHIEVED',                          cls: 'cyan'  },
-    { text: '[ROOT@ZEV_CORE:~]$ nvram gpufw_load_to_bproc=1',                                  cls: ''      },
-    { text: '[TOUCH] GESTURE RECOGNIZER LATENCY: 0.001ms',                                      cls: 'cyan'  },
-    { text: '[SYS] COMPRESSION SWAP DISABLED: RAM FREED',                                       cls: 'amber' },
-    { text: '[ROOT@ZEV_CORE:~]$ killall backboardd',                                            cls: 'pink'  },
-    { text: '[GPU] TILE RENDERER BATCH SIZE: MAX_OVERRIDE',                                     cls: 'cyan'  },
-  ];
-
-  let logLineIndex = 0;
-
-  function addLogLine(text, cls) {
-    const logEl = document.getElementById('hacker-log');
-    const span  = document.createElement('span');
-    span.className = `log-line ${cls || ''}`;
-    span.textContent = text;
-    logEl.appendChild(span);
-    logEl.scrollTop = logEl.scrollHeight;
-    if (logEl.children.length > 40) logEl.removeChild(logEl.firstChild);
-  }
-
-  async function toggleOverclock() {
-    haptic([30, 30, 30]);
-    isOverclockActive = !isOverclockActive;
-
-    const ring       = document.getElementById('core-ring');
-    const btnLabel   = document.getElementById('core-btn-label');
-    const statusTxt  = document.getElementById('core-status-text');
-    const statFps    = document.getElementById('stat-fps');
-    const statTouch  = document.getElementById('stat-touch');
-    const statLock   = document.getElementById('stat-lock');
-
-    if (isOverclockActive) {
-      ring.classList.add('active');
-      btnLabel.textContent = 'ONLINE';
-      statusTxt.textContent = '[ OVERCLOCKING MODE ACTIVE — REACTOR ONLINE ]';
-      statusTxt.classList.add('active');
-      statFps.textContent   = '120Hz';
-      statFps.classList.add('active-val');
-      statFps.classList.remove('dim');
-      statTouch.textContent = '1000Hz';
-      statTouch.classList.add('active-val');
-      statTouch.classList.remove('dim');
-
-      // Wake Lock
-      try {
-        wakeLockRef = await navigator.wakeLock.request('screen');
-        statLock.textContent = 'ACTIVE';
-        statLock.classList.add('active-val');
-        statLock.classList.remove('dim');
-        addLogLine('[WAKELOCK] SCREEN SLEEP PREVENTION: ENGAGED', 'cyan');
-      } catch (e) {
-        statLock.textContent = 'DENIED';
-        addLogLine('[WAKELOCK] PERMISSION DENIED — CONTINUING WITHOUT', 'amber');
-      }
-
-      // RAF Loop — force GPU polling
-      let rafCount = 0;
-      function rafLoop() {
-        rafCount++;
-        if (rafCount % 60 === 0) {
-          const lineData = LOG_LINES[logLineIndex % LOG_LINES.length];
-          addLogLine(lineData.text, lineData.cls);
-          logLineIndex++;
-        }
-        if (isOverclockActive) rafLoopId = requestAnimationFrame(rafLoop);
-      }
-      rafLoopId = requestAnimationFrame(rafLoop);
-
-      addLogLine('[SYS] OVERCLOCKING SEQUENCE INITIATED...', 'amber');
-      addLogLine('[ROOT@ZEV_CORE:~]$ nvram boot-args="gpu_perf_mode=1"', '');
-      addLogLine('[SYS] BYPASSING APPLE THERMAL LIMITS...', 'amber');
-      addLogLine('[TOUCH] INTERPOLATING PROMOTION POLLING RATIO: 1000Hz...', 'cyan');
-
-      showToast('⚡ OVERCLOCK ACTIVATED — REACTOR ONLINE');
-    } else {
-      ring.classList.remove('active');
-      btnLabel.textContent = 'ACTIVATE';
-      statusTxt.textContent = '[ SYSTEM STANDBY — REACTOR OFFLINE ]';
-      statusTxt.classList.remove('active');
-      statFps.textContent   = '—';
-      statFps.classList.remove('active-val');
-      statFps.classList.add('dim');
-      statTouch.textContent = '—';
-      statTouch.classList.remove('active-val');
-      statTouch.classList.add('dim');
-      statLock.textContent  = '—';
-      statLock.classList.remove('active-val');
-      statLock.classList.add('dim');
-
-      if (wakeLockRef) {
-        wakeLockRef.release();
-        wakeLockRef = null;
-      }
-
-      if (rafLoopId) {
-        cancelAnimationFrame(rafLoopId);
-        rafLoopId = null;
-      }
-
-      addLogLine('[SYS] REACTOR SHUTDOWN SEQUENCE INITIATED', 'amber');
-      addLogLine('[SYS] SYSTEM RETURNING TO STANDBY MODE', 'muted');
-      showToast('[ OVERCLOCK DEACTIVATED — STANDBY MODE ]');
-    }
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     TOGGLE CARDS
-     ═══════════════════════════════════════════════════════ */
-  function handleToggle(event, switchId) {
-    const sw = document.getElementById(switchId);
-    if (sw && event.target !== sw && event.target.tagName !== 'SPAN') {
-      sw.checked = !sw.checked;
-      sw.dispatchEvent(new Event('change'));
-    }
-  }
-
-  function onToggleChange(el) {
-    haptic([15]);
-    const card = el.closest('.toggle-card');
-    if (card) card.classList.toggle('active-card', el.checked);
-    showToast('⚡ ĐÃ BẬT CHỨC NĂNG THÀNH CÔNG!');
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     DNS ACCELERATOR
-     ═══════════════════════════════════════════════════════ */
-  const DNS_PROFILES = [
-    { name: 'Cloudflare Hyper-Speed', sub: 'Ultra-fast resolver',  ip1: '1.1.1.1',         ip2: '1.0.0.1'         },
-    { name: 'Google Public Core',      sub: 'Reliable global DNS',  ip1: '8.8.8.8',          ip2: '8.8.4.4'          },
-    { name: 'AdGuard Gaming Shield',   sub: 'Ad-blocked gaming',    ip1: '94.140.14.14',     ip2: '94.140.15.15'     },
-    { name: 'Quad9 Secure Core',       sub: 'Threat-blocking DNS',  ip1: '9.9.9.9',           ip2: '149.112.112.112'  },
-    { name: 'OpenDNS Home Speed',      sub: 'Customizable resolver',ip1: '208.67.222.222',   ip2: '208.67.220.220'   },
-    { name: 'CleanBrowsing Gaming',    sub: 'Clean & fast gaming',  ip1: '185.228.168.168',  ip2: '185.228.169.168'  },
-    { name: 'Comodo Secure',           sub: 'Malware protection',   ip1: '8.26.56.26',       ip2: '8.20.247.20'      },
-    { name: 'Level3 Infrastructure',   sub: 'Enterprise-grade DNS', ip1: '209.244.0.3',      ip2: '209.244.0.4'      },
-  ];
-
-  function buildDnsGrid() {
-    const grid = document.getElementById('dns-grid');
-    grid.innerHTML = DNS_PROFILES.map((dns, idx) => `
-      <div class="dns-card" id="dns-card-${idx}">
-        <div class="dns-card-header">
-          <div>
-            <div class="dns-name">${dns.name}</div>
-            <div class="dns-sub">${dns.sub}</div>
-          </div>
-          <label class="dns-mini-switch" onclick="event.stopPropagation()">
-            <input type="checkbox" id="dns-sw-${idx}" onchange="activateDns(${idx}, this)">
-            <span class="dns-sw-track"></span>
-          </label>
-        </div>
-        <div class="dns-ip-row">
-          <span class="dns-ip-text">${dns.ip1}</span>
-          <button class="copy-btn" onclick="copyDnsIp('${dns.ip1}','${dns.name}',1)">COPY IP1</button>
-        </div>
-        <div class="dns-ip-row">
-          <span class="dns-ip-text">${dns.ip2}</span>
-          <button class="copy-btn" onclick="copyDnsIp('${dns.ip2}','${dns.name}',2)">COPY IP2</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function copyDnsIp(ip, name, num) {
-    haptic([15]);
-    const txt = `${name} IP${num}: ${ip}`;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(ip).then(() => showToast(`✓ COPIED: ${ip}`)).catch(() => { fallbackCopy(ip); showToast(`✓ COPIED: ${ip}`); });
-    } else {
-      fallbackCopy(ip);
-      showToast(`✓ COPIED: ${ip}`);
-    }
-  }
-
-  function activateDns(idx, el) {
-    haptic([15]);
-    document.querySelectorAll('.dns-card').forEach((card, i) => card.classList.toggle('active-dns', i === idx && el.checked));
-    showToast(el.checked ? `✓ DNS ${DNS_PROFILES[idx].name} ACTIVATED` : '[ DNS PROFILE DEACTIVATED ]');
-  }
-
-  function fallbackCopy(text) {
+/* ════════════════════════════════════════════════════════
+   ACCOUNT ACTIONS
+   ════════════════════════════════════════════════════════ */
+function copyLink() {
+  const url = 'https://ducanhzev.pages.dev/';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => showToast('✓ COPIED LINK: ducanhzev.pages.dev'));
+  } else {
     const el = document.createElement('textarea');
-    el.value = text;
-    el.style.cssText = 'position:fixed;opacity:0;';
+    el.value = url;
+    el.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(el);
-    el.focus();
     el.select();
-    try { document.execCommand('copy'); } catch (e) {}
+    document.execCommand('copy');
     document.body.removeChild(el);
+    showToast('✓ LINK COPIED!');
   }
+  if (navigator.vibrate) navigator.vibrate([15]);
+}
 
-  /* ═══════════════════════════════════════════════════════
-     MOBILECONFIG GENERATOR & DOWNLOAD
-     ═══════════════════════════════════════════════════════ */
-  function downloadMobileConfig() {
-    haptic([30]);
-    const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+function openInstallGuide() {
+  showToast('📱 Tải ZevBoost.mobileconfig và đi tới Cài đặt để cài profile.');
+  if (navigator.vibrate) navigator.vibrate([20]);
+}
+
+function renewKey() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  localStorage.removeItem('zev_key');
+  localStorage.removeItem('zev_exact_expiry');
+  localStorage.removeItem('zev_tier');
+
+  const mainEl = document.getElementById('main-app');
+  const lockEl = document.getElementById('cyber-lock-screen');
+  mainEl.classList.remove('visible');
+  mainEl.style.display = 'none';
+  lockEl.style.display = 'flex';
+  lockEl.style.opacity = '1';
+  lockEl.style.transition = '';
+  
+  document.getElementById('key-input').disabled = false;
+  document.getElementById('key-input').value = '';
+  document.getElementById('inject-btn').disabled = false;
+  document.getElementById('inject-progress-area').style.display = 'none';
+  document.getElementById('inject-log-terminal').innerHTML = '';
+  document.getElementById('lock-status-msg').textContent = '[ SYSTEM ACCESS REVOKED — CHOOSE RENEW KEY ]';
+  document.getElementById('lock-status-msg').className = '';
+
+  (function() {
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx    = canvas.getContext('2d');
+    const CHARS2 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    let dr2 = Array.from({length: Math.floor(canvas.width/14)}, () => -(Math.random()*30));
+    let r2  = null;
+    function d2() {
+      ctx.fillStyle='rgba(8,2,15,0.07)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.font='12px Space Mono,monospace';
+      for(let i=0;i<dr2.length;i++){
+        const y=dr2[i]*14;
+        ctx.fillStyle=y<canvas.height*0.3?'#b700ff':'rgba(138,43,226,0.55)';
+        ctx.fillText(CHARS2[Math.floor(Math.random()*CHARS2.length)],i*14,y);
+        if(y>canvas.height&&Math.random()>0.975)dr2[i]=0;
+        dr2[i]+=0.55;
+      }
+      r2=requestAnimationFrame(d2);
+    }
+    d2();
+    window._stopMatrix=function(){if(r2){cancelAnimationFrame(r2);r2=null;}};
+  })();
+}
+
+function revokeKey() {
+  if (confirm('Xác nhận hủy phiên đăng nhập và khóa ứng dụng ngay lập tức?')) {
+    expireSession();
+    showToast('🗑 LOGOUT COMPLETED');
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   TAB SWITCHING
+   ════════════════════════════════════════════════════════ */
+function switchTab(idx) {
+  if (navigator.vibrate) navigator.vibrate([10]);
+  document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tab-nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+}
+
+/* ════════════════════════════════════════════════════════
+   TOAST
+   ════════════════════════════════════════════════════════ */
+let _toastTimer = null;
+
+function showToast(msg) {
+  const el    = document.getElementById('app-toast');
+  const txtEl = document.getElementById('toast-txt');
+  if (_toastTimer) { clearTimeout(_toastTimer); el.classList.remove('show','hide'); void el.offsetWidth; }
+  txtEl.textContent = msg || 'DONE';
+  el.classList.remove('hide');
+  el.classList.add('show');
+  _toastTimer = setTimeout(() => {
+    el.classList.remove('show');
+    el.classList.add('hide');
+    _toastTimer = null;
+  }, 2800);
+}
+
+/* ════════════════════════════════════════════════════════
+   OVERCLOCK CORE ENGINE
+   ════════════════════════════════════════════════════════ */
+let ocActive  = false;
+let wakeLock  = null;
+let rafLoop   = null;
+let logIdx    = 0;
+
+const LOG_CMDS = [
+  { t: '[ROOT@ZEV:~]$ sysctl -w kern.sched_preempt_pri=80',          c: '' },
+  { t: '[GPU] METAL SHADER PIPELINE INJECTED — LATENCY: 0.012ms',    c: 'cyan' },
+  { t: '[SYS] BYPASSING APPLE THERMAL LIMITER...',                   c: 'amber' },
+  { t: '[ROOT@ZEV:~]$ nvram boot-args="gpu_perf_mode=1"',            c: '' },
+  { t: '[TOUCH] RAF POLLING LOOP: 120Hz TARGET LOCKED',               c: 'cyan' },
+  { t: '[ROOT@ZEV:~]$ launchctl setenv NSAnimationDuration 0',        c: '' },
+  { t: '[NET] UDP REALTIME PACKET QUEUE OVERRIDE: ACTIVE',            c: 'green' },
+  { t: '[SYS] ANTI-THROTTLE GOVERNOR: PERFORMANCE LOCKED',            c: 'amber' },
+  { t: '[ROOT@ZEV:~]$ killall backboardd',                            c: 'pink' },
+  { t: '[GPU] TILE RENDERER BATCH SIZE: MAX_OVERRIDE',                c: 'cyan' },
+  { t: '[ROOT@ZEV:~]$ defaults write com.apple.springboard ReduceMotion 1', c: '' },
+  { t: '[TOUCH] GESTURE RECOGNIZER LATENCY: 0.001ms',                 c: 'green' },
+  { t: '[SYS] COMPRESSION SWAP DISABLED: RAM FREED +2.4GB',           c: 'amber' },
+  { t: '[ROOT@ZEV:~]$ nvram gpufw_load_to_bproc=1',                   c: '' },
+  { t: '[MEM] VIRTUAL MEMORY PRESSURE: NOMINAL',                       c: 'green' },
+];
+
+function addLog(text, cls) {
+  const log  = document.getElementById('hacker-log');
+  const span = document.createElement('span');
+  span.className   = 'log-ln ' + (cls || '');
+  span.textContent = text;
+  log.appendChild(document.createElement('br'));
+  log.appendChild(span);
+  log.scrollTop = log.scrollHeight;
+  if (log.childNodes.length > 80) {
+    log.removeChild(log.firstChild);
+    log.removeChild(log.firstChild);
+  }
+}
+
+async function toggleOverclock() {
+  if (navigator.vibrate) navigator.vibrate([25, 15, 25]);
+  ocActive = !ocActive;
+
+  const btn    = document.getElementById('core-btn');
+  const lbl    = document.getElementById('core-lbl');
+  const status = document.getElementById('core-status');
+  const svFps  = document.getElementById('sv-fps');
+  const svTch  = document.getElementById('sv-touch');
+  const svLck  = document.getElementById('sv-lock');
+
+  ['cr1','cr2','cr3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', ocActive);
+  });
+
+  btn.classList.toggle('active', ocActive);
+
+  if (ocActive) {
+    lbl.textContent    = 'ONLINE';
+    status.textContent = '[ OVERCLOCKING ACTIVE — REACTOR ONLINE ]';
+    status.classList.add('active');
+
+    svFps.textContent  = '120Hz'; svFps.classList.add('on');
+    svTch.textContent  = '1000Hz'; svTch.classList.add('on');
+
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      svLck.textContent = 'ACTIVE'; svLck.classList.add('on');
+      addLog('[WAKELOCK] SCREEN SLEEP PREVENTION: ENGAGED', 'green');
+    } catch (e) {
+      svLck.textContent = 'DENIED'; svLck.classList.remove('on');
+      addLog('[WAKELOCK] PERMISSION DENIED — CONTINUING', 'amber');
+    }
+
+    addLog('[SYS] OVERCLOCKING SEQUENCE INITIATED...', 'amber');
+    addLog('[ROOT@ZEV:~]$ nvram boot-args="gpu_perf_mode=1"', '');
+    addLog('[TOUCH] INTERPOLATING PROMOTION POLLING RATIO: 1000Hz...', 'cyan');
+
+    let rafCnt = 0;
+    function loop() {
+      rafCnt++;
+      if (rafCnt % 55 === 0) {
+        const cmd = LOG_CMDS[logIdx % LOG_CMDS.length];
+        addLog(cmd.t, cmd.c);
+        logIdx++;
+      }
+      if (ocActive) rafLoop = requestAnimationFrame(loop);
+    }
+    rafLoop = requestAnimationFrame(loop);
+    showToast('⚡ OVERCLOCK REACTOR ONLINE!');
+
+  } else {
+    lbl.textContent    = 'ACTIVATE';
+    status.textContent = '[ STANDBY — REACTOR OFFLINE ]';
+    status.classList.remove('active');
+
+    svFps.textContent  = '—'; svFps.classList.remove('on');
+    svTch.textContent  = '—'; svTch.classList.remove('on');
+    svLck.textContent  = '—'; svLck.classList.remove('on');
+
+    if (wakeLock) { wakeLock.release(); wakeLock = null; }
+    if (rafLoop)  { cancelAnimationFrame(rafLoop); rafLoop = null; }
+
+    addLog('[SYS] REACTOR SHUTDOWN SEQUENCE...', 'amber');
+    addLog('[SYS] STANDBY MODE RESTORED', 'dim');
+    showToast('[ OVERCLOCK DEACTIVATED — STANDBY ]');
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   DOWNLOAD MOBILECONFIG
+   ════════════════════════════════════════════════════════ */
+function downloadProfile() {
+  if (navigator.vibrate) navigator.vibrate([25]);
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PayloadList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>PayloadContent</key>
-    <array>
-        <dict>
-            <key>PayloadDescription</key>
-            <string>ZEV QUANTUM OVERLORD - High Priority Network Override</string>
-            <key>PayloadDisplayName</key>
-            <string>ZEV QUANTUM DNS Critical</string>
-            <key>PayloadIdentifier</key>
-            <string>com.zevquantum.dns.managed</string>
-            <key>PayloadType</key>
-            <string>com.apple.dnsSettings.managed</string>
-            <key>PayloadUUID</key>
-            <string>Q1N2V3A4-B5C6-7D8E-9F0A-1B2C3D4E5F6A</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-            <key>DNSSettings</key>
-            <dict>
-                <key>DNSProtocol</key>
-                <string>HTTPS</string>
-                <key>ServerURL</key>
-                <string>https://cloudflare-dns.com/dns-query</string>
-                <key>ServerAddresses</key>
-                <array>
-                    <string>1.1.1.1</string>
-                    <string>1.0.0.1</string>
-                    <string>8.8.8.8</string>
-                    <string>8.8.4.4</string>
-                    <string>2606:4700:4700::1111</string>
-                    <string>2606:4700:4700::1001</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
-    <key>PayloadDisplayName</key>
-    <string>ZEV QUANTUM PROFILE</string>
-    <key>PayloadIdentifier</key>
-    <string>com.zevquantum.profile</string>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>Z1E2V3B4-O5O6-7S8T-9U0L-1A2R3D4F5G6H</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDescription</key>
+      <string>ZEV BOOST QUANTUM — Encrypted Dual DNS via HTTPS</string>
+      <key>PayloadDisplayName</key>
+      <string>ZEV Boost Network Profile</string>
+      <key>PayloadIdentifier</key>
+      <string>com.zevboost.dns.v6</string>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadUUID</key>
+      <string>Z6E1V2B3-O4O5-6S7T-8U9V-0AZBDCEDFE2F</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>DNSSettings</key>
+      <dict>
+        <key>DNSProtocol</key>
+        <string>HTTPS</string>
+        <key>ServerURL</key>
+        <string>https://cloudflare-dns.com/dns-query</string>
+        <key>ServerAddresses</key>
+        <array>
+          <string>1.1.1.1</string>
+          <string>1.0.0.1</string>
+          <string>8.8.8.8</string>
+          <string>8.8.4.4</string>
+          <string>2606:4700:4700::1111</string>
+          <string>2606:4700:4700::1001</string>
+          <string>2001:4860:4860::8888</string>
+          <string>2001:4860:4860::8844</string>
+        </array>
+      </dict>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>ZEV Boost QUANTUM Network</string>
+  <key>PayloadIdentifier</key>
+  <string>com.zevboost.profile.v6</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>Z6E2V3B4-O5O6-7S8T-9UAB-1CZDEV3F4G6H</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
 </dict>
 </plist>`;
 
-    const blob = new Blob([xmlContent], { type: 'application/x-apple-aspen-config' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'ZevQuantum_DNS_Critical.mobileconfig';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const blob = new Blob([xml], { type: 'application/x-apple-aspen-config' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = 'zev_boost_network.mobileconfig';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('⬇ PROFILE TẢI XONG — VÀO CÀI ĐẶT → HỒ SƠ ĐỂ CÀI!');
+  addLog('[NET] DNS PROFILE EXPORTED: zev_boost_network.mobileconfig', 'green');
+}
 
-    showToast('⬇ MOBILECONFIG GENERATED — CHECK DOWNLOADS');
-    addLogLine('[NET] DNS PROFILE INJECTED: ZevQuantum_DNS_Critical.mobileconfig', 'cyan');
+/* ════════════════════════════════════════════════════════
+   FREE FIRE OPTIMIZER
+   ════════════════════════════════════════════════════════ */
+const FF_PROG_IDS = ['touch','aim','dpi','reco','fps'];
+const FF_MAX_VALS = [97, 94, 91, 88, 95];
+
+function ffToggle(idx, evt) {
+  const sw = document.getElementById('ff-sw-' + idx);
+  if (sw && evt.target !== sw && evt.target.tagName !== 'SPAN') {
+    sw.checked = !sw.checked;
+    sw.dispatchEvent(new Event('change'));
+  }
+}
+
+function ffSwChange(idx, el) {
+  if (navigator.vibrate) navigator.vibrate([15]);
+  const card = document.getElementById('ffc-' + idx);
+  card.classList.toggle('card-on', el.checked);
+
+  const barId  = FF_PROG_IDS[idx];
+  const barEl  = document.getElementById('prg-' + barId);
+  const pctEl  = document.getElementById('prg-' + barId + '-pct');
+  const target = el.checked ? FF_MAX_VALS[idx] : 0;
+
+  if (barEl && pctEl) {
+    barEl.style.width = target + '%';
+    pctEl.textContent = target + '%';
   }
 
-  /* ═══════════════════════════════════════════════════════
-     MODAL
-     ═══════════════════════════════════════════════════════ */
-  function openInstallModal() {
-    haptic([15]);
-    document.getElementById('install-modal-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
+  showToast(el.checked ? '⚡ ĐÃ BẬT: ' + getFFLabel(idx) : '[ TẮT: ' + getFFLabel(idx) + ' ]');
+}
+
+function getFFLabel(idx) {
+  return ['X20 Speed Touch', 'Macro Glitch Drag', 'DPI Simulator Matrix', 'Anti-Recoil Engine', 'Frame Sync Boost'][idx] || '';
+}
+
+/* ════════════════════════════════════════════════════════
+   OB54 SENSITIVITY TUNER
+   ════════════════════════════════════════════════════════ */
+const DEVICE_DB = {
+  promax: { 1:165, 2:170, 3:180, 4:148, 5:0, 6:93, 7:52 },
+  pro:    { 1:168, 2:172, 3:178, 4:150, 5:0, 6:95, 7:50 },
+  plus:   { 1:170, 2:175, 3:182, 4:152, 5:0, 6:90, 7:48 },
+  mini:   { 1:175, 2:180, 3:185, 4:155, 5:0, 6:88, 7:45 },
+  base:   { 1:172, 2:177, 3:183, 4:151, 5:0, 6:91, 7:47 },
+};
+
+function getDeviceCfg(name) {
+  const n = name.toLowerCase().replace(/\s+/g,'');
+  if (n.includes('promax') || n.includes('pro max') || n.includes('plus max')) return DEVICE_DB.promax;
+  if (n.includes('pro'))    return DEVICE_DB.pro;
+  if (n.includes('plus'))   return DEVICE_DB.plus;
+  if (n.includes('mini'))   return DEVICE_DB.mini;
+  return DEVICE_DB.base;
+}
+
+function isValidDevice(name) {
+  const n = name.toLowerCase().replace(/\s+/g,'');
+  return /iphone(7|8|x|xs|xr|se|11|12|13|14|15|16)/.test(n) ||
+         n.includes('iphone');
+}
+
+function checkDevice() {
+  const val = document.getElementById('device-input').value.trim();
+  document.getElementById('analyze-btn').disabled = val.length < 2;
+}
+
+function runAnalyze() {
+  const name = document.getElementById('device-input').value.trim();
+  const btn  = document.getElementById('analyze-btn');
+  const statusEl = document.getElementById('sens-status');
+
+  if (!isValidDevice(name)) {
+    statusEl.className = 'err';
+    statusEl.textContent = '❌ Thiết bị không hỗ trợ hoặc tên không hợp lệ!';
+    if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+    return;
   }
 
-  function closeInstallModal(event) {
-    document.getElementById('install-modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  btn.disabled = true;
+  statusEl.className = 'prg';
+  statusEl.textContent = `⏳ Đang phân tích phần cứng: ${name}...`;
 
-  function closeInstallModalBtn() {
-    haptic([10]);
-    closeInstallModal();
-  }
+  const barWrap = document.getElementById('scan-bar-wrap');
+  const fill    = document.getElementById('scan-fill');
+  const lbl     = document.getElementById('scan-lbl');
+  barWrap.style.display = 'flex';
+  fill.style.width = '0%';
 
-  /* ═══════════════════════════════════════════════════════
-     COPY SHARE LINK
-     ═══════════════════════════════════════════════════════ */
-  function copyShareLink() {
-    haptic([40]);
-    const url = 'https://ducanhzev.pages.dev/';
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(() => showToast('✓ LINK COPIED: ducanhzev.pages.dev')).catch(() => { fallbackCopy(url); showToast('✓ LINK COPIED: ducanhzev.pages.dev'); });
-    } else {
-      fallbackCopy(url);
-      showToast('✓ LINK COPIED: ducanhzev.pages.dev');
-    }
-  }
+  if (navigator.vibrate) navigator.vibrate([15, 15]);
 
-  /* ═══════════════════════════════════════════════════════
-     OB54 SENSITIVITY TUNER
-     ═══════════════════════════════════════════════════════ */
-  let calibInterval = null;
+  setTimeout(() => {
+    fill.style.transition = 'width 1.5s cubic-bezier(0.16,1,0.3,1)';
+    fill.style.width = '100%';
+    lbl.textContent = `Đang tối ưu ma trận cho: ${name}...`;
+  }, 80);
 
-  function validateDevice(modelName) {
-    const name = modelName.toLowerCase().replace(/\s+/g, '');
-    return /iphone(7|8|x|xs|xr|11|12|13|14|15|16)/.test(name) ||
-           /(7plus|8plus|xsmax|promax|11pro|12pro|13pro|14pro|15pro|16pro|12mini|13mini|14plus|15plus|16plus)/.test(name) ||
-           ['iphone7','iphone8','iphonex','iphonexr','iphonexs','iphonexsmax',
-            'iphone11','iphone12','iphone13','iphone14','iphone15','iphone16'].some(d => name.includes(d));
-  }
+  setTimeout(() => {
+    barWrap.style.display = 'none';
+    fill.style.width = '0%';
+    fill.style.transition = '';
 
-  function getDeviceCategory(modelName) {
-    const name = modelName.toLowerCase().replace(/\s+/g, '');
-    if (/(14|15|16)/.test(name)) return 3;
-    if (/(11|12|13)/.test(name)) return 2;
-    return 1;
-  }
-
-  function checkDeviceInput() {
-    const val = document.getElementById('device-model').value.trim();
-    document.getElementById('calibrate-btn').disabled = val.length < 2;
-  }
-
-  function executeCalibration() {
-    const btn       = document.getElementById('calibrate-btn');
-    const status    = document.getElementById('calibration-status');
-    const model     = document.getElementById('device-model').value.trim();
-    const container = document.getElementById('sliders-container');
-
-    if (!validateDevice(model)) {
-      status.className = 'error';
-      status.innerHTML = '❌ Thiết bị không hợp lệ hoặc cấu trúc phần cứng không được hỗ trợ phân tích!';
-      haptic([100, 50, 100]);
-      return;
-    }
-
-    btn.disabled = true;
-    status.className = 'scanning';
-    let progress = 0;
-    if (calibInterval) clearInterval(calibInterval);
-    haptic([30, 30]);
-
-    calibInterval = setInterval(() => {
-      progress += 20;
-      btn.textContent = `ANALYZING INTERFACE MATRIX... ${progress}%`;
-      status.innerHTML = `⏳ Thuật toán AI đang phân tích dữ liệu màn hình cho <strong>${model}</strong>...`;
-      haptic([10]);
-
-      if (progress >= 100) {
-        clearInterval(calibInterval);
-        calibInterval = null;
-
-        btn.textContent  = '✓ HOÀN THÀNH CẤU HÌNH';
-        status.className = 'ok';
-        status.innerHTML = `✅ ĐỒNG BỘ THÀNH CÔNG ĐỘ NHẠY KÉO TÂM CHO: <strong>${model}</strong>`;
-
-        const cat = getDeviceCategory(model);
-        let config = {};
-        if (cat === 1)      config = { 1:182, 2:188, 3:192, 4:165, 5:30,  6:95, 7:42 };
-        else if (cat === 3) config = { 1:152, 2:147, 3:130, 4:122, 5:0,   6:85, 7:52 };
-        else                config = { 1:165, 2:170, 3:180, 4:148, 5:0,   6:93, 7:48 };
-
-        for (let i = 1; i <= 7; i++) {
-          const rangeEl = document.getElementById(`range-${i}`);
-          const valEl   = document.getElementById(`val-${i}`);
-          if (rangeEl && valEl) {
-            rangeEl.value    = config[i];
-            valEl.textContent = i === 7 ? `${config[i]}%` : config[i];
-          }
-        }
-
-        container.style.display = 'block';
-        haptic([50, 100, 50]);
-        showToast('⚡ ĐỘ NHẠY ĐÃ ĐƯỢC ĐỒNG BỘ THÀNH CÔNG!');
+    const cfg = getDeviceCfg(name);
+    for (let i = 1; i <= 7; i++) {
+      const range = document.getElementById('sr' + i);
+      const val   = document.getElementById('sv' + i);
+      if (range && val) {
+        range.value   = cfg[i];
+        val.textContent = i === 7 ? cfg[i] + '%' : cfg[i];
       }
-    }, 300);
-  }
+    }
 
-  function stepSlider(sliderId, direction) {
-    const rangeEl = document.getElementById(`range-${sliderId}`);
-    const valEl   = document.getElementById(`val-${sliderId}`);
-    if (!rangeEl || !valEl) return;
+    document.getElementById('sliders-zone').style.display = 'flex';
+    document.getElementById('sliders-zone').style.flexDirection = 'column';
+    document.getElementById('sliders-zone').style.gap = '10px';
 
-    let cur = parseInt(rangeEl.value, 10);
-    if (isNaN(cur)) cur = sliderId === 7 ? 10 : 0;
+    statusEl.className = 'ok';
+    statusEl.textContent = `✅ ĐÃ ĐỒNG BỘ XONG ĐỘ NHẠY CHO: ${name}`;
+    btn.disabled = false;
+    if (navigator.vibrate) navigator.vibrate([40, 80, 40]);
+    showToast('⚡ ĐỘ NHẠY OB54 ĐÃ ĐƯỢC ĐỒNG BỘ!');
 
-    const min = parseInt(rangeEl.min, 10);
-    const max = parseInt(rangeEl.max, 10);
-    let nv  = cur + direction;
-    if (nv < min) nv = min;
-    if (nv > max) nv = max;
+  }, 1700);
+}
 
-    rangeEl.value    = nv;
-    valEl.textContent = sliderId === 7 ? `${nv}%` : nv;
-    haptic([10]);
-  }
+function stepSlider(id, dir) {
+  const range = document.getElementById('sr' + id);
+  const val   = document.getElementById('sv' + id);
+  if (!range || !val) return;
+  let cur = parseInt(range.value, 10);
+  const mn = parseInt(range.min, 10);
+  const mx = parseInt(range.max, 10);
+  cur = Math.max(mn, Math.min(mx, cur + dir));
+  range.value = cur;
+  val.textContent = id === 7 ? cur + '%' : cur;
+  if (navigator.vibrate) navigator.vibrate([8]);
+}
 
-  function updateSliderVal(sliderId, valId) {
-    const rangeEl = document.getElementById(`range-${sliderId}`);
-    const valEl   = document.getElementById(valId);
-    if (!rangeEl || !valEl) return;
-    const v = parseInt(rangeEl.value, 10);
-    valEl.textContent = sliderId === 7 ? `${v}%` : v;
-  }
+function onRange(id) {
+  const range = document.getElementById('sr' + id);
+  const val   = document.getElementById('sv' + id);
+  if (!range || !val) return;
+  val.textContent = id === 7 ? range.value + '%' : range.value;
+}
 
-  /* ═══════════════════════════════════════════════════════
-     LIVE TELEMETRY
-     ═══════════════════════════════════════════════════════ */
-  function initTelemetry() {
-    const ua = navigator.userAgent;
-    let gpu  = 'GPU_CORE';
-    if (/iPhone OS 1[78]/.test(ua))  gpu = 'A17_PRO';
-    else if (/iPhone OS 16/.test(ua)) gpu = 'A16_GPU';
-    else if (/iPhone OS 15/.test(ua)) gpu = 'A15_GPU';
-    else if (/iPhone OS 14/.test(ua)) gpu = 'A14_GPU';
-    document.getElementById('tele-gpu').textContent = gpu;
+/* ════════════════════════════════════════════════════════
+   LIVE HUD TELEMETRY
+   ════════════════════════════════════════════════════════ */
+function startTelemetry() {
+  const ua = navigator.userAgent;
+  let gpu = 'A15_GPU';
+  if (/OS 18/.test(ua))      gpu = 'A18_PRO';
+  else if (/OS 17/.test(ua)) gpu = 'A17_PRO';
+  else if (/OS 16/.test(ua)) gpu = 'A16_GPU';
+  else if (/OS 15/.test(ua)) gpu = 'A15_GPU';
+  else if (/OS 14/.test(ua)) gpu = 'A14_GPU';
+  document.getElementById('hud-gpu').textContent = gpu;
 
-    let fps = 60.0, fpsDir = -1;
-    setInterval(() => {
-      fps += fpsDir * Math.random() * 0.2;
-      if (fps <= 59.5) fpsDir = 1;
-      if (fps >= 60.0) { fps = 60.0; fpsDir = -1; }
-      document.getElementById('tele-fps').textContent = fps.toFixed(1);
-    }, 1200);
+  let fps = 59.8, fpsDir = -1;
+  setInterval(() => {
+    fps += fpsDir * (Math.random() * 0.25);
+    if (fps <= 59.5) fpsDir = 1;
+    if (fps >= 60.0) { fps = 60.0; fpsDir = -1; }
+    document.getElementById('hud-fps').textContent = fps.toFixed(1);
+  }, 1100);
 
-    setInterval(() => {
-      const ping = Math.floor(22 + Math.random() * 12);
-      document.getElementById('tele-ping').textContent = ping + 'ms';
-    }, 1800);
-  }
+  setInterval(() => {
+    const p = Math.floor(25 + Math.random() * 12);
+    document.getElementById('hud-ping').textContent = p + 'ms';
+  }, 1700);
+}
 
-  /* ═══════════════════════════════════════════════════════
-     PASSIVE LISTENERS — iOS PERFORMANCE
-     ═══════════════════════════════════════════════════════ */
-  window.addEventListener('scroll',    () => {}, { passive: true });
-  window.addEventListener('touchmove', () => {}, { passive: true });
+/* ════════════════════════════════════════════════════════
+   iOS PASSIVE LISTENERS
+   ════════════════════════════════════════════════════════ */
+window.addEventListener('scroll',    () => {}, { passive: true });
+window.addEventListener('touchmove', () => {}, { passive: true });
 
-  /* ═══════════════════════════════════════════════════════
-     INIT
-     ═══════════════════════════════════════════════════════ */
-  document.addEventListener('DOMContentLoaded', () => {
-    checkExistingLicense();
-    buildDnsGrid();
-    initTelemetry();
-    switchTab(0);
-  });
+/* ════════════════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  checkStoredKey();
+});
 </script>
 </body>
 </html>
