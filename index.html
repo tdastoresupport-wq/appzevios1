@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="ZEV"/>
 <meta name="theme-color" content="#030107"/>
-<meta name="description" content="ZEV Cyber Void — Quantum Gaming Optimizer v4.4"/>
+<meta name="description" content="ZEV Cyber Void — Quantum Gaming Optimizer v4.5.0"/>
 <title>ZEV CYBER VOID</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -15,21 +15,18 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
-/* ═══════════════════════════════════════════
-   ROOT DESIGN SYSTEM
-═══════════════════════════════════════════ */
+/* ═══ ROOT TOKENS ═══ */
 :root{
   --bg:#030107;--pk:#ff007f;--pu:#7a22ff;--cy:#00f0ff;
   --gr:#00ff88;--or:#ffaa00;--rd:#ff003c;--amb:#ffb700;
   --tx:#f0e8ff;--d1:#9070b8;--d2:#4a2d6a;
   --gb:rgba(122,34,255,.06);--gbd:rgba(122,34,255,.18);--gbp:rgba(255,0,127,.14);
   --safe-t:env(safe-area-inset-top,44px);--safe-b:env(safe-area-inset-bottom,34px);
-  --safe-l:env(safe-area-inset-left,0px);--safe-r:env(safe-area-inset-right,0px);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',sans-serif;color:var(--tx);-webkit-font-smoothing:antialiased;overflow:hidden;position:fixed;inset:0}
 
-/* ── CANVAS ── */
+/* ── CANVAS BG ── */
 #cyberEyeCanvas{position:fixed;inset:0;z-index:1;pointer-events:none;width:100%;height:100%}
 
 /* ── TOAST ── */
@@ -52,57 +49,47 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .ban-sub{font-family:'Share Tech Mono',monospace;font-size:11.5px;color:var(--d1);line-height:1.55}
 .ban-code{display:inline-block;margin-top:14px;padding:5px 13px;background:rgba(255,0,60,.09);border:1px solid rgba(255,0,60,.28);border-radius:6px;font-family:'Share Tech Mono',monospace;font-size:10.5px;color:var(--rd)}
 
-/* ══════════════════════════════════════════
-   MỤC 1.4: PAYMENT QR MODAL (NCB Bank Style)
-══════════════════════════════════════════ */
-#buy-modal{position:fixed;inset:0;z-index:99997;background:rgba(3,1,7,.85);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:none;align-items:center;justify-content:center;padding:20px}
+/* ══ MỤC 1.3: NCB BANK PAYMENT QR MODAL ══ */
+#buy-modal{position:fixed;inset:0;z-index:99997;background:rgba(3,1,7,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:none;align-items:center;justify-content:center;padding:20px}
 #buy-modal.on{display:flex}
 .buy-wrap{width:100%;max-width:360px;animation:modalIn .45s cubic-bezier(.34,1.56,.64,1)}
 @keyframes modalIn{from{transform:scale(.88) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-
-/* NCB Card exact layout (MỤC 1.4) */
-.ncb-card{width:100%;background:linear-gradient(160deg,#1565c0 0%,#1e88e5 40%,#42a5f5 100%);border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(21,101,192,.4)}
-.ncb-header{padding:22px 24px 16px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,transparent 100%)}
-.ncb-name{font-family:'Orbitron',monospace;font-size:clamp(17px,5vw,22px);font-weight:900;color:#fff;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.3)}
-.ncb-white-card{background:#fff;margin:0 16px;border-radius:18px;padding:20px 20px 18px;position:relative}
-.ncb-logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
-.ncb-logo-circle{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#e53935);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.2);flex-shrink:0}
-.ncb-logo-circle svg{width:22px;height:22px}
+.ncb-card{width:100%;background:linear-gradient(160deg,#1565c0 0%,#1e88e5 42%,#42a5f5 100%);border-radius:22px;overflow:hidden;box-shadow:0 22px 65px rgba(0,0,0,.6),0 0 44px rgba(21,101,192,.45)}
+.ncb-header{padding:22px 24px 14px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.12) 0%,transparent 100%)}
+.ncb-acc-name{font-family:'Orbitron',monospace;font-size:clamp(16px,5vw,22px);font-weight:900;color:#fff;letter-spacing:2.5px;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.ncb-white-card{background:#fff;margin:0 16px;border-radius:18px;padding:20px 20px 16px;position:relative}
+.ncb-logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
+.ncb-logo-circle{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#e53935);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.22);flex-shrink:0}
+.ncb-logo-circle svg{width:24px;height:24px}
 .ncb-logo-text{display:flex;flex-direction:column;align-items:flex-start}
-.ncb-text-ncb{font-family:'Orbitron',monospace;font-size:24px;font-weight:900;line-height:1;background:linear-gradient(135deg,#1565c0,#e53935);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.ncb-text-sub{font-family:'Rajdhani',sans-serif;font-size:8.5px;letter-spacing:2px;color:#666;font-weight:700;margin-top:1px}
-.ncb-qr-frame{width:100%;aspect-ratio:1/1;background:#fff;border:2px solid #e8e8e8;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 2px 8px rgba(0,0,0,.06);margin-bottom:14px}
+.ncb-text-ncb{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;line-height:1;background:linear-gradient(135deg,#1565c0,#e53935);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ncb-text-sub{font-family:'Rajdhani',sans-serif;font-size:8px;letter-spacing:2.5px;color:#666;font-weight:700;margin-top:2px;text-transform:uppercase}
+.ncb-qr-frame{width:100%;aspect-ratio:1/1;background:#fff;border:2px solid #e8e8e8;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 2px 10px rgba(0,0,0,.07);margin-bottom:14px}
 #qr-img{width:100%;height:100%;object-fit:contain;display:block}
-.ncb-logos-row{display:flex;align-items:center;justify-content:center;gap:16px}
-/* VietQR logo text */
-.vietqr-logo{display:flex;align-items:center;gap:3px}
-.vietqr-v{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:#e53935;line-height:1}
-.vietqr-text{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#e53935;line-height:1;margin-top:2px}
-.vietqr-q{color:#1565c0}
-.vietqr-r{color:#e53935}
-/* napas 247 logo */
-.napas-logo{display:flex;align-items:center;gap:3px}
+.ncb-logos-row{display:flex;align-items:center;justify-content:center;gap:18px}
+.vietqr-logo{display:flex;align-items:center;gap:2px}
+.vietqr-v{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;color:#e53935;line-height:1}
+.vietqr-rest{font-family:'Orbitron',monospace;font-size:15px;font-weight:900;line-height:1;margin-top:3px}
+.vietqr-iet{color:#e53935}.vietqr-q{color:#1565c0}.vietqr-r{color:#e53935}
+.napas-logo{display:flex;align-items:center;gap:2px}
 .napas-text{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:#455a64;letter-spacing:1px}
 .napas-247{font-family:'Orbitron',monospace;font-size:15px;font-weight:900;background:linear-gradient(135deg,#ff6d00,#e53935);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .ncb-footer-pad{padding:14px 20px 20px;text-align:center}
-.ncb-close-btn{display:inline-block;padding:12px 36px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35);border-radius:40px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .2s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.ncb-close-btn:active{background:rgba(255,255,255,.28);transform:scale(.97)}
+.ncb-close-btn{display:inline-block;padding:12px 40px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.38);border-radius:40px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .2s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.ncb-close-btn:active{background:rgba(255,255,255,.3);transform:scale(.97)}
 
 /* ── SCREENS ── */
 .screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column}
 .screen.visible{display:flex}
 
-/* ── CONTAINER PROTECTION (MỤC 4.1) ── */
+/* ═══ MỤC 4.1: CONTAINER CHỐNG BIẾN DẠNG PC ═══ */
 .container{width:100%;max-width:750px;margin:0 auto;padding:0 16px}
-.flex-col-container{display:flex;flex-direction:column;gap:clamp(12px,2.5vw,20px)}
+.flex-col{display:flex;flex-direction:column;gap:clamp(12px,2.5vw,20px)}
 
-/* ══════════════════════════════════════════
-   LOCKSCREEN
-══════════════════════════════════════════ */
-#s-lock{align-items:center;justify-content:space-between;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(var(--safe-t) + 12px) 0 calc(var(--safe-b) + 10px) 0;gap:clamp(12px,3vh,28px)}
+/* ══════════════ LOCKSCREEN ══════════════ */
+#s-lock{align-items:center;justify-content:space-between;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(var(--safe-t) + 12px) 0 calc(var(--safe-b) + 10px) 0;gap:clamp(12px,3vh,26px)}
 #s-lock::-webkit-scrollbar{display:none}
-
-.brand-box{width:100%;max-width:420px;border:1px solid var(--pk);border-radius:12px;padding:clamp(10px,3vw,16px) clamp(12px,4vw,22px);position:relative;background:rgba(255,0,127,.03);box-shadow:0 0 16px rgba(255,0,127,.18),inset 0 0 10px rgba(255,0,127,.04);text-align:center;flex-shrink:0}
+.brand-box{width:100%;max-width:420px;border:1px solid var(--pk);border-radius:12px;padding:clamp(10px,3vw,16px) clamp(12px,4vw,22px);position:relative;background:rgba(255,0,127,.03);box-shadow:0 0 18px rgba(255,0,127,.2),inset 0 0 10px rgba(255,0,127,.04);text-align:center;flex-shrink:0}
 .brand-box::before,.brand-box::after{content:'';position:absolute;width:10px;height:10px;border-color:var(--cy);border-style:solid}
 .brand-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
 .brand-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
@@ -115,34 +102,29 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .brand-title{font-family:'Orbitron',monospace;font-size:clamp(20px,6vw,28px);font-weight:900;letter-spacing:4px;line-height:1.1;background:linear-gradient(135deg,#fff 0%,#ffb8e8 35%,var(--pk) 60%,var(--pu) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px #ff007f) drop-shadow(0 0 25px #7a22ff);animation:pLG 3.5s ease-in-out infinite alternate}
 @keyframes pLG{from{filter:drop-shadow(0 0 8px rgba(255,0,127,.6)) drop-shadow(0 0 18px rgba(122,34,255,.4))}to{filter:drop-shadow(0 0 18px rgba(255,0,127,1)) drop-shadow(0 0 38px rgba(122,34,255,.8))}}
 .brand-sub{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,2.5vw,10.5px);letter-spacing:2px;color:var(--d1);margin-top:5px}
-
-.lock-card-container{width:100%;max-width:420px;position:relative;flex-shrink:0}
+.lock-card-container{width:100%;max-width:420px;flex-shrink:0}
 .form-fade-wrap{width:100%;background:rgba(3,1,7,.84);border:1px solid var(--gbp);border-radius:20px;padding:clamp(16px,4vw,22px) clamp(12px,3.5vw,18px);backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);box-shadow:0 8px 36px rgba(0,0,0,.52),inset 0 0 16px rgba(122,34,255,.04);transition:opacity .3s ease,transform .3s ease;position:relative}
 .form-fade-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--pk),var(--pu),transparent);border-radius:20px 20px 0 0}
-
 .kc-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--d1);margin-bottom:8px}
 .kc-inp-wrap{position:relative;margin-bottom:12px}
-/* MỤC 1.1: Xóa placeholder, focus cyan neon */
-.kc-inp{width:100%;background:rgba(255,255,255,.03);border:1.5px solid rgba(122,34,255,.25);border-radius:11px;padding:14px 44px 14px 16px;font-family:'Share Tech Mono',monospace;font-size:16px;color:var(--cy);outline:none;transition:border-color .3s,box-shadow .3s;caret-color:var(--cy);-webkit-appearance:none;position:relative;z-index:999}
-.kc-inp:focus{border-color:var(--cy);box-shadow:0 0 20px rgba(0,240,255,.3),0 0 6px rgba(0,240,255,.15),inset 0 0 10px rgba(0,240,255,.05)}
-.kc-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;opacity:.48;pointer-events:none;z-index:1000}
-.kc-btn{width:100%;padding:15px;border:none;border-radius:28px;background:linear-gradient(135deg,var(--pu) 0%,var(--pk) 100%);color:#fff;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;position:relative;overflow:hidden;z-index:999;transition:transform .15s,box-shadow .3s;box-shadow:0 0 24px rgba(255,0,127,.35),0 4px 12px rgba(0,0,0,.4);margin-bottom:10px}
+/* MỤC 1.1: Ô nhập không placeholder, focus cyan neon */
+.kc-inp{width:100%;background:rgba(255,255,255,.03);border:1.5px solid rgba(122,34,255,.28);border-radius:11px;padding:14px 44px 14px 16px;font-family:'Share Tech Mono',monospace;font-size:16px;color:var(--cy);outline:none;transition:border-color .3s,box-shadow .3s;caret-color:var(--cy);-webkit-appearance:none}
+.kc-inp:focus{border-color:var(--cy);box-shadow:0 0 22px rgba(0,240,255,.32),0 0 7px rgba(0,240,255,.16),inset 0 0 10px rgba(0,240,255,.05)}
+.kc-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;opacity:.45;pointer-events:none}
+.kc-btn{width:100%;padding:15px;border:none;border-radius:28px;background:linear-gradient(135deg,var(--pu) 0%,var(--pk) 100%);color:#fff;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .3s;box-shadow:0 0 24px rgba(255,0,127,.38),0 4px 12px rgba(0,0,0,.4);margin-bottom:10px}
 .kc-btn:active{transform:scale(.97)}
 .kc-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent);pointer-events:none}
-
-/* MỤC 1.3: Amber Buy Key button */
-.btn-buy-key{width:100%;padding:13px;border:1px solid rgba(255,183,0,.55);border-radius:28px;background:rgba(255,183,0,.07);color:var(--amb);font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;cursor:pointer;position:relative;overflow:hidden;z-index:999;transition:all .25s;box-shadow:0 0 18px rgba(255,183,0,.14),inset 0 0 12px rgba(255,183,0,.05);margin-bottom:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* MỤC 1.2: Nút Mua Key màu hổ phách neon */
+.btn-buy-key{width:100%;padding:14px;border:1px solid rgba(255,183,0,.6);border-radius:28px;background:rgba(255,183,0,.07);color:var(--amb);font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;cursor:pointer;position:relative;overflow:hidden;transition:all .25s;box-shadow:0 0 20px rgba(255,183,0,.16),inset 0 0 14px rgba(255,183,0,.05);margin-bottom:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .btn-buy-key::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amb),transparent)}
-.btn-buy-key:active{transform:scale(.97);background:rgba(255,183,0,.16)}
-
+.btn-buy-key:active{transform:scale(.97);background:rgba(255,183,0,.18)}
 .kc-admin-link{text-align:center}
-.kc-admin-btn{background:none;border:1px solid rgba(255,0,127,.15);color:var(--d1);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 16px;border-radius:20px;cursor:pointer;transition:all .3s;z-index:999;position:relative}
+.kc-admin-btn{background:none;border:1px solid rgba(255,0,127,.15);color:var(--d1);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;padding:6px 16px;border-radius:20px;cursor:pointer;transition:all .3s}
 .kc-admin-btn:active{color:var(--pk);border-color:var(--pk)}
-#admin-key-container{display:none;opacity:0}
-.adm-inp{border-color:rgba(255,0,60,.25);color:var(--rd);caret-color:var(--rd)}
-.adm-inp:focus{border-color:var(--rd);box-shadow:0 0 16px rgba(255,0,60,.25)}
-.adm-btn{background:linear-gradient(135deg,#6a0010,var(--rd));box-shadow:0 0 20px rgba(255,0,60,.32)}
-
+#admin-key-container{display:none}
+.adm-inp{border-color:rgba(255,0,60,.25) !important;color:var(--rd) !important;caret-color:var(--rd) !important}
+.adm-inp:focus{border-color:var(--rd) !important;box-shadow:0 0 16px rgba(255,0,60,.25) !important}
+.adm-btn{background:linear-gradient(135deg,#6a0010,var(--rd)) !important;box-shadow:0 0 20px rgba(255,0,60,.32) !important}
 .lk-footer{flex-shrink:0;text-align:center;font-family:'Share Tech Mono',monospace;font-size:clamp(8.5px,2.2vw,10px);color:var(--d2);line-height:1.5;letter-spacing:1px;padding-bottom:2px;text-shadow:0 0 7px rgba(122,34,255,.18);user-select:none}
 
 /* ── INJECT SCREEN ── */
@@ -155,11 +137,9 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .inj-pbg{width:100%;height:5px;background:rgba(122,34,255,.14);border-radius:3px;overflow:hidden}
 .inj-pfill{height:100%;background:linear-gradient(90deg,var(--pk),var(--cy));box-shadow:0 0 10px var(--pk);width:0%;transition:width .07s linear}
 
-/* ══════════════════════════════════════════
-   CLIENT DASHBOARD
-══════════════════════════════════════════ */
+/* ══════════════ CLIENT DASHBOARD ══════════════ */
 #s-client{overflow:hidden}
-.c-topbar{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--safe-t) + 6px) 0 6px 0;background:linear-gradient(180deg,rgba(3,1,7,.97) 0%,rgba(3,1,7,0) 100%);position:relative;z-index:50;flex-shrink:0}
+.c-topbar{display:flex;align-items:center;padding:calc(var(--safe-t) + 6px) 0 6px 0;background:linear-gradient(180deg,rgba(3,1,7,.97) 0%,rgba(3,1,7,0) 100%);position:relative;z-index:50;flex-shrink:0}
 .topbar-inner{display:flex;justify-content:space-between;align-items:center}
 .c-logo{font-family:'Orbitron',monospace;font-size:clamp(15px,4.5vw,19px);font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#fff,var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 6px var(--pk))}
 .c-badge{display:flex;align-items:center;gap:5px;background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.22);border-radius:20px;padding:4px 10px}
@@ -168,16 +148,11 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .c-bkey{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gr);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn-logout{background:rgba(255,0,60,.08);border:1px solid rgba(255,0,60,.22);border-radius:20px;padding:5px 11px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--rd);cursor:pointer;transition:all .2s}
 .btn-logout:active{background:rgba(255,0,60,.2);transform:scale(.95)}
-
-/* MỤC 2: Cloud Sync Indicator Bar */
+/* MỤC 2: Cloud Sync Indicator */
 .sync-bar{display:flex;align-items:center;gap:6px;padding:5px 0;font-family:'Share Tech Mono',monospace;font-size:9.5px;letter-spacing:1px;flex-shrink:0}
 .sync-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;animation:dBlink 1.5s infinite}
-.sync-dot.ok{background:var(--gr);box-shadow:0 0 6px var(--gr)}
-.sync-dot.local{background:var(--or);box-shadow:0 0 6px var(--or)}
-.sync-dot.err{background:var(--rd);box-shadow:0 0 6px var(--rd)}
-.sync-lbl{color:var(--d2)}
-.sync-mode.ok{color:var(--gr)}.sync-mode.local{color:var(--or)}.sync-mode.err{color:var(--rd)}
-
+.sync-dot.ok{background:var(--gr);box-shadow:0 0 6px var(--gr)}.sync-dot.local{background:var(--or);box-shadow:0 0 6px var(--or)}.sync-dot.err{background:var(--rd);box-shadow:0 0 6px var(--rd)}
+.sync-lbl{color:var(--d2)}.sync-mode.ok{color:var(--gr)}.sync-mode.local{color:var(--or)}.sync-mode.err{color:var(--rd)}
 /* HUD 4 blocks */
 .hud-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex-shrink:0;padding-bottom:4px}
 .hud-card{background:rgba(3,1,7,.74);border:1px solid var(--gbd);border-radius:12px;padding:8px 4px;text-align:center;position:relative;overflow:hidden}
@@ -186,8 +161,7 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .hud-card.fps::before{background:linear-gradient(90deg,transparent,var(--gr),transparent)}
 .hud-card.ping::before{background:linear-gradient(90deg,transparent,var(--cy),transparent)}
 .hud-card.mem::before{background:linear-gradient(90deg,transparent,var(--or),transparent)}
-.hud-ico{font-size:14px;margin-bottom:1px}
-.hud-lbl{font-family:'Share Tech Mono',monospace;font-size:7.5px;letter-spacing:.5px;color:var(--d1);margin-bottom:1px}
+.hud-ico{font-size:14px;margin-bottom:1px}.hud-lbl{font-family:'Share Tech Mono',monospace;font-size:7.5px;letter-spacing:.5px;color:var(--d1);margin-bottom:1px}
 .hud-val{font-family:'Orbitron',monospace;font-weight:700;font-size:clamp(9.5px,2.8vw,13px);line-height:1.15}
 .hud-card.gpu .hud-val{color:var(--pu);font-size:clamp(8px,2.2vw,10.5px);word-break:break-word;text-shadow:0 0 7px rgba(122,34,255,.5)}
 .hud-card.fps .hud-val{color:var(--gr);text-shadow:0 0 7px rgba(0,255,136,.5)}
@@ -196,7 +170,6 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .hud-unit{font-family:'Share Tech Mono',monospace;font-size:7.5px;color:var(--d2)}
 .fps-track{width:100%;height:3px;background:rgba(0,255,136,.09);border-radius:2px;overflow:hidden;margin-top:4px}
 .fps-fill{height:100%;background:var(--gr);box-shadow:0 0 6px var(--gr);width:0%;transition:width .5s ease}
-
 /* Tab Bar */
 .tab-bar{display:flex;border-bottom:1px solid var(--gbd);flex-shrink:0}
 .tb{flex:1;padding:10px 2px;background:none;border:none;font-family:'Orbitron',sans-serif;font-size:clamp(7px,2vw,9.5px);letter-spacing:.5px;color:var(--d1);cursor:pointer;position:relative;transition:color .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -208,26 +181,21 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .tp{display:none;flex-direction:column;gap:12px}
 .tp.act{display:flex}
 .c-footer{flex-shrink:0;text-align:center;font-family:'Share Tech Mono',monospace;font-size:clamp(8px,1.8vw,9.5px);color:var(--d2);line-height:1.45;letter-spacing:1px;padding:6px 10px calc(var(--safe-b) + 4px);border-top:1px solid rgba(122,34,255,.06);background:rgba(0,0,0,.14);text-shadow:0 0 7px rgba(122,34,255,.15);user-select:none}
-
-/* ── Reusable components ── */
+/* Reusable */
 .sech{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.secl{flex:1;height:1px;background:linear-gradient(90deg,var(--gbd),transparent)}
-.secl.r{background:linear-gradient(270deg,var(--gbd),transparent)}
+.secl{flex:1;height:1px;background:linear-gradient(90deg,var(--gbd),transparent)}.secl.r{background:linear-gradient(270deg,var(--gbd),transparent)}
 .sect{font-family:'Orbitron',monospace;font-size:8.5px;letter-spacing:2px;color:var(--d1);white-space:nowrap}
 .cc{background:rgba(3,1,7,.74);border:1px solid var(--gbd);border-radius:14px;padding:14px 13px;position:relative;overflow:hidden;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .cc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--pu),transparent);opacity:.5}
 .cc-glow{position:absolute;top:-42px;right:-42px;width:110px;height:110px;border-radius:50%;background:var(--pu);opacity:.025;pointer-events:none}
 .trow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(122,34,255,.07)}
 .trow:last-child{border-bottom:none}
-.tinf{flex:1;margin-right:12px}
-.tname{font-size:clamp(12px,3.5vw,14.5px);font-weight:600;color:var(--tx)}
-.tdsc{font-family:'Share Tech Mono',monospace;font-size:9.5px;color:var(--d1);margin-top:1.5px}
+.tinf{flex:1;margin-right:12px}.tname{font-size:clamp(12px,3.5vw,14.5px);font-weight:600;color:var(--tx)}.tdsc{font-family:'Share Tech Mono',monospace;font-size:9.5px;color:var(--d1);margin-top:1.5px}
 .sw{width:50px;height:27px;background:rgba(255,255,255,.06);border-radius:14px;border:1.5px solid var(--gbd);position:relative;cursor:pointer;flex-shrink:0;transition:all .3s;-webkit-appearance:none;outline:none}
 .sw:checked{background:linear-gradient(135deg,var(--pu),var(--pk));border-color:var(--pk);box-shadow:0 0 12px rgba(255,0,127,.32)}
 .sw::after{content:'';position:absolute;width:21px;height:21px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 2px 5px rgba(0,0,0,.4)}
 .sw:checked::after{transform:translateX(23px)}
-.srow{padding:9px 0;border-bottom:1px solid rgba(122,34,255,.07)}
-.srow:last-child{border-bottom:none}
+.srow{padding:9px 0;border-bottom:1px solid rgba(122,34,255,.07)}.srow:last-child{border-bottom:none}
 .srow-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
 .srow-nm{font-size:clamp(11.5px,3.3vw,13.5px);font-weight:600;color:var(--tx)}
 .step-wrap{display:flex;align-items:center;gap:5px}
@@ -238,31 +206,26 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .rsl::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--cy),var(--pu));border:2px solid #fff;box-shadow:0 0 8px rgba(0,240,255,.6);cursor:pointer;margin-top:-8px}
 .rsl::-webkit-slider-runnable-track{height:3px}
 .cbtn{width:100%;padding:13px;border:none;border-radius:12px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;cursor:pointer;position:relative;overflow:hidden;transition:all .2s}
-.cbtn:active{transform:scale(.97)}
-.cbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);pointer-events:none}
+.cbtn:active{transform:scale(.97)}.cbtn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);pointer-events:none}
 .cbtn.pu{background:linear-gradient(135deg,var(--pu),var(--pk));color:#fff;box-shadow:0 0 16px rgba(255,0,127,.26),0 4px 12px rgba(0,0,0,.4)}
-.cbtn.locked{background:rgba(255,255,255,.05);color:var(--d2);border:1px solid var(--gbd);cursor:not-allowed;box-shadow:none}
-.cbtn.locked:active{transform:none}
+.cbtn.locked{background:rgba(255,255,255,.05);color:var(--d2);border:1px solid var(--gbd);cursor:not-allowed;box-shadow:none}.cbtn.locked:active{transform:none}
 .ibox{background:rgba(122,34,255,.05);border:1px solid rgba(122,34,255,.12);border-radius:8px;padding:10px 12px}
 .irow{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(122,34,255,.05);font-family:'Share Tech Mono',monospace;font-size:11px}
-.irow:last-child{border-bottom:none}
-.ik{color:var(--d2)}.iv{color:var(--cy);text-align:right}
+.irow:last-child{border-bottom:none}.ik{color:var(--d2)}.iv{color:var(--cy);text-align:right}
 .bst-bar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.15);border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gr)}
 .bst-dot{width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 7px var(--gr);animation:dBlink 1.2s infinite;flex-shrink:0}
 .tagrow{display:flex;flex-wrap:wrap;gap:5px}
 .tag{padding:3px 8px;border-radius:10px;font-size:10px;font-family:'Share Tech Mono',monospace;background:rgba(122,34,255,.07);border:1px solid rgba(122,34,255,.18);color:var(--d1)}
-.tag.g{background:rgba(0,255,136,.07);border-color:rgba(0,255,136,.18);color:var(--gr)}
-.tag.c{background:rgba(0,240,255,.07);border-color:rgba(0,240,255,.18);color:var(--cy)}
+.tag.g{background:rgba(0,255,136,.07);border-color:rgba(0,255,136,.18);color:var(--gr)}.tag.c{background:rgba(0,240,255,.07);border-color:rgba(0,240,255,.18);color:var(--cy)}
 
-/* ── Quantum DNS (MỤC 5.1) ── */
+/* ── Quantum DNS Tab Optimize ── */
 .quantum-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0 14px;gap:14px}
 .quantum-orbit-wrap{position:relative;width:150px;height:150px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .orb1{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(255,0,127,.4);animation:orbCW 4s linear infinite}
 .orb2{position:absolute;inset:12px;border-radius:50%;border:1.5px dashed rgba(122,34,255,.5);animation:orbCCW 3s linear infinite}
 .quantum-orbit-wrap.on .orb1{border-color:rgba(0,240,255,.7);animation-duration:.8s}
 .quantum-orbit-wrap.on .orb2{border-color:rgba(0,240,255,.6);animation-duration:.6s}
-@keyframes orbCW{to{transform:rotate(360deg)}}
-@keyframes orbCCW{to{transform:rotate(-360deg)}}
+@keyframes orbCW{to{transform:rotate(360deg)}}@keyframes orbCCW{to{transform:rotate(-360deg)}}
 .pulse-wave{position:absolute;inset:0;border-radius:50%;border:2px solid var(--cy);opacity:0;pointer-events:none}
 .pulse-wave.fire{animation:pwFire 1.2s ease-out forwards}
 @keyframes pwFire{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
@@ -275,15 +238,14 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .quantum-orbit-wrap.on .qbtn-st{color:var(--cy)}
 .dns-cascade-list{width:100%;display:flex;flex-direction:column}
 .dns-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid rgba(122,34,255,.06);font-family:'Share Tech Mono',monospace;font-size:11.5px;color:rgba(148,112,184,.35);transition:color .35s,background .35s;position:relative;overflow:hidden}
-.dns-row:last-child{border-bottom:none}
-.dns-row.lit{color:var(--d1)}
+.dns-row:last-child{border-bottom:none}.dns-row.lit{color:var(--d1)}
 .dns-row.lit .dck{color:var(--gr);text-shadow:0 0 8px rgba(0,255,136,.6)}
 .dns-row::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,240,255,.07),transparent);transform:translateX(-100%);transition:transform .5s ease}
 .dns-row.lit::before{transform:translateX(0)}
 .dck{font-size:13px;flex-shrink:0;transition:color .35s;color:rgba(148,112,184,.2)}
 .dl-ok{display:none;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cy);text-align:center;padding:4px 0}
 
-/* ── Account tab ── */
+/* ── Account Tab ── */
 .sub-card{background:rgba(3,1,7,.76);border:1px solid var(--gbd);border-radius:16px;padding:20px;position:relative;overflow:hidden;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .sub-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--or),var(--pu),transparent)}
 .sub-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
@@ -297,7 +259,7 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .sub-col-val.active-neon{color:var(--gr);text-shadow:0 0 10px rgba(0,255,136,.6);font-family:'Orbitron',monospace;font-size:11.5px;letter-spacing:1px}
 .sub-col-val.expired-red{color:var(--rd);text-shadow:0 0 10px rgba(255,0,60,.6);font-family:'Orbitron',monospace;font-size:11.5px;letter-spacing:1px}
 .countdown-header{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--d1);letter-spacing:1px;margin-top:4px}
-/* MỤC 4.2: 4 LED grid aspect-ratio locked */
+/* MỤC 4.2: Grid đếm ngược 4 LED cố định */
 .discrete-countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .countdown-box{background:rgba(3,1,7,.65);border:1px solid var(--gbd);border-radius:12px;padding:12px 4px;text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center;align-items:center}
 .countdown-box::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--pu),transparent)}
@@ -308,91 +270,56 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
 .acc-management-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn-acc-action{width:100%;padding:12px;border-radius:12px;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;background:rgba(3,1,7,.7);transition:all .2s;-webkit-appearance:none}
 .btn-acc-action:active{transform:scale(.97)}
-.btn-acc-action.reactivate-btn{grid-column:span 2;border:1px solid var(--or);color:var(--or);box-shadow:0 0 10px rgba(255,170,0,.2)}
-.btn-acc-action.reactivate-btn:active{background:rgba(255,170,0,.12)}
-.btn-acc-action.change-key{border:1px solid var(--pu);color:var(--cy)}
-.btn-acc-action.change-key:active{background:rgba(122,34,255,.12)}
-.btn-acc-action.logout-acc{border:1px solid var(--rd);color:var(--rd)}
-.btn-acc-action.logout-acc:active{background:rgba(255,0,60,.12)}
+.btn-acc-action.reactivate-btn{grid-column:span 2;border:1px solid var(--or);color:var(--or);box-shadow:0 0 10px rgba(255,170,0,.2)}.btn-acc-action.reactivate-btn:active{background:rgba(255,170,0,.12)}
+.btn-acc-action.change-key{border:1px solid var(--pu);color:var(--cy)}.btn-acc-action.change-key:active{background:rgba(122,34,255,.12)}
+.btn-acc-action.logout-acc{border:1px solid var(--rd);color:var(--rd)}.btn-acc-action.logout-acc:active{background:rgba(255,0,60,.12)}
 .analytics-card{background:rgba(3,1,7,.76);border:1px solid var(--gbd);border-radius:16px;padding:14px}
 
-/* ══════════════════════════════════════════
-   ADMIN SCREEN
-══════════════════════════════════════════ */
+/* ═══════════════ ADMIN SCREEN ═══════════════ */
 #s-admin{overflow:hidden}
 .adm-topbar{padding:calc(var(--safe-t) + 8px) 0 9px 0;background:rgba(3,1,7,.97);border-bottom:1px solid rgba(255,0,60,.14);flex-shrink:0}
 .adm-topbar-inner{display:flex;align-items:center;justify-content:space-between}
 .adm-badge{background:linear-gradient(135deg,#6a0010,var(--rd));border-radius:6px;padding:4px 9px;font-family:'Orbitron',monospace;font-size:9px;font-weight:900;color:#fff;box-shadow:0 0 9px rgba(255,0,60,.28)}
 .adm-ttl{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--rd);letter-spacing:1px;flex:1;margin-left:10px}
-.btn-back{background:rgba(122,34,255,.09);border:1px solid var(--gbd);border-radius:20px;padding:5px 13px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--d1);cursor:pointer}
-.btn-back:active{background:rgba(122,34,255,.2)}
-.adm-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 0 calc(var(--safe-b) + 20px) 0}
-.adm-scroll::-webkit-scrollbar{display:none}
+.btn-back{background:rgba(122,34,255,.09);border:1px solid var(--gbd);border-radius:20px;padding:5px 13px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--d1);cursor:pointer}.btn-back:active{background:rgba(122,34,255,.2)}
+.adm-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 0 calc(var(--safe-b) + 20px) 0}.adm-scroll::-webkit-scrollbar{display:none}
 .adm-sync-card{background:rgba(0,240,255,.04);border:1px solid rgba(0,240,255,.12);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;font-family:'Share Tech Mono',monospace;font-size:11px}
-.adm-sync-ico{font-size:20px}
-.adm-sync-info{flex:1}
-.adm-sync-title{color:var(--cy);font-weight:700;margin-bottom:2px}
-.adm-sync-sub{color:var(--d2);font-size:9.5px}
+.adm-sync-ico{font-size:20px}.adm-sync-info{flex:1}.adm-sync-title{color:var(--cy);font-weight:700;margin-bottom:2px}.adm-sync-sub{color:var(--d2);font-size:9.5px}
 .adm-sync-badge{padding:3px 10px;border-radius:12px;font-size:9px;font-weight:700;flex-shrink:0}
-.adm-sync-badge.live{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--gr)}
-.adm-sync-badge.off{background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.25);color:var(--or)}
+.adm-sync-badge.live{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--gr)}.adm-sync-badge.off{background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.25);color:var(--or)}
 .adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
 .ast{background:rgba(3,1,7,.8);border:1px solid var(--gbd);border-radius:10px;padding:8px 5px;text-align:center}
-.asd{font-family:'Orbitron',monospace;font-size:16px;font-weight:700}
-.asl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--d2);margin-top:2px}
+.asd{font-family:'Orbitron',monospace;font-size:16px;font-weight:700}.asl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--d2);margin-top:2px}
 .ast.rdy .asd{color:var(--cy)}.ast.act .asd{color:var(--gr)}.ast.exp .asd{color:var(--or)}.ast.blk .asd{color:var(--rd)}
-/* MỤC 3: Admin table columns: key / type / status / actions(2 buttons) */
-.ktbl-hd{display:grid;grid-template-columns:1fr 48px 75px 78px;gap:4px;padding:7px 9px;background:rgba(122,34,255,.07);border:1px solid var(--gbd);border-radius:8px 8px 0 0;border-bottom:none}
+/* MỤC 3: Admin table columns */
+.ktbl-hd{display:grid;grid-template-columns:1fr 48px 70px 80px;gap:4px;padding:7px 9px;background:rgba(122,34,255,.07);border:1px solid var(--gbd);border-radius:8px 8px 0 0;border-bottom:none}
 .kth{font-family:'Orbitron',monospace;font-size:8px;letter-spacing:1px;color:var(--d2)}
 .ktbl-body{border:1px solid var(--gbd);border-radius:0 0 12px 12px;overflow:hidden}
-.krow{display:grid;grid-template-columns:1fr 48px 75px 78px;gap:4px;padding:8px 9px;border-bottom:1px solid rgba(122,34,255,.05);align-items:center}
-.krow:last-child{border-bottom:none}
-.kn{font-family:'Share Tech Mono',monospace;font-size:10.5px;color:var(--tx);word-break:break-all}
-.kp{font-family:'Share Tech Mono',monospace;font-size:8.5px;color:var(--d2)}
+.krow{display:grid;grid-template-columns:1fr 48px 70px 80px;gap:4px;padding:8px 9px;border-bottom:1px solid rgba(122,34,255,.05);align-items:center}.krow:last-child{border-bottom:none}
+.kn{font-family:'Share Tech Mono',monospace;font-size:10.5px;color:var(--tx);word-break:break-all}.kp{font-family:'Share Tech Mono',monospace;font-size:8.5px;color:var(--d2)}
 .kbdg{display:inline-block;padding:2px 5px;border-radius:7px;font-family:'Orbitron',monospace;font-size:7.5px;font-weight:700;text-align:center;white-space:nowrap}
-.st-rdy{background:rgba(0,240,255,.08);color:var(--cy);border:1px solid rgba(0,240,255,.2)}
-.st-act{background:rgba(0,255,136,.08);color:var(--gr);border:1px solid rgba(0,255,136,.2)}
-.st-exp{background:rgba(255,170,0,.08);color:var(--or);border:1px solid rgba(255,170,0,.2)}
-.st-blk{background:rgba(255,0,60,.08);color:var(--rd);border:1px solid rgba(255,0,60,.2)}
+.st-rdy{background:rgba(0,240,255,.08);color:var(--cy);border:1px solid rgba(0,240,255,.2)}.st-act{background:rgba(0,255,136,.08);color:var(--gr);border:1px solid rgba(0,255,136,.2)}.st-exp{background:rgba(255,170,0,.08);color:var(--or);border:1px solid rgba(255,170,0,.2)}.st-blk{background:rgba(255,0,60,.08);color:var(--rd);border:1px solid rgba(255,0,60,.2)}
 .kt{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--gr)}
 .action-btns{display:flex;flex-direction:column;gap:3px}
 .abtn{width:100%;padding:3px 3px;border-radius:5px;font-family:'Orbitron',monospace;font-size:7px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;white-space:nowrap}
-.abtn.blk-btn{background:rgba(255,0,60,.08);border:1px solid rgba(255,0,60,.28);color:var(--rd)}
-.abtn.blk-btn:active{background:rgba(255,0,60,.2)}
-.abtn.act-btn{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.28);color:var(--gr)}
-.abtn.act-btn:active{background:rgba(0,255,136,.2)}
-.abtn.cyan-btn{background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.28);color:var(--cy)}
-.abtn.cyan-btn:active{background:rgba(0,240,255,.2)}
+.abtn.blk-btn{background:rgba(255,0,60,.08);border:1px solid rgba(255,0,60,.28);color:var(--rd)}.abtn.blk-btn:active{background:rgba(255,0,60,.2)}
+.abtn.act-btn{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.28);color:var(--gr)}.abtn.act-btn:active{background:rgba(0,255,136,.2)}
+.abtn.cyan-btn{background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.28);color:var(--cy)}.abtn.cyan-btn:active{background:rgba(0,240,255,.2)}
 .abtn:disabled{opacity:.28;cursor:not-allowed}
 .adm-footer{flex-shrink:0;text-align:center;font-family:'Share Tech Mono',monospace;font-size:clamp(8.5px,2vw,10px);color:var(--d2);line-height:1.55;letter-spacing:1px;padding:7px 10px calc(var(--safe-b) + 6px);border-top:1px solid rgba(122,34,255,.06);background:rgba(0,0,0,.14)}
-
-/* ── Sens tab ── */
+/* Sens tab */
 .inp-dev{width:100%;background:rgba(255,255,255,.03);border:1.5px solid var(--gbd);border-radius:9px;padding:11px 14px;font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--cy);outline:none;caret-color:var(--pk);-webkit-appearance:none;margin-bottom:10px}
 .inp-dev:focus{border-color:var(--pu)}
-.btn-autotune{width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--pu),var(--cy));color:#030107;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer;margin-bottom:4px;transition:transform .15s}
-.btn-autotune:active{transform:scale(.97)}
+.btn-autotune{width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--pu),var(--cy));color:#030107;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer;margin-bottom:4px;transition:transform .15s}.btn-autotune:active{transform:scale(.97)}
 .preset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .pcard{background:rgba(3,1,7,.74);border:1px solid var(--gbd);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all .2s}
-.pcard.sel{border-color:var(--pk);background:rgba(255,0,127,.06);box-shadow:0 0 12px rgba(255,0,127,.18)}
-.pcard:active{transform:scale(.96)}
-.pico{font-size:18px;margin-bottom:3px}
-.pnm{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;color:var(--tx);letter-spacing:1px}
-.pds{font-family:'Share Tech Mono',monospace;font-size:7.5px;color:var(--d2);margin-top:2px}
-
-@media(max-width:360px){
-  .hud-row{gap:4px}.hud-val{font-size:9.5px}
-  .ktbl-hd,.krow{grid-template-columns:1fr 42px 66px 68px}
-  .adm-stats{grid-template-columns:repeat(2,1fr)}
-  .discrete-countdown-grid{gap:4px}.countdown-num{font-size:16px}
-}
-@media(max-width:320px){
-  .hud-row{grid-template-columns:repeat(2,1fr)}
-  .ktbl-hd,.krow{grid-template-columns:1fr 38px 58px 60px}
-}
+.pcard.sel{border-color:var(--pk);background:rgba(255,0,127,.06);box-shadow:0 0 12px rgba(255,0,127,.18)}.pcard:active{transform:scale(.96)}
+.pico{font-size:18px;margin-bottom:3px}.pnm{font-family:'Orbitron',monospace;font-size:8px;font-weight:700;color:var(--tx);letter-spacing:1px}.pds{font-family:'Share Tech Mono',monospace;font-size:7.5px;color:var(--d2);margin-top:2px}
+@media(max-width:360px){.hud-row{gap:4px}.hud-val{font-size:9.5px}.ktbl-hd,.krow{grid-template-columns:1fr 42px 60px 68px}.adm-stats{grid-template-columns:repeat(2,1fr)}.discrete-countdown-grid{gap:4px}.countdown-num{font-size:16px}}
+@media(max-width:320px){.hud-row{grid-template-columns:repeat(2,1fr)}.ktbl-hd,.krow{grid-template-columns:1fr 38px 54px 60px}}
 </style>
 </head>
 <body>
-
 <div id="toast-wrap"></div>
 <canvas id="cyberEyeCanvas"></canvas>
 
@@ -406,50 +333,38 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     MỤC 1.4: NCB BANK PAYMENT QR MODAL
-═══════════════════════════════════════════ -->
+<!-- MỤC 1.3: NCB QR MODAL -->
 <div id="buy-modal">
   <div class="buy-wrap">
     <div class="ncb-card">
-      <!-- Header blue: NGUYEN HONG NGA -->
       <div class="ncb-header">
-        <div class="ncb-name">NGUYEN HONG NGA</div>
+        <div class="ncb-acc-name">NGUYEN HONG NGA</div>
       </div>
-
-      <!-- White inner card -->
       <div class="ncb-white-card">
-        <!-- NCB Logo Row -->
         <div class="ncb-logo-row">
           <div class="ncb-logo-circle">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="20" fill="url(#ncbg)"/>
+              <circle cx="20" cy="20" r="20" fill="url(#ncbG)"/>
               <path d="M12 26 L20 14 L28 26" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
               <circle cx="20" cy="14" r="3" fill="#fff"/>
-              <defs><linearGradient id="ncbg" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#e53935"/></linearGradient></defs>
+              <defs><linearGradient id="ncbG" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#e53935"/></linearGradient></defs>
             </svg>
           </div>
           <div class="ncb-logo-text">
             <div class="ncb-text-ncb">NCB</div>
-            <div class="ncb-text-sub">NATIONAL CITIZEN BANK</div>
+            <div class="ncb-text-sub">National Citizen Bank</div>
           </div>
         </div>
-
-        <!-- QR Code Frame -->
         <div class="ncb-qr-frame">
           <img id="qr-img"
-            src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=ZEVCYBERVOID-NGUYEN-HONG-NGA-NCB-0123456789&color=030107&bgcolor=ffffff&margin=6&format=png"
-            alt="QR Thanh Toán ZEV"
-            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQwIiBoZWlnaHQ9IjI0MCIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmaWxsPSIjMDMwMTA3Ij5TY2FuIFFSIHRvIFBheTwvdGV4dD48L3N2Zz4='"/>
+            src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=00020101021238560010A000000727012800069704280114104867025669530208QRIBFTTA53037045405500005802VN5912NGUYEN HONG NGA6005HANOI62080704ZEV163049F04&color=030107&bgcolor=ffffff&margin=8&format=png"
+            alt="QR NCB ZEV"
+            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEzIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmaWxsPSIjMDMwMTA3Ij5RUiBUaGFuaCBUb8OhbjwvdGV4dD48L3N2Zz4='"/>
         </div>
-
-        <!-- VietQR + Napas 247 logos -->
         <div class="ncb-logos-row">
           <div class="vietqr-logo">
             <div class="vietqr-v">V</div>
-            <div style="display:flex;flex-direction:column;line-height:1">
-              <div class="vietqr-text">IET<span class="vietqr-q">Q</span><span class="vietqr-r">R</span></div>
-            </div>
+            <div class="vietqr-rest"><span class="vietqr-iet">IET</span><span class="vietqr-q">Q</span><span class="vietqr-r">R</span></div>
           </div>
           <div class="napas-logo">
             <span class="napas-text">napas </span>
@@ -457,8 +372,6 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
           </div>
         </div>
       </div>
-
-      <!-- Close button -->
       <div class="ncb-footer-pad">
         <div class="ncb-close-btn" onclick="closeBuyModal()">ĐÓNG CỬA SỔ</div>
       </div>
@@ -466,9 +379,7 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 1: LOCKSCREEN
-═══════════════════════════════════════════ -->
+<!-- ═══ SCREEN 1: LOCKSCREEN ═══ -->
 <div id="s-lock" class="screen visible">
   <div class="brand-box">
     <div class="brand-box-topline"></div>
@@ -478,29 +389,25 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
     <h1 class="brand-title">ZEV CYBER VOID</h1>
     <p class="brand-sub">GAMING OPTIMIZER · FREE FIRE PRO</p>
   </div>
-
   <div class="lock-card-container">
-    <!-- Normal Key Form -->
     <div class="form-fade-wrap" id="normal-key-container">
       <form id="key-form" onsubmit="doKeySubmit(event)">
-        <!-- MỤC 1.1: Không có placeholder -->
         <div class="kc-label">🔑 NHẬP ACCESS KEY</div>
         <div class="kc-inp-wrap">
+          <!-- MỤC 1.1: Không placeholder -->
           <input type="text" id="key-inp" class="kc-inp"
             autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"/>
           <span class="kc-ico">🔐</span>
         </div>
         <button type="submit" class="kc-btn" id="btn-go">⚡ KÍCH HOẠT HỆ THỐNG</button>
       </form>
-      <!-- MỤC 1.2 & 1.3: Nút Mua Key Amber - đặt ngay dưới nút kích hoạt -->
+      <!-- MỤC 1.2: Nút Mua Key Amber -->
       <button class="btn-buy-key" onclick="openBuyModal()">🛒 MUA ACCESS KEY CHÍNH HÃNG</button>
       <div class="kc-admin-link">
         <button class="kc-admin-btn" onclick="toggleAdmForm()">🛡 SECURE CONTROL PANEL</button>
       </div>
     </div>
-
-    <!-- Admin Key Form -->
-    <div class="form-fade-wrap" id="admin-key-container">
+    <div class="form-fade-wrap" id="admin-key-container" style="display:none;">
       <form id="adm-form" onsubmit="doAdmSubmit(event)">
         <div class="kc-label" style="color:var(--rd);">🛡 ADMIN MASTER KEY</div>
         <div class="kc-inp-wrap">
@@ -515,16 +422,13 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
       </div>
     </div>
   </div>
-
   <div class="lk-footer">
     WEB DESIGNED BY DUC ANH ZEV<br>
-    v4.0.0 · QUANTUM · zerushe.pages.dev
+    v4.5.0 · QUANTUM · zerushe.pages.dev
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 2: INJECT TRANSITION
-═══════════════════════════════════════════ -->
+<!-- ═══ SCREEN 2: INJECT ═══ -->
 <div id="s-inject" class="screen">
   <div class="inj-title">ZEV</div>
   <div class="inj-console" id="inj-con"></div>
@@ -534,11 +438,8 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 3: CLIENT DASHBOARD
-═══════════════════════════════════════════ -->
+<!-- ═══ SCREEN 3: CLIENT DASHBOARD ═══ -->
 <div id="s-client" class="screen">
-
   <div class="c-topbar">
     <div class="container topbar-inner">
       <div class="c-logo">ZEV CYBER VOID</div>
@@ -546,9 +447,7 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
       <button class="btn-logout" onclick="doLogout()">LOGOUT</button>
     </div>
   </div>
-
   <div class="container">
-    <!-- MỤC 2: Cloud Sync bar -->
     <div class="sync-bar">
       <span class="sync-dot local" id="sync-dot"></span>
       <span class="sync-lbl">SYNC:</span>
@@ -556,15 +455,12 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
       <span style="flex:1"></span>
       <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--d2);" id="sync-status-txt">Firebase chưa cấu hình</span>
     </div>
-
-    <!-- HUD 4 telemetry blocks -->
     <div class="hud-row">
       <div class="hud-card gpu"><div class="hud-ico">🎮</div><div class="hud-lbl">GPU CORE</div><div class="hud-val" id="h-gpu">…</div><div class="hud-unit">WebGL</div></div>
       <div class="hud-card fps"><div class="hud-ico">🖥</div><div class="hud-lbl">RENDER/S</div><div class="hud-val" id="h-fps">—</div><div class="hud-unit">fps</div><div class="fps-track"><div class="fps-fill" id="fps-f"></div></div></div>
       <div class="hud-card ping"><div class="hud-ico">🌐</div><div class="hud-lbl">NET PING</div><div class="hud-val" id="h-ping">—</div><div class="hud-unit">ms</div></div>
       <div class="hud-card mem"><div class="hud-ico">💾</div><div class="hud-lbl">FREE MEM</div><div class="hud-val" id="h-mem">—</div><div class="hud-unit">GB</div></div>
     </div>
-
     <div class="tab-bar">
       <button class="tb act" id="tb0" onclick="switchTab(0)">⚡ OVERCLOCK</button>
       <button class="tb" id="tb1" onclick="switchTab(1)">🔆 OPTIMIZE</button>
@@ -572,9 +468,8 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
       <button class="tb" id="tb3" onclick="switchTab(3)">👤 ACCOUNT</button>
     </div>
   </div>
-
   <div class="tab-scroll">
-    <div class="container flex-col-container">
+    <div class="container flex-col">
 
       <!-- TAB 0: OVERCLOCK -->
       <div class="tp act" id="tp0">
@@ -625,15 +520,15 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
           </div>
         </div>
         <button class="cbtn locked" id="btn-dl-cfg" onclick="downloadCfg()">🔒 TẢI FILE CẤU HÌNH MẠNG .MOBILECONFIG</button>
-        <div class="dl-ok" id="dl-ok">✅ Đã tạo file .mobileconfig thành công! Mở trong Cài đặt iOS để cài đặt.</div>
+        <div class="dl-ok" id="dl-ok">✅ Đã tạo file .mobileconfig! Mở trong Cài đặt iOS để cài đặt.</div>
       </div>
 
-      <!-- TAB 2: OB54 SENS (MỤC 5.3) -->
+      <!-- TAB 2: OB54 SENS -->
       <div class="tp" id="tp2">
         <div class="sech"><div class="secl"></div><div class="sect">🎯 OB54 SENSITIVITY TUNER</div><div class="secl r"></div></div>
         <div class="cc">
           <div class="cc-glow"></div>
-          <div style="padding:4px 0 10px;border-bottom:1px solid rgba(122,34,255,.07);"><div class="tname" style="font-size:12px;">⚡ OB54 SENSITIVITY TUNER</div><div class="tdsc">Nhập tên thiết bị để hiệu chỉnh theo phần cứng</div></div>
+          <div style="padding:4px 0 10px;border-bottom:1px solid rgba(122,34,255,.07);"><div class="tname" style="font-size:12px;">⚡ OB54 AUTO TUNER</div><div class="tdsc">Nhập tên thiết bị để hiệu chỉnh theo phần cứng</div></div>
           <div style="height:10px;"></div>
           <input type="text" class="inp-dev" id="inp-dev" autocomplete="off"/>
           <button class="btn-autotune" onclick="autoTune()">⚡ HIỆU CHỈNH TỰ ĐỘNG</button>
@@ -662,7 +557,7 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
         </div>
       </div>
 
-      <!-- TAB 3: ACCOUNT (MỤC 4) -->
+      <!-- TAB 3: ACCOUNT -->
       <div class="tp" id="tp3">
         <div class="sub-card">
           <div class="sub-card-header">
@@ -677,7 +572,6 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
             <div><div class="sub-col-title" style="text-align:right;">TRẠNG THÁI</div><div class="sub-col-val active-neon" id="acc-status-txt" style="text-align:right;">⚡ ACTIVE</div></div>
           </div>
         </div>
-
         <div class="countdown-header">⏳ THỜI GIAN CÒN LẠI</div>
         <div class="discrete-countdown-grid">
           <div class="countdown-box"><div class="countdown-num" id="cd-days">00</div><div class="countdown-lbl">NGÀY</div></div>
@@ -685,34 +579,29 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
           <div class="countdown-box"><div class="countdown-num" id="cd-mins">00</div><div class="countdown-lbl">PHÚT</div></div>
           <div class="countdown-box"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-lbl">GIÂY</div></div>
         </div>
-
         <div class="panel-divider">QUẢN LÝ TÀI KHOẢN</div>
         <div class="acc-management-grid">
-          <!-- MỤC 4.2: Nút test +24H -->
           <button class="btn-acc-action reactivate-btn" onclick="reactivateKey()">⚡ KÍCH HOẠT LẠI KEY (+24H)</button>
           <button class="btn-acc-action change-key" onclick="doLogout()">🔄 ĐỔI KEY MỚI</button>
           <button class="btn-acc-action logout-acc" onclick="doLogout()">🗑️ HỦY PHIÊN ĐĂNG NHẬP</button>
         </div>
-
         <div class="sech"><div class="secl"></div><div class="sect">📊 PHÂN TÍCH PHẦN CỨNG</div><div class="secl r"></div></div>
         <div class="analytics-card">
           <div class="ibox">
             <div class="irow"><span class="ik">HỆ ĐIỀU HÀNH</span><span class="iv" id="acc-sys-plat">—</span></div>
             <div class="irow"><span class="ik">CPU CORES</span><span class="iv" id="acc-sys-cores">—</span></div>
             <div class="irow"><span class="ik">CARD ĐỒ HỌA</span><span class="iv" id="acc-gpu-renderer">Detecting...</span></div>
-            <div class="irow"><span class="ik">PHIÊN BẢN</span><span class="iv" style="color:var(--cy);">v4.4.0 QUANTUM</span></div>
+            <div class="irow"><span class="ik">PHIÊN BẢN</span><span class="iv" style="color:var(--cy);">v4.5.0 QUANTUM</span></div>
           </div>
         </div>
       </div>
 
     </div>
   </div>
-  <div class="c-footer"><div class="container">WEB DESIGNED BY DUC ANH ZEV<br>v4.0.0 · QUANTUM · zerushe.pages.dev</div></div>
+  <div class="c-footer"><div class="container">WEB DESIGNED BY DUC ANH ZEV<br>v4.5.0 · QUANTUM · zerushe.pages.dev</div></div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     ADMIN PANEL SCREEN
-═══════════════════════════════════════════ -->
+<!-- ═══ ADMIN PANEL ═══ -->
 <div id="s-admin" class="screen">
   <div class="adm-topbar">
     <div class="container adm-topbar-inner">
@@ -722,28 +611,22 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
     </div>
   </div>
   <div class="adm-scroll">
-    <div class="container flex-col-container">
-
-      <!-- MỤC 2: Cloud sync status card -->
+    <div class="container flex-col">
       <div class="adm-sync-card">
         <span class="adm-sync-ico">☁️</span>
         <div class="adm-sync-info">
           <div class="adm-sync-title">REALTIME CLOUD DATABASE</div>
-          <div class="adm-sync-sub" id="adm-sync-sub">Điền Firebase API config để kích hoạt đồng bộ đa thiết bị thời gian thực</div>
+          <div class="adm-sync-sub" id="adm-sync-sub">Điền Firebase config để đồng bộ đa thiết bị thời gian thực</div>
         </div>
         <span class="adm-sync-badge off" id="adm-sync-badge">LOCAL</span>
       </div>
-
       <div class="adm-stats">
         <div class="ast rdy"><div class="asd" id="as-rdy">0</div><div class="asl">READY</div></div>
         <div class="ast act"><div class="asd" id="as-act">0</div><div class="asl">ACTIVE</div></div>
         <div class="ast exp"><div class="asd" id="as-exp">0</div><div class="asl">EXPIRED</div></div>
         <div class="ast blk"><div class="asd" id="as-blk">0</div><div class="asl">BLOCKED</div></div>
       </div>
-
       <div class="sech"><div class="secl"></div><div class="sect">🗝 KEYS DATABASE</div><div class="secl r"></div></div>
-
-      <!-- MỤC 3: Table with KHÓA + KÍCH HOẠT buttons -->
       <div class="ktbl-hd">
         <span class="kth">KEY ID</span>
         <span class="kth">TYPE</span>
@@ -751,22 +634,17 @@ html,body{width:100%;height:100%;background:var(--bg);font-family:'Rajdhani',san
         <span class="kth">ACTIONS</span>
       </div>
       <div class="ktbl-body" id="ktbl-body"></div>
-
     </div>
   </div>
-  <div class="adm-footer"><div class="container">WEB DESIGNED BY DUC ANH ZEV<br>v4.0.0 · QUANTUM · zerushe.pages.dev</div></div>
+  <div class="adm-footer"><div class="container">WEB DESIGNED BY DUC ANH ZEV<br>v4.5.0 · QUANTUM · zerushe.pages.dev</div></div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     JAVASCRIPT ENGINE v4.4.0
-═══════════════════════════════════════════ -->
 <script>
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════════════════
    MỤC 2: FIREBASE REALTIME DATABASE CONFIG
-   Điền thông tin dự án Firebase để kích hoạt
-   đồng bộ khóa Key giữa nhiều thiết bị.
-   Giữ nguyên null để chạy ở chế độ LOCAL ONLY.
-───────────────────────────────────────────── */
+   Điền thông tin dự án để kích hoạt đồng bộ đa thiết bị.
+   Giữ null để chạy ở chế độ LOCAL ONLY.
+════════════════════════════════════════════════════ */
 const FIREBASE_CONFIG = {
   apiKey:            null,
   authDomain:        null,
@@ -778,14 +656,14 @@ const FIREBASE_CONFIG = {
 };
 const FIREBASE_PATH = 'zev_keys';
 
-/* ─── CONSTANTS ─── */
+/* ── CONSTANTS ── */
 const ADMIN_KEY = 'ZEV-ADMIN-S2H-H1J';
-const LS_DB = 'zev_keys_db';
-const LS_SES = 'zev_session';
-const KEY_RGX = /^ZEV-(DAY|WEEK|MONTH)-[A-Z0-9]{3,7}$/;
-const DUR = { DAY:86400000, WEEK:604800000, MONTH:2592000000 };
-const PKG_LBL = { DAY:'NGÀY (24h)', WEEK:'TUẦN (7d)', MONTH:'THÁNG (30d)' };
-const PKG_FULL = { DAY:'GÓI NGÀY (1 NGÀY)', WEEK:'GÓI TUẦN (7 NGÀY)', MONTH:'GÓI THÁNG (30 NGÀY)' };
+const LS_DB     = 'zev_keys_db';
+const LS_SES    = 'zev_session';
+const KEY_RGX   = /^ZEV-(DAY|WEEK|MONTH)-[A-Z0-9]{3,7}$/;
+const DUR       = { DAY:86400000, WEEK:604800000, MONTH:2592000000 };
+const PKG_LBL   = { DAY:'NGÀY (24h)', WEEK:'TUẦN (7d)', MONTH:'THÁNG (30d)' };
+const PKG_FULL  = { DAY:'GÓI NGÀY (1 NGÀY)', WEEK:'GÓI TUẦN (7 NGÀY)', MONTH:'GÓI THÁNG (30 NGÀY)' };
 const PRES = {
   pro:   {gen:100,rd:80, s2x:70, s4x:55, fl:120,aa:40,fire:50},
   sniper:{gen:58, rd:50, s2x:40, s4x:28, fl:70, aa:18,fire:42},
@@ -793,7 +671,7 @@ const PRES = {
   custom:{gen:100,rd:80, s2x:70, s4x:55, fl:120,aa:40,fire:50}
 };
 
-/* ─── STATE ─── */
+/* ── STATE ── */
 let db={}, sesKey=null;
 let exTimer=null, admTimer=null, cdwTimer=null;
 let rafA={x20:false,drag:false,aim:false,drag2:false};
@@ -802,16 +680,16 @@ let fpsFrames=0, fpsLast=performance.now(), ramBase=14.5+Math.random()*2.3;
 let quantumOn=false, dnsCascading=false, dnsDone=false;
 let fbApp=null, fbDB=null, cloudAvailable=false;
 
-/* ─── BOOT ─── */
+/* ── BOOT ── */
 window.addEventListener('load',()=>{
   initLocalDB(); initFirebase(); startCanvas(); detectGPU();
   startFPS(); startPing(); startRAM(); loadSysInfo();
   initStorageWatch(); startExpireWatch(); restoreSession();
 });
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════════════════
    MỤC 2: FIREBASE INIT & CLOUD SYNC
-───────────────────────────────────────────── */
+════════════════════════════════════════════════════ */
 function initFirebase(){
   if(!FIREBASE_CONFIG.apiKey||!FIREBASE_CONFIG.databaseURL){updateSyncUI('local');return;}
   try{
@@ -825,6 +703,7 @@ function initFirebase(){
     });
   }catch(e){updateSyncUI('err');}
 }
+
 function updateSyncUI(mode){
   const dot=document.getElementById('sync-dot');
   const mTxt=document.getElementById('sync-mode-txt');
@@ -837,45 +716,48 @@ function updateSyncUI(mode){
     if(mTxt){mTxt.className='sync-mode ok';mTxt.textContent='REALTIME CLOUD';}
     if(sTxt)sTxt.textContent='Firebase đang đồng bộ';
     if(aBadge){aBadge.className='adm-sync-badge live';aBadge.textContent='LIVE';}
-    if(aSub)aSub.textContent='Đồng bộ thực tế. Khóa key có hiệu lực ngay lập tức trên mọi thiết bị.';
-  }else if(mode==='err'){
+    if(aSub)aSub.textContent='Đồng bộ thời gian thực. Key có hiệu lực ngay lập tức trên mọi thiết bị.';
+  } else if(mode==='err'){
     dot.className='sync-dot err';
     if(mTxt){mTxt.className='sync-mode err';mTxt.textContent='SYNC ERROR';}
     if(sTxt)sTxt.textContent='Lỗi kết nối Firebase';
     if(aBadge){aBadge.className='adm-sync-badge off';aBadge.textContent='ERR';}
-    if(aSub)aSub.textContent='Không kết nối được. Kiểm tra API config Firebase.';
-  }else{
+    if(aSub)aSub.textContent='Không kết nối được. Kiểm tra lại Firebase API config.';
+  } else {
     dot.className='sync-dot local';
     if(mTxt){mTxt.className='sync-mode local';mTxt.textContent='LOCAL ONLY';}
     if(sTxt)sTxt.textContent='Firebase chưa cấu hình';
     if(aBadge){aBadge.className='adm-sync-badge off';aBadge.textContent='LOCAL';}
-    if(aSub)aSub.textContent='Điền Firebase API config trong mã nguồn để kích hoạt đồng bộ đa thiết bị.';
+    if(aSub)aSub.textContent='Điền Firebase config trong mã nguồn để kích hoạt đồng bộ đa thiết bị.';
   }
 }
+
+/* MỤC 2.2: Realtime listener - khóa/thu hồi key từ xa */
 function startCloudListen(){
   if(!fbDB||!cloudAvailable)return;
   fbDB.ref(FIREBASE_PATH).on('value',snap=>{
     const cloudData=snap.val()||{};
     Object.keys(cloudData).forEach(k=>{db[k]=cloudData[k];});
     saveDB();
-    /* MỤC 2.2: Real-time khóa từ xa */
     if(sesKey&&db[sesKey]){
       const e=db[sesKey];
       if(e.status==='blocked'){
         stopAllRAF();if(cdwTimer)clearInterval(cdwTimer);
         document.getElementById('ban-sub-text').innerHTML='❌ Truy cập bị từ chối!<br>Key đã bị khóa hoặc vô hiệu hóa từ xa!';
         clrSes();showBan();
-      }else if(e.status==='expired'){
+      } else if(e.status==='expired'){
         stopAllRAF();if(cdwTimer)clearInterval(cdwTimer);
-        clrSes();showScr('s-lock');toast('err','⏰ Key của bạn đã bị thu hồi từ xa!');
+        clrSes();showScr('s-lock');
+        toast('err','⏰ Key của bạn đã bị thu hồi từ xa!');
       }
     }
   });
 }
+
 function syncLocalToCloud(){if(!fbDB||!cloudAvailable)return;fbDB.ref(FIREBASE_PATH).set(db).catch(()=>{});}
 function writeKeyToCloud(k,data){if(!fbDB||!cloudAvailable)return;fbDB.ref(`${FIREBASE_PATH}/${k}`).set(data).catch(()=>{});}
 
-/* ─── LOCAL DB ─── */
+/* ── LOCAL DB ── */
 function initLocalDB(){
   const raw=localStorage.getItem(LS_DB);
   if(raw){try{db=JSON.parse(raw);}catch(e){db={};}}
@@ -897,7 +779,7 @@ function initLocalDB(){
 }
 function saveDB(){localStorage.setItem(LS_DB,JSON.stringify(db));}
 
-/* ─── SESSION ─── */
+/* ── SESSION ── */
 function restoreSession(){
   const sk=localStorage.getItem(LS_SES);if(!sk){showScr('s-lock');return;}
   const e=db[sk];if(!e){clrSes();showScr('s-lock');return;}
@@ -906,11 +788,11 @@ function restoreSession(){
   if(expiry&&Date.now()<expiry){
     sesKey=sk;if(!localStorage.getItem('zev_expiry'))localStorage.setItem('zev_expiry',expiry);
     enterClient(sk);
-  }else{if(e.status==='active')markExp(sk);clrSes();showScr('s-lock');}
+  } else {if(e.status==='active')markExp(sk);clrSes();showScr('s-lock');}
 }
 function clrSes(){localStorage.removeItem(LS_SES);localStorage.removeItem('zev_expiry');sesKey=null;}
 
-/* ─── KEY SUBMIT ─── */
+/* ── KEY SUBMIT ── */
 function doKeySubmit(ev){
   ev.preventDefault();
   const raw=document.getElementById('key-inp').value.trim().toUpperCase();
@@ -923,8 +805,11 @@ function doKeySubmit(ev){
     if(e.status==='active'){
       let expiryTime=e.expiry;
       if(!expiryTime){const tp=raw.split('-')[1];expiryTime=Date.now()+(DUR[tp]||DUR.DAY);e.expiry=expiryTime;saveDB();writeKeyToCloud(raw,e);}
-      if(Date.now()<expiryTime){toast('ok','✅ Phiên hoạt động khôi phục!');sesKey=raw;localStorage.setItem(LS_SES,raw);localStorage.setItem('zev_expiry',expiryTime);setTimeout(()=>enterClient(raw),800);}
-      else{markExp(raw);toast('err','❌ Key này đã hết hạn!');}
+      if(Date.now()<expiryTime){
+        toast('ok','✅ Phiên hoạt động khôi phục!');sesKey=raw;
+        localStorage.setItem(LS_SES,raw);localStorage.setItem('zev_expiry',expiryTime);
+        setTimeout(()=>enterClient(raw),800);
+      } else {markExp(raw);toast('err','❌ Key này đã hết hạn!');}
       return;
     }
   }
@@ -932,12 +817,12 @@ function doKeySubmit(ev){
   db[raw]={status:'active',expiry:expiryTime,duration:dur,pkg:PKG_LBL[tp],activatedAt:Date.now()};
   saveDB();writeKeyToCloud(raw,db[raw]);
   sesKey=raw;localStorage.setItem(LS_SES,raw);localStorage.setItem('zev_expiry',expiryTime);
-  toast('ok','⚡ Kích hoạt gói thành công! Đang đồng bộ phần cứng…');
+  toast('ok','⚡ Kích hoạt thành công! Đang đồng bộ phần cứng…');
   document.getElementById('btn-go').disabled=true;
   setTimeout(()=>{document.getElementById('btn-go').disabled=false;runInject(raw);},600);
 }
 
-/* ─── ADMIN FORM ─── */
+/* ── ADMIN FORM ── */
 function doAdmSubmit(ev){
   ev.preventDefault();
   const v=document.getElementById('adm-inp').value.trim().toUpperCase();
@@ -948,20 +833,22 @@ function toggleAdmForm(){
   const norm=document.getElementById('normal-key-container');
   const adm=document.getElementById('admin-key-container');
   if(adm.style.display==='none'||adm.style.display===''){
-    norm.style.cssText='opacity:0;transform:scale(.96);pointer-events:none;';
-    setTimeout(()=>{norm.style.display='none';adm.style.display='block';requestAnimationFrame(()=>{adm.style.cssText='opacity:1;transform:scale(1);pointer-events:all;transition:opacity .3s,transform .3s;';});},300);
-  }else{
-    adm.style.cssText='opacity:0;transform:scale(.96);pointer-events:none;';
-    setTimeout(()=>{adm.style.display='none';norm.style.display='block';requestAnimationFrame(()=>{norm.style.cssText='opacity:1;transform:scale(1);pointer-events:all;transition:opacity .3s,transform .3s;';});},300);
+    norm.style.cssText='opacity:0;transform:scale(.96);pointer-events:none;transition:opacity .3s,transform .3s;';
+    setTimeout(()=>{norm.style.display='none';adm.style.display='block';
+      requestAnimationFrame(()=>{adm.style.cssText='opacity:1;transform:scale(1);pointer-events:all;transition:opacity .3s,transform .3s;';});},300);
+  } else {
+    adm.style.cssText='opacity:0;transform:scale(.96);pointer-events:none;transition:opacity .3s,transform .3s;';
+    setTimeout(()=>{adm.style.display='none';norm.style.display='block';
+      requestAnimationFrame(()=>{norm.style.cssText='opacity:1;transform:scale(1);pointer-events:all;transition:opacity .3s,transform .3s;';});},300);
   }
 }
 
-/* ─── BUY MODAL (MỤC 1.4) ─── */
+/* MỤC 1.3: BUY MODAL */
 function openBuyModal(){document.getElementById('buy-modal').classList.add('on');}
 function closeBuyModal(){document.getElementById('buy-modal').classList.remove('on');}
 document.getElementById('buy-modal').addEventListener('click',function(e){if(e.target===this)closeBuyModal();});
 
-/* ─── INJECT ─── */
+/* ── INJECT ── */
 const ILINES=['> Initializing ZEV Quantum Core…','> Mapping hardware interfaces…','> Loading DNS bypass profiles…','> Calibrating Touch Polling rate…','> Syncing OB54 sensitivity matrix…','> Applying Gaming QoS rules…','> Configuration injected. Launching UI…'];
 function runInject(key){
   showScr('s-inject');
@@ -973,13 +860,12 @@ function runInject(key){
     fill.style.width=pv+'%';pct.textContent=pv+'%';
     const tl=Math.floor(prog*ILINES.length);
     while(li<tl&&li<ILINES.length){const d=document.createElement('div');d.textContent=ILINES[li];box.appendChild(d);box.scrollTop=box.scrollHeight;li++;}
-    if(prog<1)requestAnimationFrame(frame);
-    else setTimeout(()=>enterClient(key),350);
+    if(prog<1)requestAnimationFrame(frame);else setTimeout(()=>enterClient(key),350);
   }
   requestAnimationFrame(frame);
 }
 
-/* ─── ENTER CLIENT ─── */
+/* ── ENTER CLIENT ── */
 function enterClient(key){
   showScr('s-client');
   document.getElementById('c-bkey').textContent=key;
@@ -995,14 +881,14 @@ function enterClient(key){
   if(expiry)startCountdown(parseInt(expiry));
 }
 
-/* ─── LOGOUT ─── */
+/* ── LOGOUT ── */
 function doLogout(){
   stopAllRAF();if(cdwTimer)clearInterval(cdwTimer);clrSes();
   const cs=document.getElementById('s-client');cs.style.transition='opacity .4s';cs.style.opacity='0';
   setTimeout(()=>{showScr('s-lock');cs.style.opacity='1';cs.style.transition='';document.getElementById('key-inp').value='';},400);
 }
 
-/* ─── EXPIRE WATCHER ─── */
+/* ── EXPIRE WATCHER ── */
 function startExpireWatch(){
   if(exTimer)clearInterval(exTimer);
   exTimer=setInterval(()=>{
@@ -1018,7 +904,7 @@ function startExpireWatch(){
 }
 function markExp(k){if(db[k]){db[k].status='expired';saveDB();writeKeyToCloud(k,db[k]);}}
 
-/* ─── STORAGE WATCH cross-tab ─── */
+/* ── STORAGE WATCH cross-tab ── */
 function initStorageWatch(){
   window.addEventListener('storage',ev=>{
     if(ev.key!==LS_DB)return;
@@ -1029,23 +915,35 @@ function initStorageWatch(){
   });
 }
 
-/* ─── BAN ─── */
-function showBan(){window.onbeforeunload=ev=>{ev.preventDefault();ev.returnValue='';};document.getElementById('ban-overlay').classList.add('on');}
+/* ── BAN ── */
+function showBan(){
+  window.onbeforeunload=ev=>{ev.preventDefault();ev.returnValue='';};
+  document.getElementById('ban-overlay').classList.add('on');
+}
 
-/* ─── SCREENS & TABS ─── */
-function showScr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));const el=document.getElementById(id);if(el)el.classList.add('visible');}
+/* ── SCREENS & TABS ── */
+function showScr(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  const el=document.getElementById(id);if(el)el.classList.add('visible');
+}
 function switchTab(i){
   ['tp0','tp1','tp2','tp3'].forEach((id,j)=>{
-    const p=document.getElementById(id);if(p){p.classList.toggle('act',j===i);p.style.display=(j===i)?'flex':'none';}
+    const p=document.getElementById(id);
+    if(p){p.classList.toggle('act',j===i);p.style.display=(j===i)?'flex':'none';}
     const b=document.getElementById('tb'+j);if(b)b.classList.toggle('act',j===i);
   });
 }
 
-/* ─── ADMIN ─── */
+/* ════════════════════════════════════════════════════
+   MỤC 3: ADMIN PANEL
+════════════════════════════════════════════════════ */
 function openAdmin(){
   showScr('s-admin');renderAdm();
   if(admTimer)clearInterval(admTimer);
-  admTimer=setInterval(()=>{try{const r=localStorage.getItem(LS_DB);if(r)db=JSON.parse(r);}catch(e){}renderAdm();},1200);
+  admTimer=setInterval(()=>{
+    try{const r=localStorage.getItem(LS_DB);if(r)db=JSON.parse(r);}catch(e){}
+    renderAdm();
+  },1200);
 }
 function closeAdmin(){if(admTimer)clearInterval(admTimer);showScr('s-lock');}
 
@@ -1057,62 +955,73 @@ function renderAdm(){
     if(st==='ready')rdy++;else if(st==='active')act++;else if(st==='expired')exp++;else if(st==='blocked')blk++;
     let badge='',timer='';
     if(st==='ready'){badge=`<span class="kbdg st-rdy">SẴN SÀNG</span>`;timer=`<span style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--d2)">—</span>`;}
-    else if(st==='active'){badge=`<span class="kbdg st-act">HOẠT ĐỘNG</span>`;const rem=e.expiry-now;timer=rem>0?`<span class="kt">${fmtDur(rem)}</span>`:`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXP</span>`;}
-    else if(st==='expired'){badge=`<span class="kbdg st-exp">HẾT HẠN</span>`;timer=`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXPIRED</span>`;}
+    else if(st==='active'){
+      badge=`<span class="kbdg st-act">HOẠT ĐỘNG</span>`;
+      const rem=e.expiry-now;
+      timer=rem>0?`<span class="kt">${fmtDur(rem)}</span>`:`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXP</span>`;
+    } else if(st==='expired'){badge=`<span class="kbdg st-exp">HẾT HẠN</span>`;timer=`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXPIRED</span>`;}
     else if(st==='blocked'){badge=`<span class="kbdg st-blk">BỊ KHÓA</span>`;timer=`<span style="color:var(--rd);font-size:8px;font-family:'Share Tech Mono',monospace">LOCKED</span>`;}
-    /* MỤC 3.1: 2 nút KHÓA đỏ + KÍCH HOẠT/MỞ KHÓA xanh */
+    /* MỤC 3.1: Nút KHÓA đỏ + KÍCH HOẠT/MỞ KHÓA xanh */
     let acts='';
     if(st==='blocked'){
       acts=`<div class="action-btns"><button class="abtn blk-btn" disabled>KHÓA</button><button class="abtn act-btn" onclick="admActivate('${k}')">MỞ KHÓA</button></div>`;
-    }else if(st==='expired'){
+    } else if(st==='expired'){
       acts=`<div class="action-btns"><button class="abtn blk-btn" disabled>KHÓA</button><button class="abtn act-btn" onclick="admActivate('${k}')">KÍCH HOẠT</button></div>`;
-    }else if(st==='active'){
+    } else if(st==='active'){
       acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn cyan-btn" onclick="admActivate('${k}')">+24H</button></div>`;
-    }else{
-      acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn act-btn" disabled>KÍCH HOẠT</button></div>`;
+    } else {
+      acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn act-btn" disabled>SẴN SÀNG</button></div>`;
     }
     const tp=k.split('-')[1];
     html+=`<div class="krow"><div><div class="kn">${k}</div><div class="kp">${e.pkg||'—'}</div></div><div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--d2)">${tp}</div><div>${badge}<br>${timer}</div>${acts}</div>`;
   });
   body.innerHTML=html;
-  const sv=id=>{const el=document.getElementById(id);if(el)el.textContent=eval(id.replace('as-','')==='rdy'?rdy:id.replace('as-','')==='act'?act:id.replace('as-','')==='exp'?exp:blk);};
   document.getElementById('as-rdy').textContent=rdy;
   document.getElementById('as-act').textContent=act;
   document.getElementById('as-exp').textContent=exp;
   document.getElementById('as-blk').textContent=blk;
 }
 
-/* MỤC 3.2: Admin Block & Activate */
+/* MỤC 3.2: Admin Block + Activate với gia hạn thêm thời gian đúng gói */
 function admBlock(k){
-  if(!db[k])return;db[k].status='blocked';saveDB();writeKeyToCloud(k,db[k]);renderAdm();
+  if(!db[k])return;
+  db[k].status='blocked';
+  saveDB();writeKeyToCloud(k,db[k]);renderAdm();
   toast('err',`🚫 Đã khóa key: ${k}`);
 }
 function admActivate(k){
   if(!db[k])return;
-  const tp=k.split('-')[1];const addDur=DUR[tp]||DUR.DAY;const now=Date.now();
-  const prevExp=db[k].expiry||0;
-  const newExp=(prevExp&&prevExp>now)?prevExp+addDur:now+addDur;
-  db[k].status='active';db[k].expiry=newExp;db[k].activatedAt=now;
+  const tp=k.split('-')[1];
+  const addDur=DUR[tp]||DUR.DAY;
+  const now=Date.now();
+  const prevExp=db[k].expiry&&db[k].expiry>now?db[k].expiry:now;
+  const newExp=prevExp+addDur;
+  db[k].status='active';
+  db[k].expiry=newExp;
+  db[k].activatedAt=now;
   saveDB();writeKeyToCloud(k,db[k]);renderAdm();
-  const durLabel=tp==='DAY'?'+24h':tp==='WEEK'?'+7 ngày':'+30 ngày';
-  toast('ok',`✅ Đã kích hoạt lại key ${k} (${durLabel})`);
+  const durLabel=tp==='DAY'?'+24 giờ':tp==='WEEK'?'+7 ngày':'+30 ngày';
+  toast('ok',`✅ Kích hoạt lại key ${k} (${durLabel})`);
 }
 
-/* ─── QUANTUM DNS (MỤC 5.1) ─── */
+/* ── QUANTUM DNS (MỤC 5 Optimize Tab) ── */
 function toggleQuantumSwitch(){
   if(dnsCascading)return;quantumOn=!quantumOn;
   const wrap=document.getElementById('qo-wrap');const stTxt=document.getElementById('qbtn-st');
   const pw1=document.getElementById('pw1');const pw2=document.getElementById('pw2');
   if(quantumOn){
     wrap.classList.add('on');stTxt.textContent='ON';
-    pw1.classList.remove('fire');pw2.classList.remove('fire');void pw1.offsetWidth;pw1.classList.add('fire');
+    pw1.classList.remove('fire');pw2.classList.remove('fire');
+    void pw1.offsetWidth;pw1.classList.add('fire');
     setTimeout(()=>{void pw2.offsetWidth;pw2.classList.add('fire');},300);
     setTimeout(()=>runDNSCascade(),600);
-  }else{
-    wrap.classList.remove('on');stTxt.textContent='OFF';pw1.classList.remove('fire');pw2.classList.remove('fire');
+  } else {
+    wrap.classList.remove('on');stTxt.textContent='OFF';
+    pw1.classList.remove('fire');pw2.classList.remove('fire');
     dnsDone=false;
     document.querySelectorAll('.dns-row').forEach(r=>{r.classList.remove('lit');r.querySelector('.dck').textContent='◈';});
-    const dl=document.getElementById('btn-dl-cfg');dl.className='cbtn locked';dl.textContent='🔒 TẢI FILE CẤU HÌNH MẠNG .MOBILECONFIG';
+    const dl=document.getElementById('btn-dl-cfg');
+    dl.className='cbtn locked';dl.textContent='🔒 TẢI FILE CẤU HÌNH MẠNG .MOBILECONFIG';
     document.getElementById('dl-ok').style.display='none';
   }
 }
@@ -1120,8 +1029,10 @@ function runDNSCascade(){
   if(dnsCascading||dnsDone)return;dnsCascading=true;
   const rows=document.querySelectorAll('.dns-row');let idx=0;
   function lightNext(){
-    if(idx>=rows.length){dnsCascading=false;dnsDone=true;
-      const expiry=localStorage.getItem('zev_expiry');const dl=document.getElementById('btn-dl-cfg');
+    if(idx>=rows.length){
+      dnsCascading=false;dnsDone=true;
+      const expiry=localStorage.getItem('zev_expiry');
+      const dl=document.getElementById('btn-dl-cfg');
       if(expiry&&Date.now()<parseInt(expiry)){dl.className='cbtn pu';dl.textContent='⬇ TẢI FILE CẤU HÌNH MẠNG .MOBILECONFIG';}
       else{dl.className='cbtn locked';dl.textContent='🔒 KEY EXPIRED - TẢI FILE BỊ KHÓA';}
       return;
@@ -1132,20 +1043,35 @@ function runDNSCascade(){
   lightNext();
 }
 
-/* MỤC 5.2: Dynamic .mobileconfig generator */
+/* ════════════════════════════════════════════════════
+   MỤC 5.2: DYNAMIC .MOBILECONFIG GENERATOR
+   VPNSubType + ApplicationRules chuẩn iOS Apple
+════════════════════════════════════════════════════ */
+function generateUUID(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+    const r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16).toUpperCase();
+  });
+}
 function downloadCfg(){
   if(!dnsDone)return;
   const expiry=localStorage.getItem('zev_expiry');
   if(expiry&&Date.now()>=parseInt(expiry)){toast('err','❌ Không thể tải: Key đã hết hạn!');return;}
   const ips=['1.1.1.1','1.0.0.1','94.140.14.14','94.140.15.15','45.90.28.0','45.90.30.0','9.9.9.9','149.112.112.112','8.8.8.8','8.8.4.4'];
-  let s='';ips.forEach(ip=>{s+=`          <string>${ip}</string>\n`;});
+  let srvStr='';ips.forEach(ip=>{srvStr+=`          <string>${ip}</string>\n`;});
+  /* UUID phân biệt cho từng payload */
+  const uuidRoot  = generateUUID();
+  const uuidDNS   = generateUUID();
+  const uuidClip  = generateUUID();
+  const uuidVPN   = generateUUID();
+  const uuidVPNSub= generateUUID();
   const xml=`<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
   <key>PayloadContent</key>
   <array>
-    <!-- 1. DNS Settings Managed -->
+
+    <!-- 1. DNS-over-HTTPS Managed -->
     <dict>
       <key>DNSSettings</key>
       <dict>
@@ -1153,20 +1079,20 @@ function downloadCfg(){
         <key>ServerURL</key><string>https://cloudflare-dns.com/dns-query</string>
         <key>ServerAddresses</key>
         <array>
-${s}        </array>
+${srvStr}        </array>
       </dict>
       <key>PayloadDisplayName</key><string>ZEV DNS Settings</string>
-      <key>PayloadIdentifier</key><string>com.zev.cybervoid.dns.managed</string>
+      <key>PayloadIdentifier</key><string>com.zev.cybervoid.dns.managed.${uuidDNS}</string>
       <key>PayloadType</key><string>com.apple.dnsSettings.managed</string>
-      <key>PayloadUUID</key><string>A1B2C3D4-0001-4000-A000-000000000001</string>
+      <key>PayloadUUID</key><string>${uuidDNS}</string>
       <key>PayloadVersion</key><integer>1</integer>
     </dict>
-    
-    <!-- 2. Web Clip Managed (MỤC 5.1) -->
+
+    <!-- 2. Web Clip Managed — MỤC 5.1: zerushe.pages.dev -->
     <dict>
       <key>PayloadType</key><string>com.apple.webClip.managed</string>
-      <key>PayloadIdentifier</key><string>com.zevboost.7pmax.hosted.webclip.clip</string>
-      <key>PayloadUUID</key><string>D0E5F6A7-B8C9-0123-DEFA-23456789ABCD</string>
+      <key>PayloadIdentifier</key><string>com.zevboost.webclip.managed.${uuidClip}</string>
+      <key>PayloadUUID</key><string>${uuidClip}</string>
       <key>PayloadVersion</key><integer>1</integer>
       <key>Label</key><string>ZEV BOOST</string>
       <key>URL</key><string>https://zerushe.pages.dev/</string>
@@ -1176,120 +1102,175 @@ ${s}        </array>
       <key>Precomposed</key><true/>
     </dict>
 
-    <!-- 3. Per-App VPN QoS Rules with ApplicationRules (MỤC 5.2) -->
+    <!-- 3. Per-App VPN QoS — MỤC 5.2: VPNSubType + ApplicationRules chuẩn Apple -->
     <dict>
-      <key>PayloadType</key><string>com.apple.vpn.managed.applayer</string>
-      <key>PayloadIdentifier</key><string>com.zev.cybervoid.vpn.applayer</string>
-      <key>PayloadUUID</key><string>A1B2C3D4-0002-4000-A000-000000000002</string>
+      <key>PayloadType</key><string>com.apple.vpn.managed</string>
+      <key>PayloadIdentifier</key><string>com.zev.cybervoid.vpn.managed.${uuidVPN}</string>
+      <key>PayloadUUID</key><string>${uuidVPN}</string>
       <key>PayloadDisplayName</key><string>ZEV Per-App QoS Routing</string>
       <key>PayloadVersion</key><integer>1</integer>
-      <key>VPNUUID</key><string>A1B2C3D4-0002-4000-A000-000000000003</string>
+      <key>UserDefinedName</key><string>ZEV Gaming QoS</string>
       <key>VPNType</key><string>VPN</string>
-      <key>UserDefinedName</key><string>ZEV Per-App QoS</string>
+      <key>VPNSubType</key><string>com.wireguard.ios</string>
+      <key>VPNConfiguration</key>
+      <dict>
+        <key>AuthenticationMethod</key><string>None</string>
+        <key>PayloadCertificateUUID</key><string>${uuidVPNSub}</string>
+      </dict>
+      <key>OnDemandEnabled</key><integer>0</integer>
       <key>ApplicationRules</key>
       <array>
         <dict>
           <key>AppIdentifierMatches</key>
-          <string>com.dts.freefireth</string>
-        </dict>
-        <dict>
-          <key>AppIdentifierMatches</key>
-          <string>com.dts.freefiremax</string>
+          <array>
+            <string>com.dts.freefireth</string>
+            <string>com.dts.freefiremax</string>
+          </array>
         </dict>
       </array>
     </dict>
+
   </array>
-  <key>PayloadDescription</key><string>ZEV Quantum DNS Gaming Tunnel &amp; Web Clip</string>
+  <key>PayloadDescription</key><string>ZEV Quantum DNS Gaming Tunnel, Web Clip &amp; QoS — zerushe.pages.dev</string>
   <key>PayloadDisplayName</key><string>ZEV CYBER VOID Boost</string>
-  <key>PayloadIdentifier</key><string>com.zev.cybervoid.dns</string>
-  <key>PayloadOrganization</key><string>ZEV Quantum</string>
+  <key>PayloadIdentifier</key><string>com.zev.cybervoid.root.${uuidRoot}</string>
+  <key>PayloadOrganization</key><string>ZEV Quantum — zerushe.pages.dev</string>
   <key>PayloadRemovalDisallowed</key><false/>
   <key>PayloadType</key><string>Configuration</string>
-  <key>PayloadUUID</key><string>A1B2C3D4-0000-4000-A000-000000000000</string>
+  <key>PayloadUUID</key><string>${uuidRoot}</string>
   <key>PayloadVersion</key><integer>1</integer>
 </dict>
 </plist>`;
   const blob=new Blob([xml],{type:'application/x-apple-aspen-config'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ZevBoost.mobileconfig';
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='ZevBoost.mobileconfig';
   document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  const ok=document.getElementById('dl-ok');if(ok){ok.style.display='block';setTimeout(()=>ok.style.display='none',6000);}
+  const ok=document.getElementById('dl-ok');
+  if(ok){ok.style.display='block';setTimeout(()=>ok.style.display='none',6000);}
 }
 
-/* ─── RAF TOUCH ENGINE ─── */
+/* ── RAF TOUCH ENGINE ── */
 function handleRAF(id,on){
-  if(on){if(rafA[id])return;rafA[id]=true;let lt=0;function loop(t){if(!rafA[id])return;if(t-lt>=16)lt=t;rafH[id]=requestAnimationFrame(loop);}rafH[id]=requestAnimationFrame(loop);}
-  else{rafA[id]=false;if(rafH[id]){cancelAnimationFrame(rafH[id]);rafH[id]=null;}}
+  if(on){
+    if(rafA[id])return;rafA[id]=true;
+    let lt=0;
+    function loop(t){if(!rafA[id])return;if(t-lt>=16)lt=t;rafH[id]=requestAnimationFrame(loop);}
+    rafH[id]=requestAnimationFrame(loop);
+  } else {
+    rafA[id]=false;if(rafH[id]){cancelAnimationFrame(rafH[id]);rafH[id]=null;}
+  }
   refreshBst();
 }
-function stopAllRAF(){Object.keys(rafA).forEach(id=>{rafA[id]=false;if(rafH[id]){cancelAnimationFrame(rafH[id]);rafH[id]=null;}});document.querySelectorAll('.sw').forEach(e=>e.checked=false);refreshBst();}
+function stopAllRAF(){
+  Object.keys(rafA).forEach(id=>{rafA[id]=false;if(rafH[id]){cancelAnimationFrame(rafH[id]);rafH[id]=null;}});
+  document.querySelectorAll('.sw').forEach(e=>e.checked=false);refreshBst();
+}
 function refreshBst(){
   const on=Object.values(rafA).some(v=>v);
   const bar=document.getElementById('bst-bar'),txt=document.getElementById('bst-txt'),dot=document.getElementById('bst-dot');
   if(!bar||!txt||!dot)return;
-  if(on){txt.textContent='⚡ rAF WAKELOCK ACTIVE — TOUCH POLLING: MAX BOOST';bar.style.cssText='background:rgba(122,34,255,.08);border-color:rgba(122,34,255,.3);color:var(--pu);';dot.style.cssText='background:var(--pu);box-shadow:0 0 8px var(--pu);';}
-  else{txt.textContent='HỆ THỐNG TĂNG TỐC: SẴN SÀNG KÍCH HOẠT';bar.style.cssText='background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.15);color:var(--gr);';dot.style.cssText='background:var(--gr);box-shadow:0 0 7px var(--gr);';}
+  if(on){
+    txt.textContent='⚡ rAF WAKELOCK ACTIVE — TOUCH POLLING: MAX BOOST';
+    bar.style.cssText='background:rgba(122,34,255,.08);border-color:rgba(122,34,255,.3);color:var(--pu);';
+    dot.style.cssText='background:var(--pu);box-shadow:0 0 8px var(--pu);';
+  } else {
+    txt.textContent='HỆ THỐNG TĂNG TỐC: SẴN SÀNG KÍCH HOẠT';
+    bar.style.cssText='background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.15);color:var(--gr);';
+    dot.style.cssText='background:var(--gr);box-shadow:0 0 7px var(--gr);';
+  }
 }
 
-/* ─── SLIDERS & PRESETS ─── */
+/* ── SLIDERS & PRESETS ── */
 function syncSl(id){const s=document.getElementById(id),d=document.getElementById(id+'-v');if(s&&d)d.textContent=s.value;}
-function stepSl(id,delta){const s=document.getElementById(id);if(!s)return;const step=parseFloat(s.step)||1;let v=parseFloat(s.value)+delta;v=Math.max(parseFloat(s.min),Math.min(parseFloat(s.max),v));v=Math.round(v/step)*step;s.value=v;syncSl(id);}
+function stepSl(id,delta){
+  const s=document.getElementById(id);if(!s)return;
+  const step=parseFloat(s.step)||1;
+  let v=parseFloat(s.value)+delta;
+  v=Math.max(parseFloat(s.min),Math.min(parseFloat(s.max),v));
+  v=Math.round(v/step)*step;s.value=v;syncSl(id);
+}
 function applyPre(nm,btn){
   document.querySelectorAll('.pcard').forEach(b=>b.classList.remove('sel'));if(btn)btn.classList.add('sel');
   const p=PRES[nm];if(!p)return;
-  [['ss-gen',p.gen],['ss-rd',p.rd],['ss-2x',p.s2x],['ss-4x',p.s4x],['ss-fl',p.fl],['ss-aa',p.aa],['ss-fire',p.fire]].forEach(([id,val])=>{const e=document.getElementById(id);if(e){e.value=Math.min(parseInt(e.max),Math.max(parseInt(e.min),val));syncSl(id);}});
+  [['ss-gen',p.gen],['ss-rd',p.rd],['ss-2x',p.s2x],['ss-4x',p.s4x],['ss-fl',p.fl],['ss-aa',p.aa],['ss-fire',p.fire]].forEach(([id,val])=>{
+    const e=document.getElementById(id);if(e){e.value=Math.min(parseInt(e.max),Math.max(parseInt(e.min),val));syncSl(id);}
+  });
 }
 function autoTune(){
   const dev=document.getElementById('inp-dev').value.trim()||'iPhone';
   const h=Array.from(dev).reduce((a,c)=>a+c.charCodeAt(0),0);
   toast('ok',`⚡ Đã hiệu chỉnh tự động cho [${dev}]!`);
-  [['ss-gen',85+(h%40)],['ss-rd',68+(h%30)],['ss-2x',58+(h%25)],['ss-4x',42+(h%22)],['ss-fl',100+(h%55)],['ss-aa',30+(h%22)],['ss-fire',42+(h%18)]].forEach(([id,val])=>{const e=document.getElementById(id);if(e){e.value=Math.min(parseInt(e.max),Math.max(parseInt(e.min),val));syncSl(id);}});
-  document.querySelectorAll('.pcard').forEach(b=>b.classList.remove('sel'));const cc=document.getElementById('pr-cust');if(cc)cc.classList.add('sel');
+  [['ss-gen',85+(h%40)],['ss-rd',68+(h%30)],['ss-2x',58+(h%25)],['ss-4x',42+(h%22)],['ss-fl',100+(h%55)],['ss-aa',30+(h%22)],['ss-fire',42+(h%18)]].forEach(([id,val])=>{
+    const e=document.getElementById(id);if(e){e.value=Math.min(parseInt(e.max),Math.max(parseInt(e.min),val));syncSl(id);}
+  });
+  document.querySelectorAll('.pcard').forEach(b=>b.classList.remove('sel'));
+  const cc=document.getElementById('pr-cust');if(cc)cc.classList.add('sel');
 }
 
-/* ─── COUNTDOWN (MỤC 4.2 setInterval 1s) ─── */
+/* ── COUNTDOWN (MỤC 4.2) ── */
 function startCountdown(expiry){
   if(cdwTimer)clearInterval(cdwTimer);if(!expiry)return;
   const dN=document.getElementById('cd-days'),hN=document.getElementById('cd-hours'),mN=document.getElementById('cd-mins'),sN=document.getElementById('cd-secs');
   function tick(){
     const rem=expiry-Date.now();
-    if(rem<=0){[dN,hN,mN,sN].forEach(n=>{if(n)n.textContent='00';});clearInterval(cdwTimer);
+    if(rem<=0){
+      [dN,hN,mN,sN].forEach(n=>{if(n)n.textContent='00';});clearInterval(cdwTimer);
       const st=document.getElementById('acc-status-txt');if(st){st.textContent='❌ EXPIRED';st.className='sub-col-val expired-red';}
       const dl=document.getElementById('btn-dl-cfg');if(dl){dl.className='cbtn locked';dl.textContent='🔒 KEY EXPIRED - TẢI FILE BỊ KHÓA';}
       toast('err','⏰ Gói Access Key đã hết hạn!');return;
     }
-    const ts=Math.floor(rem/1000),d=Math.floor(ts/86400),h=Math.floor((ts%86400)/3600),m=Math.floor((ts%3600)/60),s=ts%60;
+    const ts=Math.floor(rem/1000);
+    const d=Math.floor(ts/86400),h=Math.floor((ts%86400)/3600),m=Math.floor((ts%3600)/60),s=ts%60;
     if(dN)dN.textContent=p2(d);if(hN)hN.textContent=p2(h);if(mN)mN.textContent=p2(m);if(sN)sN.textContent=p2(s);
   }
   tick();cdwTimer=setInterval(tick,1000);
 }
+
+/* MỤC 4.2: Nút KÍCH HOẠT LẠI KEY +24H */
 function reactivateKey(){
   if(!sesKey)return;
-  const cur=parseInt(localStorage.getItem('zev_expiry'));const ext=86400000;
+  const cur=parseInt(localStorage.getItem('zev_expiry'));
+  const ext=86400000;
   const newExp=(cur&&Date.now()<cur)?cur+ext:Date.now()+ext;
   localStorage.setItem('zev_expiry',newExp);
   if(db[sesKey]){db[sesKey].expiry=newExp;db[sesKey].status='active';saveDB();writeKeyToCloud(sesKey,db[sesKey]);}
   const st=document.getElementById('acc-status-txt');if(st){st.textContent='⚡ ACTIVE';st.className='sub-col-val active-neon';}
   const dl=document.getElementById('btn-dl-cfg');if(dl&&dnsDone){dl.className='cbtn pu';dl.textContent='⬇ TẢI FILE CẤU HÌNH MẠNG .MOBILECONFIG';}
-  toast('ok','⚡ Gia hạn thành công +24 Giờ sử dụng!');
+  toast('ok','⚡ Gia hạn thành công +24 Giờ!');
   startCountdown(newExp);
 }
 
-/* ─── TELEMETRY ─── */
+/* ── TELEMETRY ── */
 function startFPS(){
-  function frame(now){fpsFrames++;const el=now-fpsLast;if(el>=500){const fps=Math.round((fpsFrames/el)*1000);fpsFrames=0;fpsLast=now;const e=document.getElementById('h-fps'),f=document.getElementById('fps-f');if(e)e.textContent=fps;if(f)f.style.width=Math.min(100,(fps/90)*100)+'%';}requestAnimationFrame(frame);}
+  function frame(now){
+    fpsFrames++;const el=now-fpsLast;
+    if(el>=500){
+      const fps=Math.round((fpsFrames/el)*1000);fpsFrames=0;fpsLast=now;
+      const e=document.getElementById('h-fps'),f=document.getElementById('fps-f');
+      if(e)e.textContent=fps;if(f)f.style.width=Math.min(100,(fps/90)*100)+'%';
+    }
+    requestAnimationFrame(frame);
+  }
   requestAnimationFrame(frame);
 }
 function startPing(){measurePing();setInterval(measurePing,3000);}
 async function measurePing(){
   const t0=performance.now();
-  try{await fetch('https://1.1.1.1/favicon.ico?t='+Date.now(),{method:'HEAD',mode:'no-cors',cache:'no-store',signal:AbortSignal.timeout(4000)});setPing(Math.round(performance.now()-t0));}
-  catch(e){setPing(Math.round(12+Math.random()*28));}
+  try{
+    await fetch('https://1.1.1.1/favicon.ico?t='+Date.now(),{method:'HEAD',mode:'no-cors',cache:'no-store',signal:AbortSignal.timeout(4000)});
+    setPing(Math.round(performance.now()-t0));
+  } catch(e){setPing(Math.round(12+Math.random()*28));}
 }
 function setPing(ms){const e=document.getElementById('h-ping');if(!e)return;e.textContent=ms;e.style.color=ms<40?'var(--gr)':ms<90?'var(--cy)':'var(--or)';}
-function startRAM(){function upd(){const d=(Math.random()-.48)*.13;ramBase=Math.max(14.5,Math.min(16.8,ramBase+d));const e=document.getElementById('h-mem');if(e)e.textContent=ramBase.toFixed(1);setTimeout(upd,900+Math.random()*600);}upd();}
+function startRAM(){
+  function upd(){const d=(Math.random()-.48)*.13;ramBase=Math.max(14.5,Math.min(16.8,ramBase+d));const e=document.getElementById('h-mem');if(e)e.textContent=ramBase.toFixed(1);setTimeout(upd,900+Math.random()*600);}upd();
+}
 function detectGPU(){
   let r='Apple GPU';
-  try{const cv=document.createElement('canvas');const gl=cv.getContext('webgl2')||cv.getContext('webgl');if(gl){const ext=gl.getExtension('WEBGL_debug_renderer_info');if(ext)r=gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)||r;else r=gl.getParameter(gl.RENDERER)||r;}}catch(e){}
+  try{
+    const cv=document.createElement('canvas');const gl=cv.getContext('webgl2')||cv.getContext('webgl');
+    if(gl){const ext=gl.getExtension('WEBGL_debug_renderer_info');if(ext)r=gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)||r;else r=gl.getParameter(gl.RENDERER)||r;}
+  } catch(e){}
   const hg=document.getElementById('h-gpu');if(hg)hg.textContent=r.length>14?r.slice(0,13)+'…':r;
   const ag=document.getElementById('acc-gpu-renderer');if(ag)ag.textContent=r;
 }
@@ -1300,52 +1281,108 @@ function loadSysInfo(){
   se('acc-sys-plat',plat);se('acc-sys-cores',navigator.hardwareConcurrency||'—');
 }
 
-/* ─── TOAST ─── */
+/* ── TOAST ── */
 function toast(type,msg){
-  const w=document.getElementById('toast-wrap');const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;
-  w.appendChild(el);requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));
+  const w=document.getElementById('toast-wrap');const el=document.createElement('div');
+  el.className=`toast ${type}`;el.textContent=msg;w.appendChild(el);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));
   setTimeout(()=>{el.classList.remove('show');setTimeout(()=>{if(el.parentNode)el.parentNode.removeChild(el);},500);},3500);
 }
 
-/* ─── UTILITIES ─── */
-function fmtDur(ms){if(ms<=0)return'00:00:00';const s=Math.floor(ms/1000),d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60),sc=s%60;return d>0?`${d}d ${p2(h)}:${p2(m)}:${p2(sc)}`:`${p2(h)}:${p2(m)}:${p2(sc)}`;}
+/* ── UTILITIES ── */
+function fmtDur(ms){
+  if(ms<=0)return'00:00:00';
+  const s=Math.floor(ms/1000),d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60),sc=s%60;
+  return d>0?`${d}d ${p2(h)}:${p2(m)}:${p2(sc)}`:`${p2(h)}:${p2(m)}:${p2(sc)}`;
+}
 function p2(n){return String(n).padStart(2,'0');}
 
-/* ─── CYBERNETIC EYE CANVAS (MỤC 5.4) ─── */
+/* ════════════════════════════════════════════════════
+   CYBERNETIC EYE CANVAS — 60fps~120fps rAF
+════════════════════════════════════════════════════ */
 function startCanvas(){
-  const canvas=document.getElementById('cyberEyeCanvas');const ctx=canvas.getContext('2d');
+  const canvas=document.getElementById('cyberEyeCanvas');
+  const ctx=canvas.getContext('2d');
   const N=62;let W,H,cx,cy,eyeR,pts=[],rot=0;
-  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;cx=W/2;cy=H/2;eyeR=Math.max(44,Math.min(W,H)*.11);}
+  function resize(){
+    W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;
+    cx=W/2;cy=H/2;eyeR=Math.max(44,Math.min(W,H)*.11);
+  }
   class Pt{
     constructor(){this.reset();}
-    reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.44;this.vy=(Math.random()-.5)*.44;this.r=1+Math.random()*1.8;this.a=.3+Math.random()*.5;this.hue=Math.random()>.5?285:320;}
-    update(){const dx=cx-this.x,dy=cy-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d>eyeR*1.2){this.vx+=dx/d*.0018;this.vy+=dy/d*.0018;}else if(d<eyeR*.5){this.vx-=dx/d*.002;this.vy-=dy/d*.002;}this.vx*=.991;this.vy*=.991;this.x+=this.vx;this.y+=this.vy;if(this.x<-20||this.x>W+20||this.y<-20||this.y>H+20)this.reset();}
-    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`hsla(${this.hue},100%,70%,${this.a})`;ctx.fill();ctx.beginPath();ctx.arc(this.x,this.y,this.r*2.3,0,Math.PI*2);ctx.fillStyle=`hsla(${this.hue},100%,70%,${this.a*.08})`;ctx.fill();}
+    reset(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.vx=(Math.random()-.5)*.44;this.vy=(Math.random()-.5)*.44;
+      this.r=1+Math.random()*1.8;this.a=.3+Math.random()*.5;
+      this.hue=Math.random()>.5?285:320;
+    }
+    update(){
+      const dx=cx-this.x,dy=cy-this.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d>eyeR*1.2){this.vx+=dx/d*.0018;this.vy+=dy/d*.0018;}
+      else if(d<eyeR*.5){this.vx-=dx/d*.002;this.vy-=dy/d*.002;}
+      this.vx*=.991;this.vy*=.991;this.x+=this.vx;this.y+=this.vy;
+      if(this.x<-20||this.x>W+20||this.y<-20||this.y>H+20)this.reset();
+    }
+    draw(){
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${this.hue},100%,70%,${this.a})`;ctx.fill();
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r*2.3,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${this.hue},100%,70%,${this.a*.08})`;ctx.fill();
+    }
   }
   function build(){pts=[];for(let i=0;i<N;i++)pts.push(new Pt());}
-  function drawLinks(){ctx.globalAlpha=.055;ctx.strokeStyle='#7a22ff';ctx.lineWidth=.55;for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d2=dx*dx+dy*dy;if(d2<11500){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}}}ctx.globalAlpha=1;}
+  function drawLinks(){
+    ctx.globalAlpha=.055;ctx.strokeStyle='#7a22ff';ctx.lineWidth=.55;
+    for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d2=dx*dx+dy*dy;
+      if(d2<11500){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
+    }}
+    ctx.globalAlpha=1;
+  }
   function drawEye(t){
     ctx.save();
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.strokeStyle='rgba(255,0,127,.48)';ctx.lineWidth=2;ctx.setLineDash([14,20]);ctx.shadowBlur=16;ctx.shadowColor='#ff007f';ctx.beginPath();ctx.arc(0,0,eyeR,0,Math.PI*2);ctx.stroke();ctx.restore();
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(-rot*1.5);ctx.strokeStyle='rgba(122,34,255,.58)';ctx.lineWidth=1.3;ctx.setLineDash([5,10]);ctx.shadowBlur=12;ctx.shadowColor='#7a22ff';ctx.beginPath();ctx.arc(0,0,eyeR*.72,0,Math.PI*2);ctx.stroke();ctx.restore();
-    ctx.strokeStyle='#7a22ff';ctx.lineWidth=1.5;ctx.setLineDash([]);ctx.shadowBlur=14;ctx.shadowColor='#7a22ff';ctx.beginPath();ctx.arc(cx,cy,eyeR*.42,0,Math.PI*2);ctx.stroke();
-    ctx.beginPath();ctx.arc(cx,cy,eyeR*.42,0,Math.PI*2);ctx.fillStyle='rgba(122,34,255,.07)';ctx.fill();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);
+    ctx.strokeStyle='rgba(255,0,127,.48)';ctx.lineWidth=2;ctx.setLineDash([14,20]);
+    ctx.shadowBlur=16;ctx.shadowColor='#ff007f';
+    ctx.beginPath();ctx.arc(0,0,eyeR,0,Math.PI*2);ctx.stroke();ctx.restore();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(-rot*1.5);
+    ctx.strokeStyle='rgba(122,34,255,.58)';ctx.lineWidth=1.3;ctx.setLineDash([5,10]);
+    ctx.shadowBlur=12;ctx.shadowColor='#7a22ff';
+    ctx.beginPath();ctx.arc(0,0,eyeR*.72,0,Math.PI*2);ctx.stroke();ctx.restore();
+    ctx.strokeStyle='#7a22ff';ctx.lineWidth=1.5;ctx.setLineDash([]);
+    ctx.shadowBlur=14;ctx.shadowColor='#7a22ff';
+    ctx.beginPath();ctx.arc(cx,cy,eyeR*.42,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,eyeR*.42,0,Math.PI*2);
+    ctx.fillStyle='rgba(122,34,255,.07)';ctx.fill();
     const pulse=.88+.12*Math.sin(t*.006);
-    ctx.beginPath();ctx.arc(cx,cy,eyeR*.2*pulse,0,Math.PI*2);ctx.fillStyle='#ff007f';ctx.globalAlpha=.75;ctx.shadowColor='#ff007f';ctx.shadowBlur=22;ctx.fill();ctx.globalAlpha=1;
-    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fillStyle='#fff';ctx.globalAlpha=.88;ctx.shadowBlur=8;ctx.fill();ctx.globalAlpha=1;
-    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,eyeR*2);g.addColorStop(0,'rgba(122,34,255,.1)');g.addColorStop(1,'rgba(3,1,7,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,eyeR*2,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,eyeR*.2*pulse,0,Math.PI*2);
+    ctx.fillStyle='#ff007f';ctx.globalAlpha=.75;ctx.shadowColor='#ff007f';ctx.shadowBlur=22;ctx.fill();ctx.globalAlpha=1;
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.globalAlpha=.88;ctx.shadowBlur=8;ctx.fill();ctx.globalAlpha=1;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,eyeR*2);
+    g.addColorStop(0,'rgba(122,34,255,.1)');g.addColorStop(1,'rgba(3,1,7,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,eyeR*2,0,Math.PI*2);ctx.fill();
     ctx.restore();
   }
   function render(t){
     ctx.clearRect(0,0,W,H);ctx.fillStyle='#030107';ctx.fillRect(0,0,W,H);
-    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.68);g.addColorStop(0,'rgba(28,0,55,.28)');g.addColorStop(1,'rgba(3,1,7,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    const g1=ctx.createRadialGradient(0,0,0,0,0,W*.33);g1.addColorStop(0,'rgba(122,34,255,.07)');g1.addColorStop(1,'rgba(3,1,7,0)');ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
-    const g2=ctx.createRadialGradient(W,H,0,W,H,W*.28);g2.addColorStop(0,'rgba(255,0,127,.05)');g2.addColorStop(1,'rgba(3,1,7,0)');ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.68);
+    g.addColorStop(0,'rgba(28,0,55,.28)');g.addColorStop(1,'rgba(3,1,7,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    const g1=ctx.createRadialGradient(0,0,0,0,0,W*.33);
+    g1.addColorStop(0,'rgba(122,34,255,.07)');g1.addColorStop(1,'rgba(3,1,7,0)');
+    ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
+    const g2=ctx.createRadialGradient(W,H,0,W,H,W*.28);
+    g2.addColorStop(0,'rgba(255,0,127,.05)');g2.addColorStop(1,'rgba(3,1,7,0)');
+    ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
     ctx.globalAlpha=1;pts.forEach(p=>{p.update();p.draw();});
-    drawLinks();drawEye(t);rot+=.004;requestAnimationFrame(render);
+    drawLinks();drawEye(t);rot+=.004;
+    requestAnimationFrame(render);
   }
   window.addEventListener('resize',resize);resize();build();requestAnimationFrame(render);
 }
+window.addEventListener('scroll',()=>{},{passive:true});
+window.addEventListener('touchmove',()=>{},{passive:true});
 </script>
 </body>
 </html>
