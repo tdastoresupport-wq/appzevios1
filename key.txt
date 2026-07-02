@@ -1,0 +1,32 @@
+========================================================================
+                      ZEV CYBER VOID — KEY SYSTEM DIRECTORY
+========================================================================
+
+[🛡️ ADMIN MASTER KEY]
+------------------------------------------------------------------------
+Key: ZEV-ADMIN-S2H-H1J
+Description: Toàn quyền truy cập bảng quản trị điều phối bảo mật
+
+------------------------------------------------------------------------
+[🔑 SYSTEM ACCESS KEYS LIST]
+------------------------------------------------------------------------
+
+STT  | GÓI NGÀY (DAY - 24h)  | GÓI TUẦN (WEEK - 7d)  | GÓI THÁNG (MONTH - 30d)
+-----|----------------------|-----------------------|------------------------
+01   | ZEV-DAY-D1F          | ZEV-WEEK-R8V          | ZEV-MONTH-T5A
+02   | ZEV-DAY-K91          | ZEV-WEEK-C2X          | ZEV-MONTH-U2N
+03   | ZEV-DAY-X7R          | ZEV-WEEK-G9T          | ZEV-MONTH-K7R
+04   | ZEV-DAY-A9B          | ZEV-WEEK-W3P          | ZEV-MONTH-E9P
+05   | ZEV-DAY-Y3T          | ZEV-WEEK-F5S          | ZEV-MONTH-S3W
+06   | ZEV-DAY-P5W          | ZEV-WEEK-N1M          | ZEV-MONTH-G6H
+07   | ZEV-DAY-M2K          | ZEV-WEEK-L7K          | ZEV-MONTH-X4V
+08   | ZEV-DAY-J8N          | ZEV-WEEK-B4Y          | ZEV-MONTH-J1L
+09   | ZEV-DAY-H4S          | ZEV-WEEK-V6Q          | ZEV-MONTH-B8Q
+10   | ZEV-DAY-Q6L          | ZEV-WEEK-Z9D          | ZEV-MONTH-F3D
+
+------------------------------------------------------------------------
+* Ghi chú: Hệ thống có cơ chế kiểm duyệt định dạng Regex thông minh.
+  Mọi key thường nếu nhập đúng định dạng cấu trúc dạng:
+  ZEV-(DAY|WEEK|MONTH)-[A-Z0-9] (ví dụ: ZEV-DAY-K91, ZEV-WEEK-A12B...)
+  đều sẽ được tự động đăng ký kích hoạt thành công trên máy khách.
+========================================================================
