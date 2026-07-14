@@ -1,32 +1,73 @@
-========================================================================
-                      ZEV CYBER VOID — KEY SYSTEM DIRECTORY
-========================================================================
+🔑 DANH SÁCH TOÀN BỘ ACCESS KEY HỆ THỐNG ZEV CYBER VOID
+==================================================
 
-[🛡️ ADMIN MASTER KEY]
-------------------------------------------------------------------------
-Key: ZEV-ADMIN-S2H-H1J
-Description: Toàn quyền truy cập bảng quản trị điều phối bảo mật
+🛡️ ADMIN KEY (Trang quản trị bảo mật)
+------------------------------------
+Mã Key: ZEV-ADMIN-S2H-H1J
+Quyền hạn: Truy cập Control Panel giám sát, khóa/mở khóa thiết bị.
 
-------------------------------------------------------------------------
-[🔑 SYSTEM ACCESS KEYS LIST]
-------------------------------------------------------------------------
+==================================================
 
-STT  | GÓI NGÀY (DAY - 24h)  | GÓI TUẦN (WEEK - 7d)  | GÓI THÁNG (MONTH - 30d)
------|----------------------|-----------------------|------------------------
-01   | ZEV-DAY-D1F          | ZEV-WEEK-R8V          | ZEV-MONTH-T5A
-02   | ZEV-DAY-K91          | ZEV-WEEK-C2X          | ZEV-MONTH-U2N
-03   | ZEV-DAY-X7R          | ZEV-WEEK-G9T          | ZEV-MONTH-K7R
-04   | ZEV-DAY-A9B          | ZEV-WEEK-W3P          | ZEV-MONTH-E9P
-05   | ZEV-DAY-Y3T          | ZEV-WEEK-F5S          | ZEV-MONTH-S3W
-06   | ZEV-DAY-P5W          | ZEV-WEEK-N1M          | ZEV-MONTH-G6H
-07   | ZEV-DAY-M2K          | ZEV-WEEK-L7K          | ZEV-MONTH-X4V
-08   | ZEV-DAY-J8N          | ZEV-WEEK-B4Y          | ZEV-MONTH-J1L
-09   | ZEV-DAY-H4S          | ZEV-WEEK-V6Q          | ZEV-MONTH-B8Q
-10   | ZEV-DAY-Q6L          | ZEV-WEEK-Z9D          | ZEV-MONTH-F3D
+♾️ GÓI LIFETIME (Vĩnh viễn - Không giới hạn thời gian)
+--------------------------------------------------
+Đặc điểm: Không bao giờ hết hạn, dùng trọn đời, tải cấu hình không giới hạn.
+Danh sách 5 Key:
+1. ZEV-LIFETIME-LTF
+2. ZEV-LIFETIME-LTG
+3. ZEV-LIFETIME-LTH
+4. ZEV-LIFETIME-LTJ
+5. ZEV-LIFETIME-LTK
 
-------------------------------------------------------------------------
-* Ghi chú: Hệ thống có cơ chế kiểm duyệt định dạng Regex thông minh.
-  Mọi key thường nếu nhập đúng định dạng cấu trúc dạng:
-  ZEV-(DAY|WEEK|MONTH)-[A-Z0-9] (ví dụ: ZEV-DAY-K91, ZEV-WEEK-A12B...)
-  đều sẽ được tự động đăng ký kích hoạt thành công trên máy khách.
-========================================================================
+==================================================
+
+📅 GÓI MONTH (Thời hạn 30 Ngày - Sử dụng nhiều thiết bị)
+--------------------------------------------------
+Đặc điểm: Thời gian hiệu lực 30 ngày kể từ lúc kích hoạt.
+Danh sách 10 Key:
+1. ZEV-MONTH-T5A
+2. ZEV-MONTH-U2N
+3. ZEV-MONTH-K7R
+4. ZEV-MONTH-E9P
+5. ZEV-MONTH-S3W
+6. ZEV-MONTH-G6H
+7. ZEV-MONTH-X4V
+8. ZEV-MONTH-J1L
+9. ZEV-MONTH-B8Q
+10. ZEV-MONTH-F3D
+
+==================================================
+
+📅 GÓI WEEK (Thời hạn 7 Ngày - Sử dụng nhiều thiết bị)
+--------------------------------------------------
+Đặc điểm: Thời gian hiệu lực 7 ngày kể từ lúc kích hoạt.
+Danh sách 10 Key:
+1. ZEV-WEEK-R8V
+2. ZEV-WEEK-C2X
+3. ZEV-WEEK-G9T
+4. ZEV-WEEK-W3P
+5. ZEV-WEEK-F5S
+6. ZEV-WEEK-N1M
+7. ZEV-WEEK-L7K
+8. ZEV-WEEK-B4Y
+9. ZEV-WEEK-V6Q
+10. ZEV-WEEK-Z9D
+
+==================================================
+
+⚡ GÓI DAY (Thời hạn 24 Giờ - Dùng 1 lần duy nhất)
+--------------------------------------------------
+Đặc điểm: Chỉ được tải file cấu hình duy nhất 1 lần, sau đó Key tự động bị vô hiệu hóa (USED).
+Danh sách 10 Key:
+1. ZEV-DAY-D1F
+2. ZEV-DAY-K91
+3. ZEV-DAY-X7R
+4. ZEV-DAY-A9B
+5. ZEV-DAY-Y3T
+6. ZEV-DAY-P5W
+7. ZEV-DAY-M2K
+8. ZEV-DAY-J8N
+9. ZEV-DAY-H4S
+10. ZEV-DAY-Q6L
+
+==================================================
+Tài liệu thuộc sở hữu của ZEV BOOST Systems. Nghiêm cấm chia sẻ công khai.
