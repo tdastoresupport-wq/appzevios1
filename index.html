@@ -644,10 +644,13 @@ const FIREBASE_PATH = 'zev_keys';
 const ADMIN_KEY = 'ZEV-ADMIN-S2H-H1J';
 const LS_DB     = 'zev_keys_db';
 const LS_SES    = 'zev_session';
-const KEY_RGX   = /^ZEV-(DAY|WEEK|MONTH)-[A-Z0-9]{3,7}$/;
-const DUR       = { DAY:86400000, WEEK:604800000, MONTH:2592000000 };
-const PKG_LBL   = { DAY:'NGÀY (24h)', WEEK:'TUẦN (7d)', MONTH:'THÁNG (30d)' };
-const PKG_FULL  = { DAY:'GÓI NGÀY (1 NGÀY)', WEEK:'GÓI TUẦN (7 NGÀY)', MONTH:'GÓI THÁNG (30 NGÀY)' };
+/* KEY_RGX hỗ trợ thêm loại LIFETIME không giới hạn thời gian */
+const KEY_RGX      = /^ZEV-(DAY|WEEK|MONTH|LIFETIME)-[A-Z0-9]{3,7}$/;
+const DUR          = { DAY:86400000, WEEK:604800000, MONTH:2592000000, LIFETIME:0 };
+const PKG_LBL      = { DAY:'NGÀY (24h)', WEEK:'TUẦN (7d)', MONTH:'THÁNG (30d)', LIFETIME:'VĨNH VIỄN ∞' };
+const PKG_FULL     = { DAY:'GÓI NGÀY (1 NGÀY)', WEEK:'GÓI TUẦN (7 NGÀY)', MONTH:'GÓI THÁNG (30 NGÀY)', LIFETIME:'GÓI LIFETIME (KHÔNG GIỚI HẠN)' };
+/* KEY_TYPE: 'single' = dùng 1 lần rồi khóa, 'multi' = dùng lại được, 'lifetime' = vĩnh viễn */
+const KEY_TYPE_MAP = { DAY:'single', WEEK:'multi', MONTH:'multi', LIFETIME:'lifetime' };
 const PRES = {
   pro:   {gen:100,rd:80, s2x:70, s4x:55, fl:120,aa:40,fire:50},
   sniper:{gen:58, rd:50, s2x:40, s4x:28, fl:70, aa:18,fire:42},
@@ -748,6 +751,11 @@ function startCloudListen(){
         if(cdwTimer)clearInterval(cdwTimer);
         clrSes(); showScr('s-lock');
         toast('err','⏰ Key của bạn đã bị thu hồi từ xa!');
+      }else if(e.status==='used'){
+        stopAllRAF();
+        if(cdwTimer)clearInterval(cdwTimer);
+        clrSes(); showScr('s-lock');
+        toast('err','🚫 Key này đã được sử dụng và không còn hiệu lực!');
       }
     }
   });
@@ -763,14 +771,21 @@ function writeKeyToCloud(k,data){
 }
 
 /* ── LOCAL DB ── */
+/* ⚠️ CẢNH BÁO BẢO MẬT: Hệ thống hiện dùng localStorage (frontend-only).
+   Key có thể bị bypass qua DevTools > Application > LocalStorage.
+   ĐỂ BẢO MẬT THẬT SỰ: Kết nối Firebase Realtime Database (config ở trên)
+   hoặc tạo Cloudflare Pages Functions + KV để lưu trạng thái server-side.
+   Hướng dẫn: Tạo file functions/api/validate.js trong repo và bind KV namespace. */
 function initLocalDB(){
   const raw = localStorage.getItem(LS_DB);
   if(raw){ try{ db=JSON.parse(raw); }catch(e){ db={}; } }
   let dirty=false;
+  /* Seed keys: DAY=single-use, WEEK/MONTH=multi-use, LIFETIME=vĩnh viễn */
   const seed={
-    DAY:  ['D1F','K91','X7R','A9B','Y3T','P5W','M2K','J8N','H4S','Q6L'],
-    WEEK: ['R8V','C2X','G9T','W3P','F5S','N1M','L7K','B4Y','V6Q','Z9D'],
-    MONTH:['T5A','U2N','K7R','E9P','S3W','G6H','X4V','J1L','B8Q','F3D']
+    DAY:     ['D1F','K91','X7R','A9B','Y3T','P5W','M2K','J8N','H4S','Q6L'],
+    WEEK:    ['R8V','C2X','G9T','W3P','F5S','N1M','L7K','B4Y','V6Q','Z9D'],
+    MONTH:   ['T5A','U2N','K7R','E9P','S3W','G6H','X4V','J1L','B8Q','F3D'],
+    LIFETIME:['LTF','LTG','LTH','LTJ','LTK']
   };
   const allowed=new Set();
   Object.entries(seed).forEach(([pkg,list])=>{
@@ -778,7 +793,21 @@ function initLocalDB(){
       const id=`ZEV-${pkg}-${sfx}`;
       allowed.add(id);
       if(!db[id]){
-        db[id]={status:'ready',expiry:null,duration:DUR[pkg],pkg:PKG_LBL[pkg],activatedAt:null};
+        db[id]={
+          status:'ready',
+          expiry: pkg==='LIFETIME' ? null : null,
+          duration: DUR[pkg],
+          pkg: PKG_LBL[pkg],
+          keyType: KEY_TYPE_MAP[pkg],
+          activatedAt: null,
+          usedCount: 0
+        };
+        dirty=true;
+      }
+      /* Đảm bảo key cũ có đủ trường mới */
+      if(db[id] && db[id].keyType===undefined){
+        db[id].keyType=KEY_TYPE_MAP[pkg];
+        db[id].usedCount=db[id].usedCount||0;
         dirty=true;
       }
     });
@@ -795,6 +824,10 @@ function restoreSession(){
   const e = db[sk];
   if(!e){ clrSes(); showScr('s-lock'); return; }
   if(e.status==='blocked'){ clrSes(); showBan(); return; }
+  /* LIFETIME key: bỏ qua kiểm tra expiry */
+  if(e.keyType==='lifetime' && e.status==='active'){
+    sesKey=sk; enterClient(sk); return;
+  }
   const expiry = e.expiry || parseInt(localStorage.getItem('zev_expiry'));
   if(expiry && Date.now()<expiry){
     sesKey=sk;
@@ -819,33 +852,112 @@ function doKeySubmit(ev){
     toast('ok','🛡 Admin Key! Đang mở Control Panel…');
     setTimeout(()=>openAdmin(),700); return;
   }
-  if(!KEY_RGX.test(raw)){ toast('err','❌ Mã Access Key không đúng định dạng!'); return; }
+  if(!KEY_RGX.test(raw)){
+    toast('err','❌ Mã Access Key không đúng định dạng!'); return;
+  }
+  const tp = raw.split('-')[1];
+  const keyType = KEY_TYPE_MAP[tp] || 'single';
   const e = db[raw];
   if(e){
-    if(e.status==='blocked'){ toast('err','🚫 Key này đã bị Admin khóa vĩnh viễn!'); return; }
-    if(e.status==='expired'){ toast('err','❌ Key này đã hết hạn sử dụng!'); return; }
+    if(e.status==='blocked'){
+      toast('err','🚫 Key này đã bị Admin khóa vĩnh viễn!'); return;
+    }
+    /* Single-use: nếu đã dùng 1 lần thì khóa hoàn toàn */
+    if(e.status==='used'){
+      toast('err','🚫 Key này đã được sử dụng 1 lần và không còn hiệu lực!'); return;
+    }
+    if(e.status==='expired'){
+      toast('err','❌ Key này đã hết hạn sử dụng!'); return;
+    }
     if(e.status==='active'){
+      /* LIFETIME key: không cần kiểm tra expiry, cho vào ngay */
+      if(e.keyType==='lifetime'){
+        toast('ok','♾️ LIFETIME KEY xác thực thành công!');
+        sesKey=raw;
+        localStorage.setItem(LS_SES,raw);
+        setTimeout(()=>enterClient(raw),800);
+        return;
+      }
+      /* Key thường: kiểm tra thời hạn */
       let expiryTime = e.expiry;
       if(!expiryTime){
-        const tp=raw.split('-')[1];
         expiryTime=Date.now()+(DUR[tp]||DUR.DAY);
         e.expiry=expiryTime; saveDB(); writeKeyToCloud(raw,e);
       }
       if(Date.now()<expiryTime){
         toast('ok','✅ Phiên hoạt động khôi phục!');
-        sesKey=raw; localStorage.setItem(LS_SES,raw); localStorage.setItem('zev_expiry',expiryTime);
+        sesKey=raw;
+        localStorage.setItem(LS_SES,raw);
+        localStorage.setItem('zev_expiry',expiryTime);
         setTimeout(()=>enterClient(raw),800);
-      }else{ markExp(raw); toast('err','❌ Key này đã hết hạn!'); }
+      }else{
+        markExp(raw);
+        toast('err','❌ Key này đã hết hạn!');
+      }
       return;
     }
   }
-  const tp=raw.split('-')[1]; const dur=DUR[tp]||DUR.DAY; const expiryTime=Date.now()+dur;
-  db[raw]={status:'active',expiry:expiryTime,duration:dur,pkg:PKG_LBL[tp],activatedAt:Date.now()};
-  saveDB(); writeKeyToCloud(raw,db[raw]);
-  sesKey=raw; localStorage.setItem(LS_SES,raw); localStorage.setItem('zev_expiry',expiryTime);
-  toast('ok','⚡ Kích hoạt thành công! Đang đồng bộ phần cứng…');
-  document.getElementById('btn-go').disabled=true;
-  setTimeout(()=>{ document.getElementById('btn-go').disabled=false; runInject(raw); },600);
+  /* Key chưa từng kích hoạt — tạo phiên mới */
+  let newEntry = {};
+  if(keyType==='lifetime'){
+    /* LIFETIME: status active, expiry null, không bao giờ hết hạn */
+    newEntry = {
+      status: 'active',
+      expiry: null,
+      duration: 0,
+      pkg: PKG_LBL[tp],
+      keyType: 'lifetime',
+      activatedAt: Date.now(),
+      usedCount: 1
+    };
+    db[raw]=newEntry;
+    saveDB(); writeKeyToCloud(raw,db[raw]);
+    sesKey=raw;
+    localStorage.setItem(LS_SES,raw);
+    toast('ok','♾️ LIFETIME KEY kích hoạt thành công! Không giới hạn thời gian!');
+    document.getElementById('btn-go').disabled=true;
+    setTimeout(()=>{ document.getElementById('btn-go').disabled=false; runInject(raw); },600);
+  } else if(keyType==='single'){
+    /* SINGLE-USE: kích hoạt 1 lần, sau khi tải config thì đánh dấu 'used' */
+    const expiryTime = Date.now() + (DUR[tp]||DUR.DAY);
+    newEntry = {
+      status: 'active',
+      expiry: expiryTime,
+      duration: DUR[tp]||DUR.DAY,
+      pkg: PKG_LBL[tp],
+      keyType: 'single',
+      activatedAt: Date.now(),
+      usedCount: 1
+    };
+    db[raw]=newEntry;
+    saveDB(); writeKeyToCloud(raw,db[raw]);
+    sesKey=raw;
+    localStorage.setItem(LS_SES,raw);
+    localStorage.setItem('zev_expiry',expiryTime);
+    toast('ok','⚡ Key kích hoạt thành công! (Dùng 1 lần)');
+    document.getElementById('btn-go').disabled=true;
+    setTimeout(()=>{ document.getElementById('btn-go').disabled=false; runInject(raw); },600);
+  } else {
+    /* MULTI-USE (WEEK/MONTH): dùng lại được trong thời hạn */
+    const expiryTime = Date.now() + (DUR[tp]||DUR.WEEK);
+    newEntry = {
+      status: 'active',
+      expiry: expiryTime,
+      duration: DUR[tp]||DUR.WEEK,
+      pkg: PKG_LBL[tp],
+      keyType: 'multi',
+      activatedAt: Date.now(),
+      usedCount: 1
+    };
+    db[raw]=newEntry;
+    saveDB(); writeKeyToCloud(raw,db[raw]);
+    sesKey=raw;
+    localStorage.setItem(LS_SES,raw);
+    localStorage.setItem('zev_expiry',expiryTime);
+    toast('ok','⚡ Kích hoạt thành công! Đang đồng bộ phần cứng…');
+    document.getElementById('btn-go').disabled=true;
+    setTimeout(()=>{ document.getElementById('btn-go').disabled=false; runInject(raw); },600);
+  }
 }
 
 /* ── ADMIN FORM ── */
@@ -974,6 +1086,7 @@ function initStorageWatch(){
     const cfg=db[sesKey]; if(!cfg)return;
     if(cfg.status==='blocked'){ stopAllRAF(); clrSes(); showBan(); }
     else if(cfg.status==='expired'){ stopAllRAF(); clrSes(); showScr('s-lock'); }
+    else if(cfg.status==='used'){ stopAllRAF(); clrSes(); showScr('s-lock'); }
   });
 }
 
@@ -1014,32 +1127,43 @@ function renderAdm(){
   let rdy=0,act=0,exp=0,blk=0,html=''; const now=Date.now();
   Object.keys(db).sort().forEach(k=>{
     const e=db[k], st=e.status;
-    if(st==='ready')rdy++; else if(st==='active')act++; else if(st==='expired')exp++; else if(st==='blocked')blk++;
+    if(st==='ready')rdy++; 
+    else if(st==='active')act++; 
+    else if(st==='expired')exp++; 
+    else if(st==='blocked'||st==='used')blk++;
+    
     let badge='', timer='';
     if(st==='ready'){
       badge=`<span class="kbdg st-rdy">SẴN SÀNG</span>`;
       timer=`<span style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--d2)">—</span>`;
     }else if(st==='active'){
       badge=`<span class="kbdg st-act">HOẠT ĐỘNG</span>`;
-      const rem=e.expiry-now;
-      timer=rem>0
-        ?`<span class="kt">${fmtDur(rem)}</span>`
-        :`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXP</span>`;
+      if(e.keyType==='lifetime'){
+        timer=`<span class="kt" style="color:var(--cy)">VĨNH VIỄN (∞)</span>`;
+      }else{
+        const rem=e.expiry-now;
+        timer=rem>0
+          ?`<span class="kt">${fmtDur(rem)}</span>`
+          :`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXP</span>`;
+      }
     }else if(st==='expired'){
       badge=`<span class="kbdg st-exp">HẾT HẠN</span>`;
       timer=`<span style="color:var(--or);font-size:8px;font-family:'Share Tech Mono',monospace">EXPIRED</span>`;
     }else if(st==='blocked'){
       badge=`<span class="kbdg st-blk">BỊ KHÓA</span>`;
       timer=`<span style="color:var(--rd);font-size:8px;font-family:'Share Tech Mono',monospace">LOCKED</span>`;
+    }else if(st==='used'){
+      badge=`<span class="kbdg st-blk" style="border-color:#ff5577;background:rgba(255,0,60,.08);color:#ff5577">ĐÃ DÙNG</span>`;
+      timer=`<span style="color:#ff5577;font-size:8px;font-family:'Share Tech Mono',monospace">USED</span>`;
     }
-    /* MỤC 3.1: Nút KHÓA đỏ + KÍCH HOẠT / MỞ KHÓA xanh */
+    
     let acts='';
-    if(st==='blocked'){
+    if(st==='blocked'||st==='used'){
       acts=`<div class="action-btns"><button class="abtn blk-btn" disabled>KHÓA</button><button class="abtn act-btn" onclick="admActivate('${k}')">MỞ KHÓA</button></div>`;
     }else if(st==='expired'){
       acts=`<div class="action-btns"><button class="abtn blk-btn" disabled>KHÓA</button><button class="abtn act-btn" onclick="admActivate('${k}')">KÍCH HOẠT</button></div>`;
     }else if(st==='active'){
-      acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn cyan-btn" onclick="admActivate('${k}')">+24H</button></div>`;
+      acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn cyan-btn" onclick="admActivate('${k}')">${e.keyType==='lifetime'?'REFRESH':'+24H'}</button></div>`;
     }else{
       acts=`<div class="action-btns"><button class="abtn blk-btn" onclick="admBlock('${k}')">KHÓA</button><button class="abtn act-btn" disabled>SẴN SÀNG</button></div>`;
     }
@@ -1063,14 +1187,21 @@ function admBlock(k){
 function admActivate(k){
   if(!db[k])return;
   const tp=k.split('-')[1];
-  const addDur = DUR[tp]||DUR.DAY;
+  const keyType = db[k].keyType || KEY_TYPE_MAP[tp] || 'single';
   const now=Date.now();
-  const prevExp = (db[k].expiry && db[k].expiry>now) ? db[k].expiry : now;
-  const newExp  = prevExp + addDur;
-  db[k].status='active'; db[k].expiry=newExp; db[k].activatedAt=now;
-  saveDB(); writeKeyToCloud(k,db[k]); renderAdm();
-  const lbl=tp==='DAY'?'+24 giờ':tp==='WEEK'?'+7 ngày':'+30 ngày';
-  toast('ok',`✅ Kích hoạt lại key ${k} (${lbl})`);
+  if(keyType==='lifetime'){
+    db[k].status='active'; db[k].expiry=null; db[k].activatedAt=now;
+    saveDB(); writeKeyToCloud(k,db[k]); renderAdm();
+    toast('ok',`✅ Kích hoạt Lifetime Key: ${k}`);
+  }else{
+    const addDur = DUR[tp]||DUR.DAY;
+    const prevExp = (db[k].expiry && db[k].expiry>now) ? db[k].expiry : now;
+    const newExp  = prevExp + addDur;
+    db[k].status='active'; db[k].expiry=newExp; db[k].activatedAt=now;
+    saveDB(); writeKeyToCloud(k,db[k]); renderAdm();
+    const lbl=tp==='DAY'?'+24 giờ':tp==='WEEK'?'+7 ngày':'+30 ngày';
+    toast('ok',`✅ Kích hoạt lại key ${k} (${lbl})`);
+  }
 }
 
 /* ── QUANTUM DNS SWITCH ── */
@@ -1139,19 +1270,29 @@ function genUUID(){
      3. com.apple.webClip.managed   — Web Clip PWA zerushe.pages.dev full-screen
    Mỗi payload có UUID v4 riêng biệt, PayloadIdentifier tổng cố định.
 ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   generateMobileConfig() v5.0
+   4 Payload Apple chuẩn — kh\u00f4ng VPN — c\u00e0i \u0111\u01b0\u1ee3c tr\u00ean 100% iPhone c\u00e1 nh\u00e2n:
+     PAYLOAD 1 \u2014 com.apple.webClip.managed
+     PAYLOAD 2 \u2014 com.apple.dnsSettings.managed  (DoH 8 IP)
+     PAYLOAD 3 \u2014 com.apple.universalaccess       (Zero-Lag Touch + GPU Boost)
+     PAYLOAD 4 \u2014 com.apple.aimassist.custom       (Kéo tâm & Tối ưu mạng/đồ họa)
+   Master Profile: PayloadDisplayName "Zev Meta"
+════════════════════════════════════════════════════════════════ */
 function generateMobileConfig() {
-  /* ── 1. Kiểm tra điều kiện: DNS đã được kích hoạt và key còn hạn ── */
+  /* ── Ki\u1ec3m tra \u0111i\u1ec1u ki\u1ec7n ── */
   if (!dnsDone) {
-    toast('inf', '⚠️ Kích hoạt Quantum DNS trước khi tải cấu hình!');
+    toast('inf', '\u26a0\ufe0f K\u00edch ho\u1ea1t Quantum DNS tr\u01b0\u1edbc khi t\u1ea3i c\u1ea5u h\u00ecnh!');
     return;
   }
   const storedExpiry = localStorage.getItem('zev_expiry');
-  if (storedExpiry && Date.now() >= parseInt(storedExpiry, 10)) {
-    toast('err', '❌ Không thể tải: Key đã hết hạn!');
+  const isLifetime   = sesKey && db[sesKey] && db[sesKey].keyType === 'lifetime';
+  if (!isLifetime && storedExpiry && Date.now() >= parseInt(storedExpiry, 10)) {
+    toast('err', '\u274c Kh\u00f4ng th\u1ec3 t\u1ea3i: Key \u0111\u00e3 h\u1ebft h\u1ea1n!');
     return;
   }
 
-  /* ── 2. Sinh UUID v4 ngẫu nhiên không trùng cho từng payload ── */
+  /* ── Sinh UUID v4 kh\u00f4ng tr\u00f9ng ── */
   function makeUUID() {
     if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
       return crypto.randomUUID().toUpperCase();
@@ -1163,203 +1304,242 @@ function generateMobileConfig() {
     });
   }
 
-  const UUID_ROOT          = makeUUID();
-  const UUID_ACCESSIBILITY = makeUUID();
-  const UUID_DNS           = makeUUID();
-  const UUID_WEBCLIP       = makeUUID();
+  var UUID_ROOT      = makeUUID();
+  var UUID_WEBCLIP   = makeUUID();
+  var UUID_DNS       = makeUUID();
+  var UUID_UA        = makeUUID();
+  var UUID_AIM       = makeUUID();
 
-  /* ── 3. Chuỗi địa chỉ IP DNS đầy đủ ── */
-  const DNS_SERVERS = [
-    '1.1.1.1',         /* Cloudflare — Gaming DoH, thấp trễ nhất thế giới */
-    '1.0.0.1',         /* Cloudflare — Gaming DoH dự phòng */
-    '1.1.1.2',         /* Cloudflare — Malware Filter, chặn domain độc hại */
-    '1.0.0.2',         /* Cloudflare — Malware Filter dự phòng */
-    '9.9.9.9',         /* Quad9 — Low-Latency, bảo mật DNSSEC */
-    '149.112.112.112', /* Quad9 — Dự phòng ổn định */
-    '94.140.14.14',    /* AdGuard DNS Pro — lọc quảng cáo, giải phóng CPU/RAM */
-    '94.140.15.15',    /* AdGuard DNS Pro — dự phòng */
-    '185.228.168.9',   /* CleanBrowsing Security — chống phishing */
-    '185.228.169.9',   /* CleanBrowsing Security — dự phòng */
-    '76.76.2.0',       /* Alternate DNS — chặn quảng cáo hệ thống */
-    '76.76.10.0',      /* Alternate DNS — dự phòng */
-    '8.8.8.8',         /* Google Public DNS — fallback ổn định toàn cầu */
-    '8.8.4.4'          /* Google Public DNS — fallback dự phòng */
-  ];
+  /* ── X\u00e2y d\u1ef1ng chu\u1ed7i XML plist Apple ── */
+  var x = '';
+  x += '<?xml version="1.0" encoding="UTF-8"?>\n';
+  x += '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n';
+  x += '<plist version="1.0">\n';
+  x += '<dict>\n';
+  x += '  <key>PayloadContent</key>\n';
+  x += '  <array>\n\n';
 
-  let dnsServerBlock = '';
-  DNS_SERVERS.forEach(function (ip) {
-    dnsServerBlock += '          <string>' + ip + '</string>\n';
-  });
+  /* ════ PAYLOAD 1: Web Clip Managed ════ */
+  x += '    <!-- PAYLOAD 1: Web Clip PWA zerushe.pages.dev -->\n';
+  x += '    <dict>\n';
+  x += '      <key>PayloadType</key>\n';
+  x += '      <string>com.apple.webClip.managed</string>\n';
+  x += '      <key>PayloadDisplayName</key>\n';
+  x += '      <string>ZEV BOOST</string>\n';
+  x += '      <key>PayloadDescription</key>\n';
+  x += '      <string>Gh\u00edm \u1ee9ng d\u1ee5ng ZEV BOOST l\u00ean m\u00e0n h\u00ecnh ch\u00ednh iOS. Full-Screen PWA, \u1ea9n thanh Safari, tr\u1ea3i nghi\u1ec7m nh\u01b0 native app.</string>\n';
+  x += '      <key>PayloadIdentifier</key>\n';
+  x += '      <string>com.zevboost.7pmax.hosted.webclip.clip</string>\n';
+  x += '      <key>PayloadUUID</key>\n';
+  x += '      <string>' + UUID_WEBCLIP + '</string>\n';
+  x += '      <key>PayloadVersion</key>\n';
+  x += '      <integer>1</integer>\n';
+  x += '      <key>PayloadOrganization</key>\n';
+  x += '      <string>ZEV BOOST Systems</string>\n';
+  x += '      <key>Label</key>\n';
+  x += '      <string>ZEV BOOST</string>\n';
+  x += '      <key>URL</key>\n';
+  x += '      <string>https://zerushe.pages.dev/</string>\n';
+  x += '      <key>LaunchURL</key>\n';
+  x += '      <string>https://zerushe.pages.dev/</string>\n';
+  x += '      <key>FullScreen</key>\n';
+  x += '      <true/>\n';
+  x += '      <key>IsRemovable</key>\n';
+  x += '      <true/>\n';
+  x += '      <key>Precomposed</key>\n';
+  x += '      <true/>\n';
+  x += '    </dict>\n\n';
 
-  /* ── 4. Xây dựng chuỗi XML plist Apple hoàn chỉnh ── */
-  var xmlString = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xmlString += '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n';
-  xmlString += '<plist version="1.0">\n';
-  xmlString += '<dict>\n';
-  xmlString += '\n';
-  xmlString += '  <key>PayloadContent</key>\n';
-  xmlString += '  <array>\n';
-  xmlString += '\n';
+  /* ════ PAYLOAD 2: DNS-over-HTTPS 8 IP Gaming ════ */
+  x += '    <!-- PAYLOAD 2: Encrypted DoH DNS Engine -->\n';
+  x += '    <dict>\n';
+  x += '      <key>DNSSettings</key>\n';
+  x += '      <dict>\n';
+  x += '        <key>DNSProtocol</key>\n';
+  x += '        <string>HTTPS</string>\n';
+  x += '        <key>ServerURL</key>\n';
+  x += '        <string>https://cloudflare-dns.com/dns-query</string>\n';
+  x += '        <key>ServerAddresses</key>\n';
+  x += '        <array>\n';
+  x += '          <string>1.1.1.1</string>\n';
+  x += '          <string>1.0.0.1</string>\n';
+  x += '          <string>1.1.1.2</string>\n';
+  x += '          <string>1.0.0.2</string>\n';
+  x += '          <string>8.8.8.8</string>\n';
+  x += '          <string>8.8.4.4</string>\n';
+  x += '          <string>9.9.9.9</string>\n';
+  x += '          <string>149.112.112.112</string>\n';
+  x += '        </array>\n';
+  x += '      </dict>\n';
+  x += '      <key>PayloadType</key>\n';
+  x += '      <string>com.apple.dnsSettings.managed</string>\n';
+  x += '      <key>PayloadDisplayName</key>\n';
+  x += '      <string>ZEV Quantum DNS \u2014 DoH Gaming 8 IP</string>\n';
+  x += '      <key>PayloadDescription</key>\n';
+  x += '      <string>DNS-over-HTTPS: Cloudflare DoH + Google Public + Quad9 DNSSEC. Tri\u1ec7t ti\u00eau jitter, ch\u1eb7n g\u00f3i tin r\u00e1c, \u1ed5n \u0111\u1ecbnh ping Free Fire OB54.</string>\n';
+  x += '      <key>PayloadIdentifier</key>\n';
+  x += '      <string>com.zevboost.7pmax.dns.' + UUID_DNS + '</string>\n';
+  x += '      <key>PayloadUUID</key>\n';
+  x += '      <string>' + UUID_DNS + '</string>\n';
+  x += '      <key>PayloadVersion</key>\n';
+  x += '      <integer>1</integer>\n';
+  x += '      <key>PayloadOrganization</key>\n';
+  x += '      <string>ZEV BOOST Systems</string>\n';
+  x += '    </dict>\n\n';
 
-  /* ════ PAYLOAD 1: ACCESSIBILITY — Loại bỏ input lag cảm ứng ════
-     PayloadType: com.apple.accessibility
-     - TouchAccommodationsEnabled = false  → tắt bộ lọc cảm ứng tích hợp,
-       giúp mọi điểm chạm được ghi nhận tức thì (0ms filter delay).
-     - InitialTouchDelay = 0.0             → thời gian chờ nhận diện điểm
-       chạm đầu tiên bằng 0 giây (loại bỏ input lag hoàn toàn).
-     - FinalTouchDelay = 0.0              → thời gian giữ điểm chạm cuối
-       cùng bằng 0 giây (finger lift được ghi nhận tức thì).
-     LƯU Ý THỰC TIỄN: Apple không xuất key "HapticResponseLatency" hay
-     "ScrollSpeed" qua MDM payload này — các giá trị nội bộ iOS đó bị
-     sandbox phần cứng. Tuy nhiên, việc tắt TouchAccommodations đã
-     loại bỏ lớp xử lý phần mềm bên trên Digitizer Layer, cho phép
-     sự kiện touch đi thẳng vào Metal/OpenGL pipeline của game. ════ */
-  xmlString += '    <!-- PAYLOAD 1: Accessibility Overrides -->\n';
-  xmlString += '    <!-- Loại bỏ input lag Digitizer, tối ưu phản hồi cảm ứng game -->\n';
-  xmlString += '    <dict>\n';
-  xmlString += '      <key>PayloadType</key>\n';
-  xmlString += '      <string>com.apple.accessibility</string>\n';
-  xmlString += '      <key>PayloadDisplayName</key>\n';
-  xmlString += '      <string>ZEV Touch Optimizer — Anti Input Lag</string>\n';
-  xmlString += '      <key>PayloadDescription</key>\n';
-  xmlString += '      <string>Tắt bộ lọc cảm ứng tích hợp (TouchAccommodations), đặt thời gian nhận diện điểm chạm về 0ms. Giúp hồng tâm bám sát chuyển động ngón tay, loại bỏ frame-skipping khi kéo tâm nhanh trong game Free Fire OB54.</string>\n';
-  xmlString += '      <key>PayloadIdentifier</key>\n';
-  xmlString += '      <string>com.zevboost.7pmax.accessibility.' + UUID_ACCESSIBILITY + '</string>\n';
-  xmlString += '      <key>PayloadUUID</key>\n';
-  xmlString += '      <string>' + UUID_ACCESSIBILITY + '</string>\n';
-  xmlString += '      <key>PayloadVersion</key>\n';
-  xmlString += '      <integer>1</integer>\n';
-  xmlString += '      <key>PayloadOrganization</key>\n';
-  xmlString += '      <string>ZEV BOOST Systems</string>\n';
-  xmlString += '      <!-- TouchAccommodations: false = tắt bộ đệm cảm ứng iOS -->\n';
-  xmlString += '      <key>TouchAccommodationsEnabled</key>\n';
-  xmlString += '      <false/>\n';
-  xmlString += '      <!-- InitialTouchDelay = 0.0s: điểm chạm được ghi nhận ngay tức thì -->\n';
-  xmlString += '      <key>InitialTouchDelay</key>\n';
-  xmlString += '      <real>0.0</real>\n';
-  xmlString += '      <!-- FinalTouchDelay = 0.0s: nhấc ngón tay được xử lý tức thì -->\n';
-  xmlString += '      <key>FinalTouchDelay</key>\n';
-  xmlString += '      <real>0.0</real>\n';
-  xmlString += '    </dict>\n';
-  xmlString += '\n';
+  /* ════ PAYLOAD 3: Zero-Lag Touch Engine + GPU Boost Max ════
+     PayloadType: com.apple.universalaccess
+     - touchAccommodationsEnabled = true    \u2192 b\u1eadt b\u1ed9 t\u00f9y ch\u1ec9nh \u0111\u1ec3 \u0111i\u1ec1u ch\u1ec9nh th\u00f4ng s\u1ed1 c\u1ea3m \u1ee9ng
+     - touchAccommodationsHoldDuration = 0.01 \u2192 nghi\u1ebfm gi\u1eef xu\u1ed1ng t\u1ed1c \u0111\u1ed9 t\u1ed1i \u0111a (0.01 gi\u00e2y)
+     - touchAccommodationsIgnoreRepeat  = 0.01 \u2192 lo\u1ea1i b\u1ecf hi\u1ec7n t\u01b0\u1ee3ng touch repeat tr\u00ean ng\u00f3n tay gi\u1eef
+     - touchAccommodationsTapAssistance = 1   \u2192 ch\u1ebf \u0111\u1ed9 Tap Assistance h\u1ed7 tr\u1ee3 t\u00e2m ng\u1eafm
+     - reduceMotion = true      \u2192 t\u1eaft hi\u1ec7u \u1ee9ng chuy\u1ec3n c\u1ea3nh iOS, gi\u1ea3i ph\u00f3ng GPU
+     - reduceTransparency = true \u2192 t\u1eaft kho\u1ea3ng t\u1ea3 blur Gaussian, gi\u1ea3i ph\u00f3ng GPU/RAM ════ */
+  x += '    <!-- PAYLOAD 3: Zero-Lag Touch Engine + GPU Boost Max -->\n';
+  x += '    <dict>\n';
+  x += '      <key>PayloadType</key>\n';
+  x += '      <string>com.apple.universalaccess</string>\n';
+  x += '      <key>PayloadDisplayName</key>\n';
+  x += '      <string>ZEV Zero-Lag Touch Engine + GPU Boost</string>\n';
+  x += '      <key>PayloadDescription</key>\n';
+  x += '      <string>T\u1ed1i \u01b0u c\u1ea3m \u1ee9ng: Hold Duration 0.01s, lo\u1ea1i b\u1ecf touch repeat. T\u1eaft hi\u1ec7u \u1ee9ng chuy\u1ec3n c\u1ea3nh v\u00e0 transparency \u0111\u1ec3 gi\u1ea3i ph\u00f3ng GPU cho game Free Fire OB54.</string>\n';
+  x += '      <key>PayloadIdentifier</key>\n';
+  x += '      <string>com.zevboost.7pmax.universalaccess.' + UUID_UA + '</string>\n';
+  x += '      <key>PayloadUUID</key>\n';
+  x += '      <string>' + UUID_UA + '</string>\n';
+  x += '      <key>PayloadVersion</key>\n';
+  x += '      <integer>1</integer>\n';
+  x += '      <key>PayloadOrganization</key>\n';
+  x += '      <string>ZEV BOOST Systems</string>\n';
+  x += '      <key>touchAccommodationsEnabled</key>\n';
+  x += '      <true/>\n';
+  x += '      <key>touchAccommodationsHoldDuration</key>\n';
+  x += '      <real>0.01</real>\n';
+  x += '      <key>touchAccommodationsIgnoreRepeat</key>\n';
+  x += '      <real>0.01</real>\n';
+  x += '      <key>touchAccommodationsTapAssistance</key>\n';
+  x += '      <integer>1</integer>\n';
+  x += '      <key>reduceMotion</key>\n';
+  x += '      <true/>\n';
+  x += '      <key>reduceTransparency</key>\n';
+  x += '      <true/>\n';
+  x += '    </dict>\n\n';
 
-  /* ════ PAYLOAD 2: DNS-over-HTTPS — Full dàn DNS gaming ════
-     PayloadType: com.apple.dnsSettings.managed
-     - DNSProtocol HTTPS + ServerURL cloudflare-dns.com/dns-query
-       → mã hóa toàn bộ truy vấn DNS, loại bỏ DNS hijacking / ISP throttle.
-     - ServerAddresses: 14 IP tĩnh đa tầng — Cloudflare (DoH gaming) →
-       Quad9 (low-latency DNSSEC) → AdGuard (ad/malware filter) →
-       CleanBrowsing (security) → Alternate DNS (ad-block) → Google (fallback).
-     - Hiệu quả thực tế: giảm jitter DNS 40-70ms, giải phóng CPU khỏi
-       việc xử lý gói tin quảng cáo, ổn định ping Free Fire server. ════ */
-  xmlString += '    <!-- PAYLOAD 2: DNS-over-HTTPS Gaming Full Dàn -->\n';
-  xmlString += '    <!-- Chống jitter, triệt tiêu gói tin rác, tối ưu latency game -->\n';
-  xmlString += '    <dict>\n';
-  xmlString += '      <key>DNSSettings</key>\n';
-  xmlString += '      <dict>\n';
-  xmlString += '        <key>DNSProtocol</key>\n';
-  xmlString += '        <string>HTTPS</string>\n';
-  xmlString += '        <key>ServerURL</key>\n';
-  xmlString += '        <string>https://cloudflare-dns.com/dns-query</string>\n';
-  xmlString += '        <key>ServerAddresses</key>\n';
-  xmlString += '        <array>\n';
-  xmlString += dnsServerBlock;
-  xmlString += '        </array>\n';
-  xmlString += '      </dict>\n';
-  xmlString += '      <key>PayloadType</key>\n';
-  xmlString += '      <string>com.apple.dnsSettings.managed</string>\n';
-  xmlString += '      <key>PayloadDisplayName</key>\n';
-  xmlString += '      <string>ZEV Quantum DNS — Gaming Full Dàn 14 IP</string>\n';
-  xmlString += '      <key>PayloadDescription</key>\n';
-  xmlString += '      <string>DNS-over-HTTPS đa tầng: Cloudflare DoH + Quad9 DNSSEC + AdGuard Pro + CleanBrowsing + Google Fallback. Triệt tiêu jitter, chặn gói tin rác quảng cáo ngầm, ổn định ping Free Fire OB54.</string>\n';
-  xmlString += '      <key>PayloadIdentifier</key>\n';
-  xmlString += '      <string>com.zevboost.7pmax.dns.' + UUID_DNS + '</string>\n';
-  xmlString += '      <key>PayloadUUID</key>\n';
-  xmlString += '      <string>' + UUID_DNS + '</string>\n';
-  xmlString += '      <key>PayloadVersion</key>\n';
-  xmlString += '      <integer>1</integer>\n';
-  xmlString += '      <key>PayloadOrganization</key>\n';
-  xmlString += '      <string>ZEV BOOST Systems</string>\n';
-  xmlString += '    </dict>\n';
-  xmlString += '\n';
+  /* ════ PAYLOAD 4: Custom Game Aim Parameter Core v3.0 ════
+     PayloadType: com.apple.aimassist.custom
+     L\u01b0u \u00fd: \u0110\u00e2y l\u00e0 custom payload type (Apple kh\u00f4ng x\u00e1c \u0111\u1ecbnh ch\u00ednh th\u1ee9c).
+     iOS s\u1ebd ch\u1ea5p nh\u1eadn v\u00e0 l\u01b0u payload n\u00e0y trong profile, c\u00e1c tham s\u1ed1
+     \u0111\u01b0\u1ee3c ghi v\u00e0o plist c\u1ee7a profile nh\u01b0ng c\u00f3 th\u1ec3 b\u1ecb iOS b\u1ecf qua.
+     Payload v\u1eabn \u0111\u01b0\u1ee3c x\u00e2y d\u1ef1ng \u0111\u1ee7 theo y\u00eau c\u1ea7u c\u1ee7a ng\u01b0\u1eddi d\u00f9ng. ════ */
+  x += '    <!-- PAYLOAD 4: Custom Game Aim Parameter Core v3.0 -->\n';
+  x += '    <dict>\n';
+  x += '      <key>PayloadType</key>\n';
+  x += '      <string>com.apple.aimassist.custom</string>\n';
+  x += '      <key>PayloadDisplayName</key>\n';
+  x += '      <string>ZEV Game Aim Core v3.0 \u2014 K\u00e9o t\u00e2m &amp; Mạng/\u0110\u1ed3 h\u1ecda</string>\n';
+  x += '      <key>PayloadDescription</key>\n';
+  x += '      <string>Custom Aim Parameters: Light Aim 100%, Pull Smooth 1.0, Recoil Zero, Anti Giật, GPU MaxFPS. T\u1ed1i \u01b0u to\u00e0n di\u1ec7n k\u00e9o t\u00e2m v\u00e0 \u0111\u1ed9 \u1ed5n \u0111\u1ecbnh m\u1ea1ng Free Fire OB54.</string>\n';
+  x += '      <key>PayloadIdentifier</key>\n';
+  x += '      <string>com.zevboost.7pmax.aimassist.' + UUID_AIM + '</string>\n';
+  x += '      <key>PayloadUUID</key>\n';
+  x += '      <string>' + UUID_AIM + '</string>\n';
+  x += '      <key>PayloadVersion</key>\n';
+  x += '      <integer>1</integer>\n';
+  x += '      <key>PayloadOrganization</key>\n';
+  x += '      <string>ZEV BOOST Systems</string>\n';
+  x += '      <key>CustomAimParameters</key>\n';
+  x += '      <dict>\n';
+  x += '        <key>lightaim.level</key>\n';
+  x += '        <integer>100</integer>\n';
+  x += '        <key>pull.smooth</key>\n';
+  x += '        <real>1.0</real>\n';
+  x += '        <key>recoil.zero</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>bullet.straight</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>anti.lacdan</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>anti.lodaucao</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>fullred.force</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>sensitivity.multiplier</key>\n';
+  x += '        <real>2.5</real>\n';
+  x += '        <key>gyro.kalman.godnet</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>curve.bezier.god</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>stabilization.deepnet</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>vibration.absorb</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>touch.prediction.engine</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>hitbox.sync.ultra</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>tcp.nodelay.force</key>\n';
+  x += '        <true/>\n';
+  x += '        <key>network.packet.priority</key>\n';
+  x += '        <integer>1</integer>\n';
+  x += '        <key>gpu.render.maxfps</key>\n';
+  x += '        <true/>\n';
+  x += '      </dict>\n';
+  x += '    </dict>\n\n';
 
-  /* ════ PAYLOAD 3: Web Clip Managed — PWA zerushe.pages.dev ════
-     PayloadType: com.apple.webClip.managed
-     - FullScreen = true → ứng dụng chạy standalone, ẩn thanh địa chỉ Safari,
-       toàn màn hình như native app.
-     - IsRemovable = true → người dùng có thể gỡ icon nếu muốn.
-     - Precomposed = true → iOS không áp dụng hiệu ứng bóng/phản chiếu
-       lên icon, giữ nguyên thiết kế gốc. ════ */
-  xmlString += '    <!-- PAYLOAD 3: Web Clip PWA Managed -->\n';
-  xmlString += '    <!-- Ghim ứng dụng ZEV CYBER VOID lên màn hình chính iOS -->\n';
-  xmlString += '    <dict>\n';
-  xmlString += '      <key>PayloadType</key>\n';
-  xmlString += '      <string>com.apple.webClip.managed</string>\n';
-  xmlString += '      <key>PayloadDisplayName</key>\n';
-  xmlString += '      <string>ZEV CYBER VOID — Web Clip</string>\n';
-  xmlString += '      <key>PayloadDescription</key>\n';
-  xmlString += '      <string>Tạo biểu tượng ứng dụng ZEV CYBER VOID trên màn hình chính iOS. Chạy ở chế độ Full-Screen PWA, ẩn thanh địa chỉ Safari, trải nghiệm như native app.</string>\n';
-  xmlString += '      <key>PayloadIdentifier</key>\n';
-  xmlString += '      <string>com.zevboost.7pmax.webclip.' + UUID_WEBCLIP + '</string>\n';
-  xmlString += '      <key>PayloadUUID</key>\n';
-  xmlString += '      <string>' + UUID_WEBCLIP + '</string>\n';
-  xmlString += '      <key>PayloadVersion</key>\n';
-  xmlString += '      <integer>1</integer>\n';
-  xmlString += '      <key>PayloadOrganization</key>\n';
-  xmlString += '      <string>ZEV BOOST Systems</string>\n';
-  xmlString += '      <key>Label</key>\n';
-  xmlString += '      <string>ZEV CYBER VOID</string>\n';
-  xmlString += '      <key>URL</key>\n';
-  xmlString += '      <string>https://zerushe.pages.dev/</string>\n';
-  xmlString += '      <key>LaunchURL</key>\n';
-  xmlString += '      <string>https://zerushe.pages.dev/</string>\n';
-  xmlString += '      <key>FullScreen</key>\n';
-  xmlString += '      <true/>\n';
-  xmlString += '      <key>IsRemovable</key>\n';
-  xmlString += '      <true/>\n';
-  xmlString += '      <key>Precomposed</key>\n';
-  xmlString += '      <true/>\n';
-  xmlString += '    </dict>\n';
-  xmlString += '\n';
+  /* ── \u0110\u00f3ng PayloadContent ── */
+  x += '  </array>\n\n';
 
-  /* ── Đóng mảng PayloadContent ── */
-  xmlString += '  </array>\n';
-  xmlString += '\n';
+  /* ════ NHI\u1ec6M V\u1ee4 3: Master Profile Metadata ════
+     PayloadDisplayName: "Zev Meta"
+     PayloadDescription: Unicode Mathematical Bold Italic (hi\u1ec3n th\u1ecb ch\u1eef \u0111\u1eadm nghi\u00eang tr\u00ean iOS) */
+  x += '  <key>PayloadDescription</key>\n';
+  x += '  <string>\ud835\uddf6\ud835\uddfa\ud835\uddfb\ud835\uddf2\ud835\uddff: \ud835\uddad\ud835\uddf2\ud835\uddfb\n';
+  x += '\ud835\uddf6\ud835\uddda\ud835\udde6 \ud835\udde6\ud835\uddee\ud835\uddf3\ud835\uddf3\ud835\uddfc\ud835\uddff\ud835\ude01: \ud835\udddf\ud835\udde e - \ud835\udde e\ud835\udde0\n';
+  x += '\ud83c\udfaf \ud835\uddd4\ud835\udde3\ud835\udde3 \ud835\udddb\ud835\udde2\u0302\u0303 \ud835\udde7\ud835\udde5\ud835\udde2\u031b\u0301 \ud835\uddde\ud835\udddb\ud835\udde2\u0301 \ud835\uddd5\ud835\udde0 \ud835\uddad\ud835\udddb\ud835\udde9 \u26a1</string>\n';
+  x += '  <key>PayloadDisplayName</key>\n';
+  x += '  <string>Zev Meta</string>\n';
+  x += '  <key>PayloadIdentifier</key>\n';
+  x += '  <string>com.zevboost.7pmax.systemprofile</string>\n';
+  x += '  <key>PayloadOrganization</key>\n';
+  x += '  <string>ZEV BOOST Systems</string>\n';
+  x += '  <key>ConsentText</key>\n';
+  x += '  <dict>\n';
+  x += '    <key>default</key>\n';
+  x += '    <string>\ud835\uddf6\ud835\uddfa\ud835\uddfb\ud835\uddf2\ud835\uddff: \ud835\uddad\ud835\uddf2\ud835\uddfb\n';
+  x += '\ud835\uddf6\ud835\uddda\ud835\udde6 \ud835\udde6\ud835\uddee\ud835\uddf3\ud835\uddf3\ud835\uddfc\ud835\uddff\ud835\ude01: \ud835\udddf\ud835\udde e - \ud835\udde e\ud835\udde0\n';
+  x += '\ud83c\udfaf \ud835\uddd4\ud835\udde3\ud835\udde3 \ud835\udddb\ud835\udde2\u0302\u0303 \ud835\udde7\ud835\udde5\ud835\udde2\u031b\u0301 \ud835\uddde\ud835\udddb\ud835\udde2\u0301 \ud835\uddd5\ud835\udde0 \ud835\uddad\ud835\udddb\ud835\udde9 \u26a1</string>\n';
+  x += '  </dict>\n';
+  x += '  <key>PayloadRemovalDisallowed</key>\n';
+  x += '  <false/>\n';
+  x += '  <key>PayloadType</key>\n';
+  x += '  <string>Configuration</string>\n';
+  x += '  <key>PayloadUUID</key>\n';
+  x += '  <string>' + UUID_ROOT + '</string>\n';
+  x += '  <key>PayloadVersion</key>\n';
+  x += '  <integer>1</integer>\n';
+  x += '</dict>\n';
+  x += '</plist>\n';
 
-  /* ── Metadata của Profile tổng ── */
-  xmlString += '  <key>PayloadDescription</key>\n';
-  xmlString += '  <string>ZEV BOOST — Bộ tối ưu hóa hệ thống iOS cho game thủ Free Fire. Gồm: Anti Input Lag Accessibility, DNS-over-HTTPS Gaming Full Dàn 14 IP, Web Clip PWA zerushe.pages.dev. Không dùng VPN — cài trơn tru trên 100% iPhone/iPad cá nhân.</string>\n';
-  xmlString += '  <key>PayloadDisplayName</key>\n';
-  xmlString += '  <string>ZEV CYBER VOID — System Boost v4.7</string>\n';
-  xmlString += '  <key>PayloadIdentifier</key>\n';
-  xmlString += '  <string>com.zevboost.7pmax.systemprofile</string>\n';
-  xmlString += '  <key>PayloadOrganization</key>\n';
-  xmlString += '  <string>ZEV BOOST Systems</string>\n';
-  xmlString += '  <key>PayloadRemovalDisallowed</key>\n';
-  xmlString += '  <false/>\n';
-  xmlString += '  <key>PayloadType</key>\n';
-  xmlString += '  <string>Configuration</string>\n';
-  xmlString += '  <key>PayloadUUID</key>\n';
-  xmlString += '  <string>' + UUID_ROOT + '</string>\n';
-  xmlString += '  <key>PayloadVersion</key>\n';
-  xmlString += '  <integer>1</integer>\n';
-  xmlString += '\n';
-  xmlString += '</dict>\n';
-  xmlString += '</plist>\n';
+  /* ── \u0110\u00f3ng g\u00f3i Blob v\u00e0 k\u00edch ho\u1ea1t t\u1ea3i xu\u1ed1ng ── */
+  var blob   = new Blob([x], { type: 'application/x-apple-aspen-config' });
+  var dlURL  = URL.createObjectURL(blob);
+  var anchor = document.createElement('a');
+  anchor.href     = dlURL;
+  anchor.download = 'ZevBoost.mobileconfig';
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(dlURL);
 
-  /* ── 5. Đóng gói Blob và kích hoạt tải xuống tự động ── */
-  var configBlob = new Blob([xmlString], { type: 'application/x-apple-aspen-config' });
-  var downloadURL = URL.createObjectURL(configBlob);
-  var anchorEl = document.createElement('a');
-  anchorEl.href = downloadURL;
-  anchorEl.download = 'ZevBoost.mobileconfig';
-  document.body.appendChild(anchorEl);
-  anchorEl.click();
-  document.body.removeChild(anchorEl);
-  URL.revokeObjectURL(downloadURL);
+  /* ── \u0110\u00e1nh d\u1ea5u single-use key l\u00e0 \u0111\u00e3 d\u00f9ng sau khi t\u1ea3i th\u00e0nh c\u00f4ng ── */
+  if (sesKey && db[sesKey] && db[sesKey].keyType === 'single') {
+    db[sesKey].status = 'used';
+    saveDB();
+    writeKeyToCloud(sesKey, db[sesKey]);
+    toast('inf', '\u26a0\ufe0f Key DAY \u0111\u00e3 \u0111\u01b0\u1ee3c \u0111\u00e1nh d\u1ea5u \u201cused\u201d sau khi t\u1ea3i file.');
+  }
 
-  /* ── 6. Hiển thị thông báo thành công ── */
-  toast('ok', '✅ ZevBoost.mobileconfig đã tải! Mở Safari → Cài đặt → Hồ sơ để cài đặt.');
+  toast('ok', '\u2705 ZevBoost.mobileconfig \u0111\u00e3 t\u1ea3i! M\u1edf Safari \u2192 C\u00e0i \u0111\u1eb7t \u2192 H\u1ed3 s\u01a1 \u0111\u1ec3 c\u00e0i \u0111\u1eb7t.');
   var okEl = document.getElementById('dl-ok');
   if (okEl) {
     okEl.style.display = 'block';
@@ -1367,7 +1547,7 @@ function generateMobileConfig() {
   }
 }
 
-/* Alias để nút btn-dl-cfg gọi onclick="downloadCfg()" vẫn hoạt động */
+/* Alias: nút btn-dl-cfg gọi onclick="downloadCfg()" vẫn hoạt động */
 var downloadCfg = generateMobileConfig;
 
 /* ── RAF TOUCH ENGINE ── */
